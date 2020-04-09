@@ -1,0 +1,29 @@
+{
+  "name": "coronavirusnake",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "Mehmet Burak Erman",
+  "license": "ISC",
+  "dependencies": {
+    "hammerjs": "^2.0.8",
+    "normalize.css": "^8.0.1",
+    "vue": "^2.6.11",
+    "vue-feather-icons": "^5.0.0",
+    "vue-hot-reload-api": "^2.3.4",
+    "vue-icon": "^2.1.2"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.1.2",
+    "parcel-bundler": "^1.12.4",
+    "stylus": "^0.54.7",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "alias": {
+    "vue": "./node_modules/vue/dist/vue.common.js"
+  }
+}

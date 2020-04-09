@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" data-emoji="🐍" />
+    <title>Coronavirusnake</title>
+
+    <script>
+        var favicon = document.querySelector("link[rel=icon]");
+        if (favicon) {
+            var emoji = favicon.getAttribute("data-emoji");
+            if (emoji) {
+                var canvas = document.createElement("canvas");
+                canvas.height = 64;
+                canvas.width = 64;
+                var ctx = canvas.getContext("2d");
+                ctx.font = "64px serif";
+                ctx.fillText(emoji, 0, 64);
+                favicon.href = canvas.toDataURL();
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="app"> </div>
+    <script defer src="assets/main.js"></script>
+</body>
+
+</html>
