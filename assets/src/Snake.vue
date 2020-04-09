@@ -12,7 +12,8 @@
     <div class="game__area">
       <div class="game__area-overlay" :class="{active: isModalVisible}">
         <div class="game__area-overlay-content" v-html="this.modalTemplate"></div>
-        <button @click="isModalVisible = false">OK</button>
+        <button v-if="!isGameOver" @click="isModalVisible = false">OK</button>
+        <button v-if="isGameOver" @click="gameOver">Try Again</button>
       </div>
       <ul>
         <li v-for="(item, colIndex) in gameLengthArray" :key="colIndex">
@@ -60,7 +61,8 @@ export default {
       gameAnimationTimer: null,
       scoreAnimation: false,
       modalTemplate: "",
-      isModalVisible: false
+      isModalVisible: false,
+      isGameOver: false
     };
   },
 
@@ -71,6 +73,49 @@ export default {
         arr.push(i);
       }
       return arr;
+    }
+  },
+
+  created() {
+    this.screen = {
+      width: document.body.offsetWidth,
+      height: document.body.offsetHeight
+    };
+    this.handleGameSize();
+  },
+
+  mounted() {
+    window.addEventListener("keyup", this.bindSnakeDirections);
+    // swipe actions
+    const swipeGestures = new Hammer(document.querySelector(".game"));
+    swipeGestures.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
+
+    swipeGestures.on("swipeleft", e => {
+      if (this.snakeDirection == "right") return;
+      this.snakeDirection = "left";
+    });
+    swipeGestures.on("swiperight", e => {
+      if (this.snakeDirection == "left") return;
+      this.snakeDirection = "right";
+    });
+    swipeGestures.on("swipeup", e => {
+      if (this.snakeDirection == "down") return;
+      this.snakeDirection = "up";
+    });
+    swipeGestures.on("swipedown", e => {
+      if (this.snakeDirection == "up") return;
+      this.snakeDirection = "down";
+    });
+  },
+
+  watch: {
+    snakeLength: function(newLen, oldLen) {
+      if (newLen > oldLen) {
+        this.scoreAnimation = true;
+        setTimeout(() => {
+          this.scoreAnimation = false;
+        }, 400);
+      }
     }
   },
 
@@ -143,7 +188,7 @@ export default {
       }
       for (let i = 0; i < this.snake.length; i++) {
         if (this.snake[i].x == head.x && this.snake[i].y == head.y) {
-          this.gameOver();
+          this.toggleGameOverModal();
         }
       }
     },
@@ -190,10 +235,9 @@ export default {
     },
 
     gameOver() {
-      clearInterval(this.gameAnimationTimer);
-      setTimeout(() => {
-        this.init();
-      }, 1500);
+      this.isGameOver = false;
+      this.isModalVisible = !this.isModalVisible;
+      this.init();
     },
 
     init() {
@@ -229,48 +273,14 @@ export default {
       this.modalTemplate = "";
       this.modalTemplate = `<p>💡<br> Use your arrow buttons or swipe left, right, top or bottom to nagivate.</p>`;
       this.isModalVisible = !this.isModalVisible;
-    }
-  },
-
-  created() {
-    this.screen = {
-      width: document.body.offsetWidth,
-      height: document.body.offsetHeight
-    };
-
-    this.handleGameSize();
-  },
-  mounted() {
-    window.addEventListener("keyup", this.bindSnakeDirections);
-    // swipe actions
-    const swipeGestures = new Hammer(document.querySelector(".game"));
-    swipeGestures.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
-
-    swipeGestures.on("swipeleft", e => {
-      if (this.snakeDirection == "right") return;
-      this.snakeDirection = "left";
-    });
-    swipeGestures.on("swiperight", e => {
-      if (this.snakeDirection == "left") return;
-      this.snakeDirection = "right";
-    });
-    swipeGestures.on("swipeup", e => {
-      if (this.snakeDirection == "down") return;
-      this.snakeDirection = "up";
-    });
-    swipeGestures.on("swipedown", e => {
-      if (this.snakeDirection == "up") return;
-      this.snakeDirection = "down";
-    });
-  },
-  watch: {
-    snakeLength: function(newLen, oldLen) {
-      if (newLen > oldLen) {
-        this.scoreAnimation = true;
-        setTimeout(() => {
-          this.scoreAnimation = false;
-        }, 400);
-      }
+    },
+    toggleGameOverModal() {
+      this.isGameOver = true;
+      clearInterval(this.gameAnimationTimer);
+      this.modalTemplate = "";
+      this.modalTemplate = `<p>😷<br />Game Over!<br />Your score is ${this
+        .snakeLength - 1}.</p>`;
+      this.isModalVisible = !this.isModalVisible;
     }
   }
 };
@@ -307,7 +317,7 @@ export default {
 
   .game__area-overlay {
     position: absolute;
-    background-color: rgba(32, 33, 44, 0.8);
+    background-color: rgba(32, 33, 44, 0.9);
     width: 100%;
     height: 100%;
     display: flex;
