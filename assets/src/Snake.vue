@@ -54,8 +54,9 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from "uuid";
 import { RefreshCwIcon, InfoIcon, XIcon } from "vue-feather-icons";
-
+import db from "../firebaseInit.js";
 export default {
   name: "Snake",
   components: {
@@ -80,7 +81,8 @@ export default {
       modalTemplate: "",
       isModalVisible: false,
       isGameOver: false,
-      wantRestart: false
+      wantRestart: false,
+      highScore: { name: "", score: 0 }
     };
   },
 
@@ -95,6 +97,7 @@ export default {
   },
 
   created() {
+    // this.fetchHighScores();
     this.screen = {
       width: document.body.offsetWidth,
       height: document.body.offsetHeight
@@ -138,6 +141,28 @@ export default {
   },
 
   methods: {
+    fetchHighScores() {
+      db.collection("snake")
+        .get()
+        .then(query => {
+          query.forEach(item => {
+            console.log(item.data());
+          });
+        });
+    },
+    addNewHighScore() {
+      var scoreData = {
+        user__id: uuidv4(),
+        user__name: "lorem rrr",
+        user__score: 666
+      };
+      db.collection("snake")
+        .doc()
+        .set(scoreData)
+        .then(function() {
+          console.log("Document successfully written!");
+        });
+    },
     bindSnake(x, y) {
       for (let i = 0; i < this.snake.length; i++) {
         if (this.snake[i].x === x && this.snake[i].y === y) {
