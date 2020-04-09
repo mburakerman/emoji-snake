@@ -300,6 +300,7 @@ export default {
   }
 }
 
+// game header
 .game__header {
   .game__header-score {
     background-color: #43465a;
@@ -311,6 +312,7 @@ export default {
   }
 }
 
+// game area
 .game__area {
   position: relative;
   margin: 10px 0;
@@ -363,13 +365,26 @@ export default {
         }
 
         &.food {
+          animation-name: scale;
+          animation-duration: 0.4s;
+          animation-timing-function: ease-in-out;
+
           &:after {
             content: '🦠';
-            transform: scale(1, 1);
           }
         }
       }
     }
+  }
+}
+
+@keyframes scale {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.4);
   }
 }
 
