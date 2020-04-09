@@ -374,7 +374,7 @@ export default {
     }
 
     .game__area-overlay-content {
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
   }
 
