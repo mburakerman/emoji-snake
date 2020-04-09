@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div class="loading"></div>
     <h1>🦠 Coronavirusnake 🐍</h1>
     <Snake />
   </div>
@@ -52,20 +51,5 @@ button {
   border-radius: 4px;
   color: #fff;
   background-color: #43465a;
-}
-
-.loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background: url("/assets/img/loading.svg") rgba(32, 33, 44, 0.9) center center
-    no-repeat;
-  background-size: 50px;
-  z-index: 666666;
-  display: none;
 }
 </style>
