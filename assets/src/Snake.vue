@@ -356,7 +356,6 @@ export default {
         background-color: #2d2f3d;
         width: 20px;
         height: 20px;
-        transition: all 0.3s linear;
 
         &.snake {
           &:after {
