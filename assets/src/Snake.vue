@@ -17,7 +17,7 @@
     </div>
     <div class="game__area">
       <div class="game__area-overlay" :class="{active: isModalVisible}">
-        <button class="game__area-overlay-close" @click="isModalVisible = false">
+        <button class="game__area-overlay-close" @click="isModalVisible = false" v-if="!isGameOver">
           <x-icon></x-icon>
         </button>
         <div class="game__area-overlay-content" v-html="this.modalTemplate"></div>
