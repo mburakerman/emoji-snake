@@ -42,24 +42,13 @@
 </template>
 
 <script>
-import {
-  RefreshCwIcon,
-  InfoIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
-  ArrowRightIcon,
-  ArrowLeftIcon
-} from "vue-feather-icons";
+import { RefreshCwIcon, InfoIcon } from "vue-feather-icons";
 
 export default {
   name: "Snake",
   components: {
     RefreshCwIcon,
-    InfoIcon,
-    ArrowUpIcon,
-    ArrowDownIcon,
-    ArrowRightIcon,
-    ArrowLeftIcon
+    InfoIcon
   },
   data() {
     return {
@@ -224,31 +213,22 @@ export default {
     },
 
     handleGameSize() {
-      function debounce(func) {
-        var timer;
-        return function(event) {
-          if (timer) clearTimeout(timer);
-          timer = setTimeout(func, 100, event);
-        };
+      window.addEventListener("resize", e => {
+        if (e.target.innerWidth < 500) {
+          this.gameLength = 17;
+          this.init();
+        } else {
+          this.gameLength = 20;
+          this.init();
+        }
+      });
+      if (this.screen.width < 500) {
+        this.gameLength = 17;
+        this.init();
+      } else {
+        this.gameLength = 20;
+        this.init();
       }
-      window.addEventListener(
-        "resize",
-        debounce(e => {
-          if (e.target.innerWidth < 500) {
-            this.gameLength = 15;
-            this.food = [];
-            this.food.push(this.getRandomDirection());
-            this.snake = [];
-            this.snake.push(this.getRandomDirection());
-          } else {
-            this.gameLength = 20;
-            this.food = [];
-            this.food.push(this.getRandomDirection());
-            this.snake = [];
-            this.snake.push(this.getRandomDirection());
-          }
-        })
-      );
     },
     toggleInfoModal() {
       this.modalTemplate = "";
@@ -267,7 +247,6 @@ export default {
       width: document.body.offsetWidth,
       height: document.body.offsetHeight
     };
-    this.init();
 
     this.handleGameSize();
   },
@@ -308,130 +287,130 @@ export default {
 </script>
 
  
- <style lang="stylus">
- #score {
-   position: relative;
- }
+<style lang="stylus">
+#score {
+  position: relative;
+}
 
- #scoreAnimation {
-   visibility: hidden;
-   opacity: 0;
-   position: absolute;
-   top: 0;
-   left: 0;
-   color: #a7e9af;
+#scoreAnimation {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #a7e9af;
 
-   &.active {
-     display: inline-block;
-     transition: all 0.4s linear;
-     transform: translatey(-30px);
-     visibility: visible;
-     opacity: 1;
-   }
- }
+  &.active {
+    display: inline-block;
+    transition: all 0.4s linear;
+    transform: translatey(-30px);
+    visibility: visible;
+    opacity: 1;
+  }
+}
 
- .game {
-   margin: 0 auto;
-   width: 400px;
-   max-width: 100%;
- }
+.game {
+  margin: 0 auto;
+  width: 400px;
+  max-width: 100%;
+}
 
- @media screen and (max-width: 500px) {
-   .game {
-     width: 300px;
-   }
- }
+@media screen and (max-width: 500px) {
+  .game {
+    width: 340px;
+  }
+}
 
- .game__header {
-   .game__header-score {
-     background-color: #43465a;
-     padding: 5px;
-     width: 130px;
-     border-radius: 4px;
-     text-align: center;
-     margin-left: auto;
-   }
- }
+.game__header {
+  .game__header-score {
+    background-color: #43465a;
+    padding: 5px;
+    width: 130px;
+    border-radius: 4px;
+    text-align: center;
+    margin-left: auto;
+  }
+}
 
- .game__area {
-   position: relative;
-   margin: 10px 0;
+.game__area {
+  position: relative;
+  margin: 10px 0;
 
-   .game__area-overlay {
-     position: absolute;
-     background-color: rgba(32, 33, 44, 0.8);
-     width: 100%;
-     height: 100%;
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     align-items: center;
-     color: #fff;
-     padding: 10px;
-     text-align: center;
-     visibility: hidden;
-     opacity: 0;
-     transition: all 0.2s linear;
+  .game__area-overlay {
+    position: absolute;
+    background-color: rgba(32, 33, 44, 0.8);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s linear;
 
-     &.active {
-       visibility: visible;
-       opacity: 1;
-     }
+    &.active {
+      visibility: visible;
+      opacity: 1;
+    }
 
-     .game__area-overlay-content {
-       margin-bottom: 5px;
-     }
-   }
+    .game__area-overlay-content {
+      margin-bottom: 5px;
+    }
+  }
 
-   ul {
-     display: flex;
+  ul {
+    display: flex;
 
-     li {
-       list-style: none;
-       min-width: 20px;
-       min-height: 20px;
-       border-right: 0;
+    li {
+      list-style: none;
+      min-width: 20px;
+      min-height: 20px;
+      border-right: 0;
 
-       > div {
-         background-color: #2d2f3d;
-         width: 20px;
-         height: 20px;
-         transition: all 0.3s linear;
+      > div {
+        background-color: #2d2f3d;
+        width: 20px;
+        height: 20px;
+        transition: all 0.3s linear;
 
-         &.snake {
-           &:after {
-             content: '🧽';
-           }
-         }
+        &.snake {
+          &:after {
+            content: '🧽';
+          }
+        }
 
-         &.food {
-           &:after {
-             content: '🦠';
-             transform: scale(1, 1);
-           }
-         }
-       }
-     }
-   }
- }
+        &.food {
+          &:after {
+            content: '🦠';
+            transform: scale(1, 1);
+          }
+        }
+      }
+    }
+  }
+}
 
- .game__footer {
-   display: flex;
-   width: 100%;
+.game__footer {
+  display: flex;
+  width: 100%;
 
-   button {
-     svg {
-       colo: #fff;
-     }
+  button {
+    svg {
+      colo: #fff;
+    }
 
-     &.button--level {
-       margin-right: auto;
-     }
+    &.button--level {
+      margin-right: auto;
+    }
 
-     &.button--info, &.button--restart {
-       margin-left: 10px;
-     }
-   }
- }
+    &.button--info, &.button--restart {
+      margin-left: 10px;
+    }
+  }
+}
 </style>
  
