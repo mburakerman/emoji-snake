@@ -2,11 +2,17 @@
   <section class="game" @keydown.esc="isModalVisible = false">
     <div class="game__header">
       <p class="game__header-score" title="Score">
-        🧪 Score:
+        Score
+        <br />
         <span id="score">
           {{snakeLength - 1}}
-          <small id="scoreAnimation" :class="{active: scoreAnimation}">+1</small>
+          <span id="scoreAnimation" :class="{active: scoreAnimation}">+1</span>
         </span>
+      </p>
+      <p class="game__header-score">
+        👑 Best Score
+        <br />
+        <span id="bestScore">666</span>
       </p>
     </div>
     <div class="game__area">
@@ -82,7 +88,8 @@ export default {
       isModalVisible: false,
       isGameOver: false,
       wantRestart: false,
-      highScore: { name: "", score: 0 }
+      bestScore: { name: "", score: 0 },
+      bestScores: []
     };
   },
 
@@ -349,13 +356,14 @@ export default {
 
 // game header
 .game__header {
+  display: flex;
+  justify-content: space-between;
+
   .game__header-score {
     background-color: #43465a;
-    padding: 5px;
-    width: 130px;
+    padding: 5px 10px;
     border-radius: 4px;
     text-align: center;
-    margin-left: auto;
   }
 }
 
@@ -473,16 +481,17 @@ export default {
 
   #scoreAnimation {
     visibility: hidden;
-    opacity: 0;
     position: absolute;
     top: 0;
     left: 0;
     color: #a7e9af;
+    font-size: 18px;
+    font-weight: bold;
 
     &.active {
       display: inline-block;
       transition: all 0.4s linear;
-      transform: translatey(-30px);
+      transform: translatey(-40px);
       visibility: visible;
       opacity: 1;
     }
