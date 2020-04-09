@@ -25,12 +25,7 @@
       </ul>
     </div>
     <div class="game__footer">
-      <button
-        class="button--level"
-        @click="toggleLevelModal"
-        title="Levels"
-        style="visibility:hidden;"
-      >Easy</button>
+      <button class="button--level" title="Levels" style="visibility:hidden;">Easy</button>
       <button class="button--restart" @click="init" title="Restart">
         <refresh-cw-icon></refresh-cw-icon>
       </button>
@@ -232,12 +227,7 @@ export default {
     },
     toggleInfoModal() {
       this.modalTemplate = "";
-      this.modalTemplate = `<p>💡<br> Use your arrow buttons or swipe left, rigth, top or bottom to nagivate.</p>`;
-      this.isModalVisible = !this.isModalVisible;
-    },
-    toggleLevelModal() {
-      this.modalTemplate = "";
-      this.modalTemplate = `<p>😷More levels coming soon.</p>`;
+      this.modalTemplate = `<p>💡<br> Use your arrow buttons or swipe left, right, top or bottom to nagivate.</p>`;
       this.isModalVisible = !this.isModalVisible;
     }
   },
@@ -275,7 +265,7 @@ export default {
   },
   watch: {
     snakeLength: function(newLen, oldLen) {
-      if (newLen != oldLen) {
+      if (newLen > oldLen) {
         this.scoreAnimation = true;
         setTimeout(() => {
           this.scoreAnimation = false;
@@ -287,28 +277,7 @@ export default {
 </script>
 
  
-<style lang="stylus">
-#score {
-  position: relative;
-}
-
-#scoreAnimation {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: #a7e9af;
-
-  &.active {
-    display: inline-block;
-    transition: all 0.4s linear;
-    transform: translatey(-30px);
-    visibility: visible;
-    opacity: 1;
-  }
-}
-
+<style lang="stylus" scoped>
 .game {
   margin: 0 auto;
   width: 400px;
@@ -346,7 +315,7 @@ export default {
     justify-content: center;
     align-items: center;
     color: #fff;
-    padding: 10px;
+    padding: 15px;
     text-align: center;
     visibility: hidden;
     opacity: 0;
@@ -394,6 +363,7 @@ export default {
   }
 }
 
+// game footer
 .game__footer {
   display: flex;
   width: 100%;
@@ -409,6 +379,28 @@ export default {
 
     &.button--info, &.button--restart {
       margin-left: 10px;
+    }
+  }
+}
+
+// score
+#score {
+  position: relative;
+
+  #scoreAnimation {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #a7e9af;
+
+    &.active {
+      display: inline-block;
+      transition: all 0.4s linear;
+      transform: translatey(-30px);
+      visibility: visible;
+      opacity: 1;
     }
   }
 }
