@@ -11,6 +11,9 @@
     </div>
     <div class="game__area">
       <div class="game__area-overlay" :class="{active: isModalVisible}">
+        <button class="game__area-overlay-close" @click="isModalVisible = false">
+          <x-icon></x-icon>
+        </button>
         <div class="game__area-overlay-content" v-html="this.modalTemplate"></div>
         <button v-if="!isGameOver" @click="isModalVisible = false">OK</button>
         <button v-if="isGameOver" @click="gameOver">Try Again</button>
@@ -38,13 +41,14 @@
 </template>
 
 <script>
-import { RefreshCwIcon, InfoIcon } from "vue-feather-icons";
+import { RefreshCwIcon, InfoIcon, XIcon } from "vue-feather-icons";
 
 export default {
   name: "Snake",
   components: {
     RefreshCwIcon,
-    InfoIcon
+    InfoIcon,
+    XIcon
   },
   data() {
     return {
@@ -336,6 +340,18 @@ export default {
     &.active {
       visibility: visible;
       opacity: 1;
+    }
+
+    .game__area-overlay-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 3px;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.75;
     }
 
     .game__area-overlay-content {
