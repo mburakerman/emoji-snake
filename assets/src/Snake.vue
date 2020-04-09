@@ -15,8 +15,11 @@
           <x-icon></x-icon>
         </button>
         <div class="game__area-overlay-content" v-html="this.modalTemplate"></div>
-        <button v-if="!isGameOver" @click="isModalVisible = false">OK</button>
-        <button v-if="isGameOver" @click="gameOver">Try Again</button>
+        <div v-if="!wantRestart">
+          <button v-if="!isGameOver" @click="isModalVisible = false">OK</button>
+          <button v-if="isGameOver" @click="gameOver">Try Again</button>
+        </div>
+        <button v-if="wantRestart" @click="gameOver">OK</button>
       </div>
       <ul>
         <li v-for="(item, colIndex) in gameLengthArray" :key="colIndex">
@@ -30,7 +33,7 @@
     </div>
     <div class="game__footer">
       <button class="button--level" title="Levels" style="visibility:hidden;">Easy</button>
-      <button class="button--restart" @click="init" title="Restart">
+      <button class="button--restart" @click="toggleRestartModal" title="Restart">
         <refresh-cw-icon></refresh-cw-icon>
       </button>
       <button class="button--info" @click="toggleInfoModal" title="More info">
@@ -66,7 +69,8 @@ export default {
       scoreAnimation: false,
       modalTemplate: "",
       isModalVisible: false,
-      isGameOver: false
+      isGameOver: false,
+      wantRestart: false
     };
   },
 
@@ -241,6 +245,7 @@ export default {
     gameOver() {
       this.isGameOver = false;
       this.isModalVisible = !this.isModalVisible;
+      this.wantRestart = false;
       this.init();
     },
 
@@ -274,17 +279,20 @@ export default {
       }
     },
     toggleInfoModal() {
-      this.modalTemplate = "";
       this.modalTemplate = `<p>💡<br> Use your arrow buttons or swipe left, right, top or bottom to nagivate.</p>`;
       this.isModalVisible = !this.isModalVisible;
     },
     toggleGameOverModal() {
       this.isGameOver = true;
       clearInterval(this.gameAnimationTimer);
-      this.modalTemplate = "";
       this.modalTemplate = `<p>😷<br />Game Over!<br />Your score is ${this
         .snakeLength - 1}.</p>`;
       this.isModalVisible = !this.isModalVisible;
+    },
+    toggleRestartModal() {
+      this.modalTemplate = `<p>🧼<br> Restart?</p>`;
+      this.isModalVisible = !this.isModalVisible;
+      this.wantRestart = true;
     }
   }
 };
@@ -320,6 +328,7 @@ export default {
 .game__area {
   position: relative;
   margin: 10px 0;
+  ovefflow: hidden;
 
   .game__area-overlay {
     position: absolute;
@@ -335,7 +344,7 @@ export default {
     text-align: center;
     visibility: hidden;
     opacity: 0;
-    transition: all 0.2s linear;
+    transition: all 0.1s linear;
 
     &.active {
       visibility: visible;
