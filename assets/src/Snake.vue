@@ -33,10 +33,20 @@
     </div>
     <div class="game__footer">
       <button class="button--level" title="Levels" style="visibility:hidden;">Easy</button>
-      <button class="button--restart" @click="toggleRestartModal" title="Restart">
+      <button
+        class="button--restart"
+        @click="toggleRestartModal"
+        title="Restart"
+        :disabled="isModalVisible"
+      >
         <refresh-cw-icon></refresh-cw-icon>
       </button>
-      <button class="button--info" @click="toggleInfoModal" title="More info">
+      <button
+        class="button--info"
+        @click="toggleInfoModal"
+        title="More info"
+        :disabled="isModalVisible"
+      >
         <info-icon></info-icon>
       </button>
     </div>

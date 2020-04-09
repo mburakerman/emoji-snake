@@ -52,4 +52,7 @@ button {
   color: #fff;
   background-color: #43465a;
 }
+button:disabled {
+  opacity: 0.5;
+}
 </style>
