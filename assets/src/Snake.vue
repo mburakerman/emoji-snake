@@ -235,7 +235,7 @@ export default {
         "resize",
         debounce(e => {
           if (e.target.innerWidth < 500) {
-            this.gameLength = 17;
+            this.gameLength = 15;
             this.food = [];
             this.food.push(this.getRandomDirection());
             this.snake = [];
@@ -338,7 +338,7 @@ export default {
 
  @media screen and (max-width: 500px) {
    .game {
-     width: 340px;
+     width: 300px;
    }
  }
 
