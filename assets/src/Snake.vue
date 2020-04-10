@@ -491,7 +491,9 @@ export default {
 
   button {
     svg {
-      colo: #fff;
+      color: #fff;
+      width: 22px;
+      height: 22px;
     }
 
     &.button--restart {
