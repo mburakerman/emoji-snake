@@ -90,7 +90,7 @@ export default {
       snake: [],
       snakeLength: 1,
       snakeDirection: "right",
-      food: [{ x: 5, y: 2 }],
+      food: [{ x: 5, y: 7 }],
       gameSpeed: 100,
       gameLength: 20,
       gameAnimationTimer: null,
@@ -481,19 +481,16 @@ export default {
         }
 
         &.snake {
-          &:after {
-            content: '🧽';
-          }
+          background-image: url('./img/sponge.png');
+          background-size: cover;
         }
 
         &.food {
           animation-name: scale;
           animation-duration: 0.4s;
           animation-timing-function: ease-in-out;
-
-          &:after {
-            content: '🦠';
-          }
+          background-image: url('./img/virus.png');
+          background-size: cover;
         }
       }
     }
