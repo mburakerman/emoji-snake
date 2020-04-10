@@ -1,14 +1,16 @@
 <template>
   <div>
     <Snake />
+    <Footer />
   </div>
 </template>
 <script>
 import Snake from "./Snake.vue";
+import Footer from "./Footer.vue";
 
 export default {
   name: "App",
-  components: { Snake }
+  components: { Snake, Footer }
 };
 </script>
 
@@ -32,7 +34,7 @@ body {
   font-size: 16px;
   background-color: #20212c;
   color: #fff;
-  padding: 5px;
+  padding: 10px 0;
 }
 h1 {
   text-align: center;

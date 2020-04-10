@@ -274,6 +274,8 @@ export default {
     },
 
     bindSnakeDirections(e) {
+      e.preventDefault();
+
       let directions = {
         37: "left",
         38: "up",
