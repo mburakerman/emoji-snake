@@ -9,10 +9,10 @@
           <span id="scoreAnimation" :class="{active: scoreAnimation}">+1</span>
         </span>
       </p>
-      <p class="game__header-score">
+      <p class="game__header-score" title="Best Score">
         👑 Best Score
         <br />
-        <span id="bestScore">666</span>
+        <span id="bestScore">399</span>
       </p>
     </div>
     <div class="game__area">
@@ -38,7 +38,6 @@
       </ul>
     </div>
     <div class="game__footer">
-      <button class="button--level" title="Levels" style="visibility:hidden;">Easy</button>
       <button
         class="button--restart"
         @click="toggleRestartModal"
@@ -46,6 +45,10 @@
         :disabled="isModalVisible"
       >
         <refresh-cw-icon></refresh-cw-icon>
+      </button>
+      <button class="button--volume" title="Volume" @click="sound.isMuted = !sound.isMuted">
+        <volume-2-icon v-if="sound.isMuted"></volume-2-icon>
+        <volume-x-icon v-if="!sound.isMuted"></volume-x-icon>
       </button>
       <button
         class="button--info"
@@ -61,21 +64,25 @@
 
 <script>
 import { v4 as uuidv4 } from "uuid";
-import { RefreshCwIcon, InfoIcon, XIcon } from "vue-feather-icons";
+import {
+  RefreshCwIcon,
+  InfoIcon,
+  XIcon,
+  Volume2Icon,
+  VolumeXIcon
+} from "vue-feather-icons";
 import db from "../firebaseInit.js";
 export default {
   name: "Snake",
   components: {
     RefreshCwIcon,
     InfoIcon,
-    XIcon
+    XIcon,
+    Volume2Icon,
+    VolumeXIcon
   },
   data() {
     return {
-      screen: {
-        width: document.body.offsetWidth,
-        height: document.body.offsetHeight
-      },
       snake: [],
       snakeLength: 1,
       snakeDirection: "right",
@@ -83,17 +90,22 @@ export default {
       gameSpeed: 100,
       gameLength: 20,
       gameAnimationTimer: null,
+      isGameOver: false,
       scoreAnimation: false,
       modalTemplate: "",
       isModalVisible: false,
-      isGameOver: false,
       wantRestart: false,
-      bestScore: { name: "", score: 0 },
-      bestScores: [],
       sound: {
         food: require("./sound/food.mp3"),
-        direction: require("./sound/direction.mp3")
-      }
+        direction: require("./sound/direction.mp3"),
+        isMuted: false
+      },
+      screen: {
+        width: document.body.offsetWidth,
+        height: document.body.offsetHeight
+      },
+      bestScore: { name: "", score: 0 },
+      bestScores: []
     };
   },
 
@@ -194,6 +206,7 @@ export default {
     },
 
     playAudio(audioSource, audioVolume) {
+      if (this.sound.isMuted) return;
       let audio = new Audio(audioSource);
       audio.play();
       audio.volume = audioVolume;
@@ -481,12 +494,12 @@ export default {
       colo: #fff;
     }
 
-    &.button--level {
-      margin-right: auto;
+    &.button--restart {
+      margin-right: 10px;
     }
 
-    &.button--info, &.button--restart {
-      margin-left: 10px;
+    &.button--info {
+      margin-left: auto;
     }
   }
 }
