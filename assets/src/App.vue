@@ -58,6 +58,10 @@ button {
   &:disabled {
     opacity: 0.5;
   }
+
+  &.swal2-styled.swal2-confirm {
+    background-color: #43465a;
+  }
 }
 
 .has-loading {

@@ -16,7 +16,7 @@
       >
         Best Score
         <br />
-        <span id="bestScore">{{this.bestScore}}</span>
+        <span id="bestScore">{{this.bestScore.user__score}}</span>
       </p>
     </div>
     <div class="game__area">
@@ -106,7 +106,7 @@ export default {
       },
       bestScores: [],
       isScoresFetched: false,
-      bestScore: 0
+      bestScore: {}
     };
   },
 
@@ -165,6 +165,36 @@ export default {
   },
 
   methods: {
+    showBestScoreAlert() {
+      var that = this;
+      var score = this.snakeLength - 1;
+      this.$swal({
+        allowOutsideClick: false,
+        title: "🎉 Congrats! ",
+        html: `<div class="swal2-html-container">You have made the best score. <br> Your score is ${that.snakeLength -
+          1}. <br> You can save your name if you want or let it stay anonymous.</div><input id="bestScoreUserInput" class="swal2-input" value="anonymous">`,
+        preConfirm: function() {
+          return new Promise(function(resolve) {
+            var input = document.getElementById("bestScoreUserInput");
+            var scoreData = {
+              user__id: uuidv4(),
+              user__name: "anonymous",
+              user__score: score
+            };
+            if (input.value.length > 1) {
+              scoreData.user__name = input.value;
+            } else {
+              scoreData.user__name = "anonymous";
+            }
+
+            resolve(scoreData);
+          });
+        },
+        onOpen: function() {}
+      }).then(function(data) {
+        that.addNewHighScore(data.value);
+      });
+    },
     fetchScores() {
       var that = this;
       this.bestScores = [];
@@ -177,21 +207,17 @@ export default {
             that.isScoresFetched = true;
             var scores = item.data();
             this.bestScores.push(scores);
-            // get best score from scores
-            this.bestScore = Math.max(
-              ...this.bestScores.map(o => o.user__score),
-              0
-            );
+
+            // get best score from all scores
+            this.bestScore = this.bestScores.reduce(function(prev, current) {
+              return prev.user__score > current.user__score ? prev : current;
+            });
           });
         });
     },
-    addNewHighScore() {
+    addNewHighScore(scoreData) {
       var that = this;
-      var scoreData = {
-        user__id: uuidv4(),
-        user__name: "anonymous",
-        user__score: this.snakeLength - 1
-      };
+
       db.collection("scores")
         .doc()
         .set(scoreData)
@@ -275,6 +301,11 @@ export default {
       for (let i = 0; i < this.snake.length; i++) {
         if (this.snake[i].x == head.x && this.snake[i].y == head.y) {
           this.toggleGameOverModal();
+          // show best score alert
+          var score = this.gameLength - 1;
+          if (score > this.bestScore.user__score) {
+            this.showBestScoreAlert();
+          }
         }
       }
     },
@@ -325,11 +356,6 @@ export default {
     },
 
     gameOver() {
-      var score = this.gameLength - 1;
-      if (score > this.bestScore) {
-        this.addNewHighScore();
-      }
-
       this.isGameOver = false;
       this.isModalVisible = !this.isModalVisible;
       this.wantRestart = false;
@@ -348,7 +374,7 @@ export default {
     },
 
     toggleInfoModal() {
-      this.modalTemplate = `<p>💡<br> Use your arrow buttons or swipe left, right, top or bottom to nagivate.</p>`;
+      this.modalTemplate = `<p>💡<br> Use your arrow buttons or swipe left, right, top or bottom to nagivate. <br> If your score is better than current best score, your score will be saved.</p>`;
       this.isModalVisible = !this.isModalVisible;
     },
     toggleGameOverModal() {
