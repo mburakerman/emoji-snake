@@ -172,7 +172,7 @@ export default {
         allowOutsideClick: false,
         title: "🎉 Congrats! ",
         html: `<div class="swal2-html-container">You have made the best score. <br> Your score is ${that.snakeLength -
-          1}. <br> You can save your name if you want or let it stay anonymous.</div><input id="bestScoreUserInput" class="swal2-input" value="anonymous">`,
+          1}. <br> You can save your name or let it stay anonymous.</div><input id="bestScoreUserInput" class="swal2-input" value="anonymous">`,
         preConfirm: function() {
           return new Promise(function(resolve) {
             var input = document.getElementById("bestScoreUserInput");
@@ -302,7 +302,7 @@ export default {
         if (this.snake[i].x == head.x && this.snake[i].y == head.y) {
           this.toggleGameOverModal();
           // show best score alert
-          var score = this.gameLength - 1;
+          var score = this.snakeLength - 1;
           if (score > this.bestScore.user__score) {
             this.showBestScoreAlert();
           }
