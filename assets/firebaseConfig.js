@@ -1,10 +1,10 @@
 export default {
-    apiKey: "AIzaSyAsIll-3DhRKXLoh64h72DlWIGVzinRAzY",
-    authDomain: "vuedemo-5c83b.firebaseapp.com",
-    databaseURL: "https://vuedemo-5c83b.firebaseio.com",
-    projectId: "vuedemo-5c83b",
-    storageBucket: "vuedemo-5c83b.appspot.com",
-    messagingSenderId: "929533780859",
-    appId: "1:929533780859:web:7482154e09becf101193de",
-    measurementId: "G-QGMR4T9HKR"
+    apiKey: "AIzaSyCEsqxYPr3D2dyxnVIlO4yR7Rk5fjBWsvw",
+    authDomain: "virusnake-f78a2.firebaseapp.com",
+    databaseURL: "https://virusnake-f78a2.firebaseio.com",
+    projectId: "virusnake-f78a2",
+    storageBucket: "virusnake-f78a2.appspot.com",
+    messagingSenderId: "888051625379",
+    appId: "1:888051625379:web:ed1e41ba948f7569c83e16",
+    measurementId: "G-QJ5HV93T2Y"
 };

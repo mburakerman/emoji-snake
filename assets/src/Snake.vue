@@ -9,8 +9,8 @@
           <span id="scoreAnimation" :class="{active: scoreAnimation}">+1</span>
         </span>
       </p>
-      <p class="game__header-score" title="Best Score">
-        👑 Best Score
+      <p class="game__header-score game__header-score--best" title="Best Score">
+        Best Score
         <br />
         <span id="bestScore">399</span>
       </p>
@@ -369,6 +369,18 @@ export default {
     padding: 5px 10px;
     border-radius: 4px;
     text-align: center;
+    position: relative;
+
+    &.game__header-score--best {
+      &:after {
+        content: '👑';
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        transform: rotate(20deg);
+        font-size: 18px;
+      }
+    }
   }
 
   @media screen and (max-width: 500px) {
