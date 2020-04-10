@@ -11,7 +11,7 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 footer {
   font-size: 13px;
   opacity: 0.9;

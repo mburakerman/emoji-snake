@@ -9,10 +9,14 @@
           <span id="scoreAnimation" :class="{active: scoreAnimation}">+1</span>
         </span>
       </p>
-      <p class="game__header-score game__header-score--best" title="Best Score">
+      <p
+        class="game__header-score game__header-score--best"
+        :class="{'has-loading': !isScoresFetched}"
+        title="Best Score"
+      >
         Best Score
         <br />
-        <span id="bestScore">399</span>
+        <span id="bestScore">{{this.bestScore}}</span>
       </p>
     </div>
     <div class="game__area">
@@ -100,8 +104,9 @@ export default {
         direction: require("./sound/direction.mp3"),
         isMuted: false
       },
-      bestScore: { name: "", score: 0 },
-      bestScores: []
+      bestScores: [],
+      isScoresFetched: false,
+      bestScore: 0
     };
   },
 
@@ -116,7 +121,7 @@ export default {
   },
 
   created() {
-    // this.fetchHighScores();
+    this.fetchScores();
     this.init();
   },
 
@@ -160,26 +165,38 @@ export default {
   },
 
   methods: {
-    fetchHighScores() {
-      db.collection("snake")
+    fetchScores() {
+      var that = this;
+      this.bestScores = [];
+      this.isScoresFetched = false;
+
+      db.collection("scores")
         .get()
         .then(query => {
           query.forEach(item => {
-            console.log(item.data());
+            that.isScoresFetched = true;
+            var scores = item.data();
+            this.bestScores.push(scores);
+            // get best score from scores
+            this.bestScore = Math.max(
+              ...this.bestScores.map(o => o.user__score),
+              0
+            );
           });
         });
     },
     addNewHighScore() {
+      var that = this;
       var scoreData = {
         user__id: uuidv4(),
-        user__name: "lorem rrr",
-        user__score: 666
+        user__name: "anonymous",
+        user__score: this.snakeLength - 1
       };
-      db.collection("snake")
+      db.collection("scores")
         .doc()
         .set(scoreData)
         .then(function() {
-          console.log("Document successfully written!");
+          that.fetchScores();
         });
     },
     bindSnake(x, y) {
@@ -308,6 +325,11 @@ export default {
     },
 
     gameOver() {
+      var score = this.gameLength - 1;
+      if (score > this.bestScore) {
+        this.addNewHighScore();
+      }
+
       this.isGameOver = false;
       this.isModalVisible = !this.isModalVisible;
       this.wantRestart = false;
