@@ -100,10 +100,6 @@ export default {
         direction: require("./sound/direction.mp3"),
         isMuted: false
       },
-      screen: {
-        width: document.body.offsetWidth,
-        height: document.body.offsetHeight
-      },
       bestScore: { name: "", score: 0 },
       bestScores: []
     };
@@ -121,11 +117,7 @@ export default {
 
   created() {
     // this.fetchHighScores();
-    this.screen = {
-      width: document.body.offsetWidth,
-      height: document.body.offsetHeight
-    };
-    this.handleGameSize();
+    this.init();
   },
 
   mounted() {
@@ -331,24 +323,6 @@ export default {
       this.animateSnake();
     },
 
-    handleGameSize() {
-      window.addEventListener("resize", e => {
-        if (e.target.innerWidth < 500) {
-          this.gameLength = 17;
-          this.init();
-        } else {
-          this.gameLength = 20;
-          this.init();
-        }
-      });
-      if (this.screen.width < 500) {
-        this.gameLength = 17;
-        this.init();
-      } else {
-        this.gameLength = 20;
-        this.init();
-      }
-    },
     toggleInfoModal() {
       this.modalTemplate = `<p>💡<br> Use your arrow buttons or swipe left, right, top or bottom to nagivate.</p>`;
       this.isModalVisible = !this.isModalVisible;
@@ -393,6 +367,12 @@ export default {
     padding: 5px 10px;
     border-radius: 4px;
     text-align: center;
+  }
+
+  @media screen and (max-width: 500px) {
+    .game__header-score {
+      font-size: 15px;
+    }
   }
 }
 
@@ -449,10 +429,20 @@ export default {
       min-height: 20px;
       border-right: 0;
 
+      @media screen and (max-width: 500px) {
+        min-width: 17px;
+        min-height: 17px;
+      }
+
       > div {
         background-color: #2d2f3d;
         width: 20px;
         height: 20px;
+
+        @media screen and (max-width: 500px) {
+          width: 17px;
+          height: 17px;
+        }
 
         &.snake {
           &:after {

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>🦠 Virusnake 🐍</h1>
     <Snake />
   </div>
 </template>
