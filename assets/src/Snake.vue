@@ -241,10 +241,28 @@ export default {
     },
 
     playAudio(audioSource, audioVolume) {
+      var audio = new Audio(audioSource);
+
+      document.body.addEventListener(
+        "touchstart",
+        function() {
+          var playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise.then(_ => {
+              // Automatic playback started!
+              // Show playing UI.
+              // We can now safely pause video...
+              audio.pause();
+              audio.currentTime = 0;
+            });
+          }
+        },
+        { once: true }
+      );
+
       if (this.sound.isMuted) return;
-      let audio = new Audio(audioSource);
-      audio.play();
       audio.volume = audioVolume;
+      audio.play();
     },
 
     animateSnake() {
