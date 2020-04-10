@@ -89,7 +89,11 @@ export default {
       isGameOver: false,
       wantRestart: false,
       bestScore: { name: "", score: 0 },
-      bestScores: []
+      bestScores: [],
+      sound: {
+        food: require("./sound/food.mp3"),
+        direction: require("./sound/direction.mp3")
+      }
     };
   },
 
@@ -121,18 +125,22 @@ export default {
     swipeGestures.on("swipeleft", e => {
       if (this.snakeDirection == "right") return;
       this.snakeDirection = "left";
+      this.playAudio(this.sound.direction, 0.05);
     });
     swipeGestures.on("swiperight", e => {
       if (this.snakeDirection == "left") return;
       this.snakeDirection = "right";
+      this.playAudio(this.sound.direction, 0.05);
     });
     swipeGestures.on("swipeup", e => {
       if (this.snakeDirection == "down") return;
       this.snakeDirection = "up";
+      this.playAudio(this.sound.direction, 0.05);
     });
     swipeGestures.on("swipedown", e => {
       if (this.snakeDirection == "up") return;
       this.snakeDirection = "down";
+      this.playAudio(this.sound.direction, 0.05);
     });
   },
 
@@ -183,6 +191,12 @@ export default {
           return true;
         }
       }
+    },
+
+    playAudio(audioSource, audioVolume) {
+      let audio = new Audio(audioSource);
+      audio.play();
+      audio.volume = audioVolume;
     },
 
     animateSnake() {
@@ -250,6 +264,7 @@ export default {
         this.snakeLength++;
         this.food = [];
         this.food.push(this.getRandomDirection());
+        this.playAudio(this.sound.food, 0.1);
       }
     },
 
@@ -274,6 +289,7 @@ export default {
         }
 
         this.snakeDirection = directions[e.keyCode];
+        this.playAudio(this.sound.direction, 0.05);
       }
     },
     getRandomDirection() {
