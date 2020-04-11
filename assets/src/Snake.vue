@@ -73,7 +73,7 @@
         <li
           :class="{active : characters.snake.donaldJohnTrump}"
           @click="toggleSnakeCharacter('donaldJohnTrump')"
-        >Donald John Trump</li>
+        >Donald Trump</li>
         <li
           :class="{active : characters.snake.fahrettinKoca}"
           @click="toggleSnakeCharacter('fahrettinKoca')"
