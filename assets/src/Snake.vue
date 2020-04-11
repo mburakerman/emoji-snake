@@ -42,7 +42,12 @@
       </ul>
     </div>
     <div class="game__footer">
-      <button class="button--volume" title="Volume" @click="sound.isMuted = !sound.isMuted">
+      <button
+        class="button--volume"
+        title="Volume"
+        @click="sound.isMuted = !sound.isMuted"
+        v-if="!isMobile"
+      >
         <volume-2-icon v-if="sound.isMuted"></volume-2-icon>
         <volume-x-icon v-if="!sound.isMuted"></volume-x-icon>
       </button>
@@ -98,7 +103,8 @@ export default {
       },
       bestScores: [],
       isScoresFetched: false,
-      bestScore: {}
+      bestScore: {},
+      isMobile: false
     };
   },
 
@@ -115,6 +121,7 @@ export default {
   created() {
     this.fetchScores();
     this.init();
+    this.isMobile = this.checkIsMobile();
   },
 
   mounted() {
@@ -157,6 +164,38 @@ export default {
   },
 
   methods: {
+    checkIsMobile() {
+      var isMobile = {
+        Android: function() {
+          return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function() {
+          return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function() {
+          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function() {
+          return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function() {
+          return (
+            navigator.userAgent.match(/IEMobile/i) ||
+            navigator.userAgent.match(/WPDesktop/i)
+          );
+        },
+        any: function() {
+          return (
+            isMobile.Android() ||
+            isMobile.BlackBerry() ||
+            isMobile.iOS() ||
+            isMobile.Opera() ||
+            isMobile.Windows()
+          );
+        }
+      };
+      return isMobile.any();
+    },
     showBestScoreAlert() {
       var that = this;
       var score = this.snakeLength - 1;
@@ -234,6 +273,7 @@ export default {
 
     playAudio(audioSource, audioVolume) {
       if (this.sound.isMuted) return;
+      if (this.isMobile) return;
       var audio = new Audio(audioSource);
       audio.volume = audioVolume;
       audio.play();
