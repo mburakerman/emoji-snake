@@ -660,7 +660,7 @@ export default {
 }
 
 .game__characters {
-  margin: 30px auto 50px;
+  margin: 20px auto 50px;
 
   h2 {
     margin-top: 0;
@@ -675,7 +675,7 @@ export default {
     flex-wrap: wrap;
 
     li {
-      margin-right: 15px;
+      margin-right: 10px;
       margin-bottom: 5px;
       font-size: 15px;
       cursor: pointer;
