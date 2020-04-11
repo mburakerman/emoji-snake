@@ -150,6 +150,9 @@ export default {
     this.fetchScores();
     this.init();
     this.isMobile = this.checkIsMobile();
+    if (this.isMobile) {
+      this.gameSpeed = 120;
+    }
   },
 
   mounted() {
