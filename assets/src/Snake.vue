@@ -473,7 +473,7 @@ export default {
       this.modalTemplate = `<p>💡<br> Use your arrow buttons or swipe left, right, top or bottom to nagivate.</p>
         <br />
         <p>
-          If your score is better than current best score, your score will be saved. You can save your save or leave it anonymous.
+          If your score is better than current best score, your score will be saved. You can save your name or leave it anonymous.
           <br />You can also see who has the best score by tapping on best score.
         </p>
         <p>Maximum score is 100. Have fun!</p>`;
