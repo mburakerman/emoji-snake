@@ -35,13 +35,16 @@
         <li v-for="(item, colIndex) in gameLengthArray" :key="colIndex">
           <div
             v-for="(item, rowIndex) in gameLengthArray"
-            :class="{snake: bindSnake(colIndex, rowIndex), food: bindFood(colIndex, rowIndex)}"
+            :class="{snake: bindSnake(colIndex, rowIndex), food: bindFood(colIndex, rowIndex), fahrettinKoca : characters.snake.fahrettinKoca, donaldJohnTrump : characters.snake.donaldJohnTrump}"
             :key="rowIndex"
           ></div>
         </li>
       </ul>
     </div>
     <div class="game__footer">
+      <button class="button--info" @click="toggleInfoModal">
+        <info-icon></info-icon>
+      </button>
       <button
         class="button--volume"
         title="Volume"
@@ -59,6 +62,23 @@
       >
         <refresh-cw-icon></refresh-cw-icon>
       </button>
+    </div>
+    <div class="game__characters">
+      <h2>Characters</h2>
+      <ul>
+        <li
+          :class="{active : characters.snake.sponge }"
+          @click="toggleSnakeCharacter('sponge' )"
+        >Sponge</li>
+        <li
+          :class="{active : characters.snake.donaldJohnTrump}"
+          @click="toggleSnakeCharacter('donaldJohnTrump')"
+        >Donald John Trump</li>
+        <li
+          :class="{active : characters.snake.fahrettinKoca}"
+          @click="toggleSnakeCharacter('fahrettinKoca')"
+        >Fahrettin Koca</li>
+      </ul>
     </div>
   </section>
 </template>
@@ -104,6 +124,14 @@ export default {
       bestScores: [],
       isScoresFetched: false,
       bestScore: {},
+      maxScore: 100,
+      characters: {
+        snake: {
+          sponge: true,
+          fahrettinKoca: false,
+          donaldJohnTrump: false
+        }
+      },
       isMobile: false
     };
   },
@@ -164,6 +192,20 @@ export default {
   },
 
   methods: {
+    toggleSnakeCharacter(character) {
+      this.characters.snake.sponge = false;
+      this.characters.snake.donaldJohnTrump = false;
+      this.characters.snake.fahrettinKoca = false;
+      if (character == "donaldJohnTrump") {
+        this.characters.snake.donaldJohnTrump = !this.characters.snake
+          .donaldJohnTrump;
+      } else if (character == "fahrettinKoca") {
+        this.characters.snake.fahrettinKoca = !this.characters.snake
+          .fahrettinKoca;
+      } else {
+        this.characters.snake.sponge = !this.characters.snake.sponge;
+      }
+    },
     checkIsMobile() {
       var isMobile = {
         Android: function() {
@@ -349,6 +391,18 @@ export default {
         this.food = [];
         this.food.push(this.getRandomDirection());
         this.playAudio(this.sound.food, 0.1);
+
+        // max score is reached
+        if (this.snakeLength - 1 == this.maxScore) {
+          clearInterval(this.gameAnimationTimer);
+          this.$swal({
+            allowOutsideClick: false,
+            title: "🎉 Hooray!",
+            text: "You have reached the maximum score!"
+          }).then(() => {
+            this.init();
+          });
+        }
       }
     },
 
@@ -414,6 +468,16 @@ export default {
       this.modalTemplate = `<p>🧼<br> Restart?</p>`;
       this.isModalVisible = !this.isModalVisible;
       this.wantRestart = true;
+    },
+    toggleInfoModal() {
+      this.modalTemplate = `<p>💡<br> Use your arrow buttons or swipe left, right, top or bottom to nagivate.</p>
+        <br />
+        <p>
+          If your score is better than current best score, your score will be saved. You can save your save or leave it anonymous.
+          <br />You can also see who has the best score by tapping on best score.
+        </p>
+        <p>Maximum score is 100. Have fun!</p>`;
+      this.isModalVisible = !this.isModalVisible;
     }
   }
 };
@@ -499,7 +563,7 @@ export default {
       position: absolute;
       top: 10px;
       right: 10px;
-      padding: 3px;
+      padding: 1px;
       background-color: transparent;
       display: flex;
       align-items: center;
@@ -508,7 +572,7 @@ export default {
     }
 
     .game__area-overlay-content {
-      margin-bottom: 10px;
+      margin: 10px 0;
     }
   }
 
@@ -539,6 +603,16 @@ export default {
         &.snake {
           background-image: url('./img/sponge.png');
           background-size: cover;
+
+          &.donaldJohnTrump {
+            background-image: url('./img/donald-john-trump.png');
+            background-size: 100% 100%;
+          }
+
+          &.fahrettinKoca {
+            background-image: url('./img/fahrettin-koca.png');
+            background-size: 100% 100%;
+          }
         }
 
         &.food {
@@ -575,8 +649,41 @@ export default {
       height: 22px;
     }
 
+    &.button--info {
+      margin-right: auto;
+    }
+
     &.button--restart {
       margin-left: 10px;
+    }
+  }
+}
+
+.game__characters {
+  margin: 30px auto;
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 4px;
+    font-size: 18px;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    li {
+      margin-right: 15px;
+      margin-bottom: 5px;
+      font-size: 15px;
+      cursor: pointer;
+      opacity: 0.5;
+
+      &.active {
+        opacity: 1;
+      }
     }
   }
 }
@@ -589,7 +696,7 @@ export default {
     visibility: hidden;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 5px;
     color: #a7e9af;
     font-size: 18px;
     font-weight: bold;
