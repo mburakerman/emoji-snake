@@ -20,7 +20,7 @@ footer {
   justify-content: space-between;
   max-width: 400px;
   width: 100%;
-  margin: 10em auto 0;
+  margin: 0 auto 0;
   padding: 0.75em 0;
   border-top: 1px solid #43465a;
 

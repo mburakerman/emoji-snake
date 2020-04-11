@@ -1,14 +1,6 @@
 <template>
   <section class="game" @keydown.esc="isModalVisible = false">
     <div class="game__header">
-      <p class="game__header-score" title="Score">
-        Score
-        <br />
-        <span id="score">
-          {{snakeLength - 1}}
-          <span id="scoreAnimation" :class="{active: scoreAnimation}">+1</span>
-        </span>
-      </p>
       <p
         class="game__header-score game__header-score--best"
         :class="{'has-loading': !isScoresFetched}"
@@ -17,6 +9,14 @@
         Best Score
         <br />
         <span id="bestScore" :data-tooltip="bestScore.user__name">{{this.bestScore.user__score}}</span>
+      </p>
+      <p class="game__header-score" title="Score">
+        Score
+        <br />
+        <span id="score">
+          {{snakeLength - 1}}
+          <span id="scoreAnimation" :class="{active: scoreAnimation}">+1</span>
+        </span>
       </p>
     </div>
     <div class="game__area">
@@ -42,6 +42,10 @@
       </ul>
     </div>
     <div class="game__footer">
+      <button class="button--volume" title="Volume" @click="sound.isMuted = !sound.isMuted">
+        <volume-2-icon v-if="sound.isMuted"></volume-2-icon>
+        <volume-x-icon v-if="!sound.isMuted"></volume-x-icon>
+      </button>
       <button
         class="button--restart"
         @click="toggleRestartModal"
@@ -49,18 +53,6 @@
         :disabled="isModalVisible"
       >
         <refresh-cw-icon></refresh-cw-icon>
-      </button>
-      <button class="button--volume" title="Volume" @click="sound.isMuted = !sound.isMuted">
-        <volume-2-icon v-if="sound.isMuted"></volume-2-icon>
-        <volume-x-icon v-if="!sound.isMuted"></volume-x-icon>
-      </button>
-      <button
-        class="button--info"
-        @click="toggleInfoModal"
-        title="More info"
-        :disabled="isModalVisible"
-      >
-        <info-icon></info-icon>
       </button>
     </div>
   </section>
@@ -172,7 +164,7 @@ export default {
         allowOutsideClick: false,
         title: "🎉 Congrats! ",
         html: `<div class="swal2-html-container">You have made the best score. <br> Your score is ${that.snakeLength -
-          1}. <br> You can save your name or let it stay anonymous.</div><input id="bestScoreUserInput" class="swal2-input" value="anonymous">`,
+          1}. <br> You can save your name or let it stay anonymous.</div><input id="bestScoreUserInput" class="swal2-input" value="anonymous" maxlength="40">`,
         preConfirm: function() {
           return new Promise(function(resolve) {
             var input = document.getElementById("bestScoreUserInput");
@@ -372,11 +364,6 @@ export default {
       this.bindSnake();
       this.animateSnake();
     },
-
-    toggleInfoModal() {
-      this.modalTemplate = `<p>💡<br> Use your arrow buttons or swipe left, right, top or bottom to nagivate. <br> If your score is better than current best score, your score will be saved.</p>`;
-      this.isModalVisible = !this.isModalVisible;
-    },
     toggleGameOverModal() {
       this.isGameOver = true;
       clearInterval(this.gameAnimationTimer);
@@ -540,7 +527,7 @@ export default {
 // game footer
 .game__footer {
   display: flex;
-  width: 100%;
+  justify-content: flex-end;
 
   button {
     svg {
@@ -550,11 +537,7 @@ export default {
     }
 
     &.button--restart {
-      margin-right: 10px;
-    }
-
-    &.button--info {
-      margin-left: auto;
+      margin-left: 10px;
     }
   }
 }

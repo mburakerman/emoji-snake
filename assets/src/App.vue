@@ -1,16 +1,26 @@
 <template>
   <div>
     <Snake />
+    <main>
+      <info-icon></info-icon>
+      <p>Use your arrow buttons or swipe left, right, top or bottom to nagivate.</p>
+      <br />
+      <p>
+        If your score is better than current best score, your score will be saved. You can save your save or leave it anonymous.
+        <br />You can see who has the best score by tapping on best score.
+      </p>
+    </main>
     <Footer />
   </div>
 </template>
 <script>
 import Snake from "./Snake.vue";
 import Footer from "./Footer.vue";
+import { InfoIcon } from "vue-feather-icons";
 
 export default {
   name: "App",
-  components: { Snake, Footer }
+  components: { Snake, InfoIcon, Footer }
 };
 </script>
 
@@ -64,6 +74,21 @@ button {
   }
 }
 
+main {
+  width: 400px;
+  padding: 0px 5px;
+  margin: 75px auto;
+
+  @media screen and (max-width: 500px) {
+    width: 340px;
+  }
+
+  p {
+    font-size: 15px;
+    opacity: 0.9;
+  }
+}
+
 [data-tooltip] {
   &:after {
     position: absolute;
@@ -73,7 +98,7 @@ button {
     padding: 5px 14px;
     background-color: rgba(32, 33, 44, 0.9);
     color: #fff;
-    text-align: left;
+    text-align: center;
     z-index: 1;
     pointer-events: none;
     display: block;
