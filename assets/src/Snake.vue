@@ -203,7 +203,7 @@ export default {
         allowOutsideClick: false,
         title: "🎉 Congrats! ",
         html: `<div class="swal2-html-container">You have made the best score. <br> Your score is ${that.snakeLength -
-          1}. <br> You can save your name or let it stay anonymous.</div><input id="bestScoreUserInput" class="swal2-input" value="anonymous" maxlength="40">`,
+          1}. <br> You can save your name or leave it anonymous.</div><input id="bestScoreUserInput" class="swal2-input" value="anonymous" maxlength="40">`,
         preConfirm: function() {
           return new Promise(function(resolve) {
             var input = document.getElementById("bestScoreUserInput");
@@ -220,10 +220,9 @@ export default {
 
             resolve(scoreData);
           });
-        },
-        onOpen: function() {}
-      }).then(function(data) {
-        that.addNewHighScore(data.value);
+        }
+      }).then(data => {
+        this.addNewHighScore(data.value);
       });
     },
     fetchScores() {
@@ -252,8 +251,8 @@ export default {
       db.collection("scores")
         .doc()
         .set(scoreData)
-        .then(function() {
-          that.fetchScores();
+        .then(() => {
+          this.fetchScores();
         });
     },
     bindSnake(x, y) {
