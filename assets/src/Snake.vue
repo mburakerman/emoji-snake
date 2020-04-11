@@ -16,7 +16,7 @@
       >
         Best Score
         <br />
-        <span id="bestScore">{{this.bestScore.user__score}}</span>
+        <span id="bestScore" :data-tooltip="bestScore.user__name">{{this.bestScore.user__score}}</span>
       </p>
     </div>
     <div class="game__area">
@@ -418,6 +418,10 @@ export default {
     border-radius: 4px;
     text-align: center;
     position: relative;
+
+    > span {
+      display: block;
+    }
 
     &.game__header-score--best {
       &:after {

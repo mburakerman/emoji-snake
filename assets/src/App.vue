@@ -64,6 +64,37 @@ button {
   }
 }
 
+[data-tooltip] {
+  &:after {
+    position: absolute;
+    font-size: 13px;
+    border-radius: 4px;
+    content: attr(data-tooltip);
+    padding: 5px 14px;
+    background-color: rgba(32, 33, 44, 0.9);
+    color: #fff;
+    text-align: left;
+    z-index: 1;
+    pointer-events: none;
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 0px);
+    width: 100%;
+  }
+
+  &:hover {
+    &:after {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 5px);
+    }
+  }
+}
+
 .has-loading {
   position: relative;
 
