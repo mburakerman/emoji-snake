@@ -154,7 +154,7 @@ export default {
   },
 
   created() {
-    this.fetchScores();
+    this.fetchScores(this.gameDifficulties[this.gameDifficulty]);
     this.init();
     this.isMobile = this.checkIsMobile();
     /*if (this.isMobile) {
@@ -287,10 +287,11 @@ export default {
           this.init();
         });
     },
-    fetchScores() {
+    fetchScores(difficulty) {
       var that = this;
       this.bestScores = [];
       this.isScoresFetched = false;
+      this.bestScore = {};
 
       db.collection("scores")
         .get()
@@ -298,12 +299,20 @@ export default {
           query.forEach(item => {
             that.isScoresFetched = true;
             var scores = item.data();
-            this.bestScores.push(scores);
 
-            // get best score from all scores
-            this.bestScore = this.bestScores.reduce(function(prev, current) {
-              return prev.user__score > current.user__score ? prev : current;
-            });
+            if (scores.user__difficulty !== undefined) {
+              if (scores.user__difficulty === difficulty) {
+                this.bestScores.push(scores);
+              }
+            } else {
+              if (difficulty == "medium") {
+                this.bestScores.push(scores);
+              }
+            }
+          });
+
+          this.bestScore = this.bestScores.reduce(function(prev, current) {
+            return prev.user__score > current.user__score ? prev : current;
           });
         });
     },
@@ -314,7 +323,7 @@ export default {
         .doc()
         .set(scoreData)
         .then(() => {
-          this.fetchScores();
+          this.fetchScores(that.gameDifficulties[that.gameDifficulty]);
         });
     },
     bindSnake(x, y) {
@@ -516,6 +525,8 @@ export default {
         this.gameSpeed = initSpeed - 20;
         this.init();
       }
+
+      this.fetchScores(this.gameDifficulties[this.gameDifficulty]);
     }
   }
 };
