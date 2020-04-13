@@ -73,7 +73,7 @@
       <ul>
         <li
           :class="{active : characters.snake.sponge }"
-          @click="toggleSnakeCharacter('sponge' )"
+          @click="toggleSnakeCharacter('sponge')"
         >Sponge</li>
         <li
           :class="{active : characters.snake.donaldJohnTrump}"
@@ -262,9 +262,14 @@ export default {
             var scoreData = {
               user__id: uuidv4(),
               user__name: "anonymous",
-              user__score: score,
-              user__difficulty: that.gameDifficulties[that.gameDifficulty]
+              user__score: score
             };
+            // set difficulty if not medium level
+            if (that.gameDifficulty != 1) {
+              scoreData.user__difficulty =
+                that.gameDifficulties[that.gameDifficulty];
+            }
+
             if (input.value.length > 1) {
               scoreData.user__name = input.value;
             } else {
