@@ -46,6 +46,11 @@
         <info-icon></info-icon>
       </button>
       <button
+        class="button--difficulty"
+        @click="toggleDifficulty"
+        :disabled="(snakeLength - 1) > 0"
+      >{{this.gameDifficulties[this.gameDifficulty]}}</button>
+      <button
         class="button--volume"
         title="Volume"
         @click="sound.isMuted = !sound.isMuted"
@@ -112,6 +117,8 @@ export default {
       gameLength: 20,
       gameAnimationTimer: null,
       isGameOver: false,
+      gameDifficulties: ["easy", "medium", "hard"],
+      gameDifficulty: 1,
       scoreAnimation: false,
       modalTemplate: "",
       isModalVisible: false,
@@ -150,9 +157,9 @@ export default {
     this.fetchScores();
     this.init();
     this.isMobile = this.checkIsMobile();
-    if (this.isMobile) {
-      this.gameSpeed = 120;
-    }
+    /*if (this.isMobile) {
+      this.gameSpeed = this.gameSpeed + 20;
+    }*/
   },
 
   mounted() {
@@ -255,7 +262,8 @@ export default {
             var scoreData = {
               user__id: uuidv4(),
               user__name: "anonymous",
-              user__score: score
+              user__score: score,
+              user__difficulty: that.gameDifficulties[that.gameDifficulty]
             };
             if (input.value.length > 1) {
               scoreData.user__name = input.value;
@@ -485,6 +493,24 @@ export default {
         </p>
         <p>Maximum score is 100. Have fun!</p>`;
       this.isModalVisible = !this.isModalVisible;
+    },
+    toggleDifficulty() {
+      this.gameDifficulty++;
+      if (this.gameDifficulty > 2) {
+        this.gameDifficulty = 0;
+      }
+
+      var initSpeed = 100;
+      if (this.gameDifficulty == 0) {
+        this.gameSpeed = initSpeed + 20;
+        this.init();
+      } else if (this.gameDifficulty == 1) {
+        this.gameSpeed = initSpeed;
+        this.init();
+      } else {
+        this.gameSpeed = initSpeed - 20;
+        this.init();
+      }
     }
   }
 };
@@ -660,8 +686,13 @@ export default {
       margin-right: auto;
     }
 
-    &.button--restart {
-      margin-left: 10px;
+    &.button--difficulty {
+      margin-right: 10px;
+      text-transform: capitalize;
+    }
+
+    &.button--volume {
+      margin-right: 10px;
     }
   }
 }
