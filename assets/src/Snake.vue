@@ -266,9 +266,13 @@ export default {
             resolve(scoreData);
           });
         }
-      }).then(data => {
-        this.addNewHighScore(data.value);
-      });
+      })
+        .then(data => {
+          this.addNewHighScore(data.value);
+        })
+        .then(() => {
+          this.init();
+        });
     },
     fetchScores() {
       var that = this;
@@ -403,7 +407,7 @@ export default {
             title: "🎉 Hooray!",
             text: "You have reached the maximum score!"
           }).then(() => {
-            this.init();
+            this.showBestScoreAlert();
           });
         }
       }
