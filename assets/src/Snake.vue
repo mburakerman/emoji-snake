@@ -714,7 +714,7 @@ export default {
 }
 
 .game__characters {
-  margin: 20px auto 50px;
+  margin: 20px auto 0px;
 
   h2 {
     margin-top: 0;

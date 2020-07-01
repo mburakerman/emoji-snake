@@ -1,16 +1,14 @@
 <template>
   <div>
     <Snake />
-    <Footer />
   </div>
 </template>
 <script>
 import Snake from "./Snake.vue";
-import Footer from "./Footer.vue";
 
 export default {
   name: "App",
-  components: { Snake, Footer }
+  components: { Snake }
 };
 </script>
 
