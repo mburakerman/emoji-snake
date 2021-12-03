@@ -2,7 +2,7 @@
   <div class="game__header">
     <p
       class="game__header-score game__header-score--best"
-      :class="{'has-loading': !isScoresFetched}"
+      :class="{'has-loading': !areScoresFetched}"
       title="Best Score"
     >
       Best Score
@@ -36,7 +36,8 @@
         type: Boolean,
         default: false
       },
-      isScoresFetched : {
+      areScoresFetched : {
+        type: Boolean,
         default : false
       }
     }

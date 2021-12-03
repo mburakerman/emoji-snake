@@ -4,7 +4,7 @@
         :score="snakeLength - 1"
         :bestScore="bestScore" 
         :scoreAnimation="scoreAnimation" 
-        :isScoresFetched="isScoresFetched"
+        :areScoresFetched="areScoresFetched"
     />
     <div class="game__area">
       <div class="game__area-overlay" :class="{active: isModalVisible}">
@@ -93,7 +93,7 @@ export default {
         isMuted: false
       },
       bestScores: [],
-      isScoresFetched: false,
+      areScoresFetched: false,
       bestScore: {},
       maxScore: 100,
       characters: {
@@ -202,14 +202,14 @@ export default {
     fetchScores(difficulty) {
       var that = this;
       this.bestScores = [];
-      this.isScoresFetched = false;
+      this.areScoresFetched = false;
       this.bestScore = {};
 
       db.collection("scores")
         .get()
         .then(query => {
           query.forEach(item => {
-            that.isScoresFetched = true;
+            that.areScoresFetched = true;
             var scores = item.data();
 
             if (scores.user__difficulty !== undefined) {
