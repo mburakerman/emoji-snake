@@ -1,24 +1,11 @@
 <template>
   <section class="game" @keydown.esc="isModalVisible = false">
-    <div class="game__header">
-      <p
-        class="game__header-score game__header-score--best"
-        :class="{'has-loading': !isScoresFetched}"
-        title="Best Score"
-      >
-        Best Score
-        <br />
-        <span id="bestScore" :data-tooltip="bestScore.user__name">{{this.bestScore.user__score}}</span>
-      </p>
-      <p class="game__header-score" title="Score">
-        Score
-        <br />
-        <span id="score">
-          {{snakeLength - 1}}
-          <span id="scoreAnimation" :class="{active: scoreAnimation}">+1</span>
-        </span>
-      </p>
-    </div>
+    <Header 
+        :score="snakeLength - 1"
+        :bestScore="bestScore" 
+        :scoreAnimation="scoreAnimation" 
+        :isScoresFetched="isScoresFetched"
+    />
     <div class="game__area">
       <div class="game__area-overlay" :class="{active: isModalVisible}">
         <button class="game__area-overlay-close" @click="isModalVisible = false" v-if="!isGameOver">
@@ -68,23 +55,10 @@
         <refresh-cw-icon></refresh-cw-icon>
       </button>
     </div>
-    <div class="game__characters">
-      <h2>Characters</h2>
-      <ul>
-        <li
-          :class="{active : characters.snake.sponge }"
-          @click="toggleSnakeCharacter('sponge')"
-        >Sponge</li>
-        <li
-          :class="{active : characters.snake.donaldJohnTrump}"
-          @click="toggleSnakeCharacter('donaldJohnTrump')"
-        >Donald Trump</li>
-        <li
-          :class="{active : characters.snake.fahrettinKoca}"
-          @click="toggleSnakeCharacter('fahrettinKoca')"
-        >Fahrettin Koca</li>
-      </ul>
-    </div>
+    <Characters
+      :characters="characters" 
+      @characterChanged="characters = $event"
+    />
   </section>
 </template>
 
@@ -98,6 +72,9 @@ import {
   VolumeXIcon
 } from "vue-feather-icons";
 import db from "../firebaseInit.js";
+import Header from './components/Header'
+import Characters from './components/Characters'
+
 export default {
   name: "Snake",
   components: {
@@ -105,7 +82,9 @@ export default {
     InfoIcon,
     XIcon,
     Volume2Icon,
-    VolumeXIcon
+    VolumeXIcon,
+    Header,
+    Characters
   },
   data() {
     return {
@@ -132,14 +111,14 @@ export default {
       isScoresFetched: false,
       bestScore: {},
       maxScore: 100,
+      isMobile: false,
       characters: {
-        snake: {
-          sponge: true,
-          fahrettinKoca: false,
-          donaldJohnTrump: false
-        }
+          snake: {
+              sponge: true,
+              fahrettinKoca: false,
+              donaldJohnTrump: false
+          }
       },
-      isMobile: false
     };
   },
 
@@ -202,20 +181,6 @@ export default {
   },
 
   methods: {
-    toggleSnakeCharacter(character) {
-      this.characters.snake.sponge = false;
-      this.characters.snake.donaldJohnTrump = false;
-      this.characters.snake.fahrettinKoca = false;
-      if (character == "donaldJohnTrump") {
-        this.characters.snake.donaldJohnTrump = !this.characters.snake
-          .donaldJohnTrump;
-      } else if (character == "fahrettinKoca") {
-        this.characters.snake.fahrettinKoca = !this.characters.snake
-          .fahrettinKoca;
-      } else {
-        this.characters.snake.sponge = !this.characters.snake.sponge;
-      }
-    },
     checkIsMobile() {
       var isMobile = {
         Android: function() {
@@ -533,7 +498,7 @@ export default {
 </script>
 
  
-<style lang="stylus" scoped>
+<style lang="stylus">
 .game {
   margin: 0 auto;
   width: 400px;
@@ -543,41 +508,6 @@ export default {
 @media screen and (max-width: 500px) {
   .game {
     width: 340px;
-  }
-}
-
-// game header
-.game__header {
-  display: flex;
-  justify-content: space-between;
-
-  .game__header-score {
-    background-color: #43465a;
-    padding: 5px 10px;
-    border-radius: 4px;
-    text-align: center;
-    position: relative;
-
-    > span {
-      display: block;
-    }
-
-    &.game__header-score--best {
-      &:after {
-        content: '👑';
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        transform: rotate(20deg);
-        font-size: 18px;
-      }
-    }
-  }
-
-  @media screen and (max-width: 500px) {
-    .game__header-score {
-      font-size: 15px;
-    }
   }
 }
 
@@ -709,35 +639,6 @@ export default {
 
     &.button--volume {
       margin-right: 10px;
-    }
-  }
-}
-
-.game__characters {
-  margin: 20px auto 0px;
-
-  h2 {
-    margin-top: 0;
-    margin-bottom: 4px;
-    font-size: 18px;
-  }
-
-  ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-
-    li {
-      margin-right: 10px;
-      margin-bottom: 5px;
-      font-size: 15px;
-      cursor: pointer;
-      opacity: 0.5;
-
-      &.active {
-        opacity: 1;
-      }
     }
   }
 }
