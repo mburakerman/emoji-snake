@@ -36,16 +36,10 @@
         class="button--difficulty"
         @click="toggleDifficulty"
         :disabled="(snakeLength - 1) > 0"
-      >{{this.gameDifficulties[this.gameDifficulty]}}</button>
-      <button
-        class="button--volume"
-        title="Volume"
-        @click="sound.isMuted = !sound.isMuted"
-        v-if="!isMobile"
       >
-        <volume-2-icon v-if="sound.isMuted"></volume-2-icon>
-        <volume-x-icon v-if="!sound.isMuted"></volume-x-icon>
+        {{this.gameDifficulties[this.gameDifficulty]}}
       </button>
+      <VolumeButton :sound="sound" @volumeChanged="sound = $event"/>
       <button
         class="button--restart"
         @click="toggleRestartModal"
@@ -68,13 +62,11 @@ import {
   RefreshCwIcon,
   InfoIcon,
   XIcon,
-  Volume2Icon,
-  VolumeXIcon
 } from "vue-feather-icons";
 import db from "../firebaseInit.js";
 import Header from './components/Header'
 import Characters from './components/Characters'
-import isMobile from './helpers/is-mobile'
+import VolumeButton from './components/VolumeButton'
 
 export default {
   name: "Snake",
@@ -82,10 +74,9 @@ export default {
     RefreshCwIcon,
     InfoIcon,
     XIcon,
-    Volume2Icon,
-    VolumeXIcon,
     Header,
-    Characters
+    Characters,
+    VolumeButton
   },
   data() {
     return {
@@ -112,7 +103,6 @@ export default {
       isScoresFetched: false,
       bestScore: {},
       maxScore: 100,
-      isMobile: false,
       characters: {
           snake: {
               sponge: true,
@@ -136,7 +126,6 @@ export default {
   created() {
     this.fetchScores(this.gameDifficulties[this.gameDifficulty]);
     this.init();
-    this.isMobile = isMobile();
   },
 
   mounted() {
@@ -274,7 +263,6 @@ export default {
 
     playAudio(audioSource, audioVolume) {
       if (this.sound.isMuted) return;
-      if (this.isMobile) return;
       var audio = new Audio(audioSource);
       audio.volume = audioVolume;
       audio.play();
