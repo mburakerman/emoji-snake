@@ -74,6 +74,7 @@ import {
 import db from "../firebaseInit.js";
 import Header from './components/Header'
 import Characters from './components/Characters'
+import isMobile from './helpers/is-mobile'
 
 export default {
   name: "Snake",
@@ -135,10 +136,7 @@ export default {
   created() {
     this.fetchScores(this.gameDifficulties[this.gameDifficulty]);
     this.init();
-    this.isMobile = this.checkIsMobile();
-    /*if (this.isMobile) {
-      this.gameSpeed = this.gameSpeed + 20;
-    }*/
+    this.isMobile = isMobile();
   },
 
   mounted() {
@@ -181,38 +179,6 @@ export default {
   },
 
   methods: {
-    checkIsMobile() {
-      var isMobile = {
-        Android: function() {
-          return navigator.userAgent.match(/Android/i);
-        },
-        BlackBerry: function() {
-          return navigator.userAgent.match(/BlackBerry/i);
-        },
-        iOS: function() {
-          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        },
-        Opera: function() {
-          return navigator.userAgent.match(/Opera Mini/i);
-        },
-        Windows: function() {
-          return (
-            navigator.userAgent.match(/IEMobile/i) ||
-            navigator.userAgent.match(/WPDesktop/i)
-          );
-        },
-        any: function() {
-          return (
-            isMobile.Android() ||
-            isMobile.BlackBerry() ||
-            isMobile.iOS() ||
-            isMobile.Opera() ||
-            isMobile.Windows()
-          );
-        }
-      };
-      return isMobile.any();
-    },
     showBestScoreAlert() {
       var that = this;
       var score = this.snakeLength - 1;

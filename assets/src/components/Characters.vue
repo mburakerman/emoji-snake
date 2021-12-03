@@ -23,17 +23,9 @@ export default {
   name: 'Characters',
   props: {
     characters : {
-        type : Object,
-        default: null
+      type : Object,
+      default: null
     }
-  },
-  data() {
-      return {
-        
-      }
-  },
-  mounted(){
-    this.$emit('characterChanged', this.characters)
   },
   methods:{
     toggleSnakeCharacter(character) {
