@@ -3,6 +3,7 @@
     <Snake />
   </div>
 </template>
+
 <script>
 import Snake from "./Snake.vue";
 
@@ -125,7 +126,7 @@ main {
     width: 100%;
     height: 100%;
     border-radius: inherit;
-    background: url('./img/loading.svg') rgba(#15161d, 0.8) center center no-repeat;
+    background: url('./assets/img/loading.svg') rgba(#15161d, 0.8) center center no-repeat;
     background-size: 20%;
     overflow: hidden;
     z-index: 9999999;

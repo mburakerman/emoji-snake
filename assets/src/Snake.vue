@@ -103,8 +103,8 @@ export default {
       isModalVisible: false,
       wantRestart: false,
       sound: {
-        food: require("./sound/food.mp3"),
-        direction: require("./sound/direction.mp3"),
+        food: require("./assets/sound/food.mp3"),
+        direction: require("./assets/sound/direction.mp3"),
         isMuted: false
       },
       bestScores: [],
@@ -580,16 +580,16 @@ export default {
         }
 
         &.snake {
-          background-image: url('./img/sponge.png');
+          background-image: url('./assets/img/sponge.png');
           background-size: cover;
 
           &.donaldJohnTrump {
-            background-image: url('./img/donald-john-trump.png');
+            background-image: url('./assets/img/donald-john-trump.png');
             background-size: 100% 100%;
           }
 
           &.fahrettinKoca {
-            background-image: url('./img/fahrettin-koca.png');
+            background-image: url('./assets/img/fahrettin-koca.png');
             background-size: 100% 100%;
           }
         }
@@ -598,7 +598,7 @@ export default {
           animation-name: scale;
           animation-duration: 0.4s;
           animation-timing-function: ease-in-out;
-          background-image: url('./img/virus.png');
+          background-image: url('./assets/img/virus.png');
           background-size: cover;
         }
       }
