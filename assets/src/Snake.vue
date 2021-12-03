@@ -40,14 +40,7 @@
         {{this.gameDifficulties[this.gameDifficulty]}}
       </button>
       <VolumeButton :sound="sound" @volumeChanged="sound = $event"/>
-      <button
-        class="button--restart"
-        @click="toggleRestartModal"
-        title="Restart"
-        :disabled="isModalVisible"
-      >
-        <refresh-cw-icon></refresh-cw-icon>
-      </button>
+      <RestartButton @clicked="toggleRestartModal" :isDisabled="isModalVisible"/>
     </div>
     <Characters
       :characters="characters" 
@@ -59,7 +52,6 @@
 <script>
 import { v4 as uuidv4 } from "uuid";
 import {
-  RefreshCwIcon,
   InfoIcon,
   XIcon,
 } from "vue-feather-icons";
@@ -67,16 +59,17 @@ import db from "../firebaseInit.js";
 import Header from './components/Header'
 import Characters from './components/Characters'
 import VolumeButton from './components/VolumeButton'
+import RestartButton from './components/RestartButton'
 
 export default {
   name: "Snake",
   components: {
-    RefreshCwIcon,
     InfoIcon,
     XIcon,
     Header,
     Characters,
-    VolumeButton
+    VolumeButton,
+    RestartButton
   },
   data() {
     return {
@@ -169,15 +162,14 @@ export default {
 
   methods: {
     showBestScoreAlert() {
-      var that = this;
       var score = this.snakeLength - 1;
       this.$swal({
         allowOutsideClick: false,
         title: "🎉 Congrats! ",
         html: `<div class="swal2-html-container">You have made the best score. <br> Your score is ${that.snakeLength -
           1}. <br> You can save your name or leave it anonymous.</div><input id="bestScoreUserInput" class="swal2-input" value="anonymous" maxlength="40">`,
-        preConfirm: function() {
-          return new Promise(function(resolve) {
+        preConfirm: () => {
+          return new Promise((resolve) => {
             var input = document.getElementById("bestScoreUserInput");
             var scoreData = {
               user__id: uuidv4(),
@@ -185,9 +177,9 @@ export default {
               user__score: score
             };
             // set difficulty if not medium level
-            if (that.gameDifficulty != 1) {
+            if (this.gameDifficulty != 1) {
               scoreData.user__difficulty =
-                that.gameDifficulties[that.gameDifficulty];
+                this.gameDifficulties[that.gameDifficulty];
             }
 
             if (input.value.length > 1) {
