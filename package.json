@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/react": "^18.2.15",
     "@types/styled-components": "^4.4.1",
+    "@types/vue-feather-icons": "^5.0.4",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
     "@vue/component-compiler-utils": "^3.1.2",

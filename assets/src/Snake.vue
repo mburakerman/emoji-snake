@@ -33,7 +33,7 @@
       </button>
 
       <VolumeButton :sound="sound" @volumeChanged="sound = $event" />
-      <RestartButton @clicked="toggleRestartModal" :isDisabled="isModalVisible" />
+      <RestartButton @click="toggleRestartModal" :disabled="isModalVisible" />
     </div>
 
     <Characters :characters="characters" @characterChanged="characters = $event" />
@@ -49,8 +49,8 @@ import {
 import db from "../firebaseInit.js";
 import Characters from './components/Characters'
 import VolumeButton from './components/VolumeButton'
-import RestartButton from './components/RestartButton'
 import { Header } from "./components/Header.tsx"
+import { RestartButton } from "./components/RestartButton.tsx"
 import { applyReactInVue } from 'vuereact-combined'
 
 const MAX_SCORE = 100
@@ -62,8 +62,8 @@ export default {
     XIcon,
     Characters,
     VolumeButton,
-    RestartButton,
-    Header: applyReactInVue(Header)
+    RestartButton: applyReactInVue(RestartButton),
+    Header: applyReactInVue(Header),
   },
   data() {
     return {
