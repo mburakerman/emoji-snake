@@ -139,12 +139,10 @@ export default {
   },
 
   watch: {
-    snakeLength: function (newLen, oldLen) {
+    snakeLength(newLen, oldLen) {
       if (newLen > oldLen) {
         this.scoreAnimation = true;
-        setTimeout(() => {
-          this.scoreAnimation = false;
-        }, 400);
+        setTimeout(() => (this.scoreAnimation = false), 400);
       }
     }
   },
