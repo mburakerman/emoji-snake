@@ -1,6 +1,6 @@
 <template>
   <section class="game" @keydown.esc="isModalVisible = false">
-    <HeaderReact :score="snakeLength - 1" :bestScore="bestScore" :isScoreAnimationActive="scoreAnimation"
+    <Header :score="snakeLength - 1" :bestScore="bestScore" :isScoreAnimationActive="scoreAnimation"
       :areScoresFetched="areScoresFetched" />
     <div class="game__area">
       <div class="game__area-overlay" :class="{ active: isModalVisible }">
@@ -46,7 +46,7 @@ import db from "../firebaseInit.js";
 import Characters from './components/Characters'
 import VolumeButton from './components/VolumeButton'
 import RestartButton from './components/RestartButton'
-import { Header as HeaderReact } from "./components/Header.tsx"
+import { Header } from "./components/Header.tsx"
 import { applyReactInVue } from 'vuereact-combined'
 
 const MAX_SCORE = 100
@@ -59,7 +59,7 @@ export default {
     Characters,
     VolumeButton,
     RestartButton,
-    HeaderReact: applyReactInVue(HeaderReact)
+    Header: applyReactInVue(Header)
   },
   data() {
     return {
