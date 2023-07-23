@@ -1,13 +1,8 @@
 <template>
-  <button
-      class="button--volume"
-      title="Volume"
-      @click="toggleVolume"
-      v-if="!isMobile"
-    >
-      <volume-2-icon v-if="sound.isMuted"></volume-2-icon>
-      <volume-x-icon v-if="!sound.isMuted"></volume-x-icon>
-    </button>
+  <button class="button--volume" title="Volume" @click="toggleVolume" v-if="!isMobile">
+    <volume-2-icon v-if="sound.isMuted"></volume-2-icon>
+    <volume-x-icon v-if="!sound.isMuted"></volume-x-icon>
+  </button>
 </template>
 
 <script>
@@ -19,26 +14,26 @@ import {
 
 export default {
   name: 'VolumeButton',
-  components : {
+  components: {
     Volume2Icon,
     VolumeXIcon
   },
-  props : {
-    sound : {
+  props: {
+    sound: {
       type: Object,
-      default : null
+      default: null
     }
   },
-  data(){
+  data() {
     return {
-      isMobile : false
+      isMobile: false
     }
   },
   created() {
     this.isMobile = isMobile()
   },
   methods: {
-    toggleVolume(){
+    toggleVolume() {
       this.sound.isMuted = !this.sound.isMuted;
       this.$emit('volumeChanged', this.sound);
     }

@@ -1,13 +1,9 @@
 <template>
   <section class="game" @keydown.esc="isModalVisible = false">
-    <Header 
-        :score="snakeLength - 1"
-        :bestScore="bestScore" 
-        :scoreAnimation="scoreAnimation" 
-        :areScoresFetched="areScoresFetched"
-    />
+    <Header :score="snakeLength - 1" :bestScore="bestScore" :scoreAnimation="scoreAnimation"
+      :areScoresFetched="areScoresFetched" />
     <div class="game__area">
-      <div class="game__area-overlay" :class="{active: isModalVisible}">
+      <div class="game__area-overlay" :class="{ active: isModalVisible }">
         <button class="game__area-overlay-close" @click="isModalVisible = false" v-if="!isGameOver">
           <x-icon></x-icon>
         </button>
@@ -20,11 +16,9 @@
       </div>
       <ul>
         <li v-for="(item, colIndex) in gameLengthArray" :key="colIndex">
-          <div
-            v-for="(item, rowIndex) in gameLengthArray"
-            :class="{snake: bindSnake(colIndex, rowIndex), food: bindFood(colIndex, rowIndex), fahrettinKoca : characters.snake.fahrettinKoca, donaldJohnTrump : characters.snake.donaldJohnTrump}"
-            :key="rowIndex"
-          ></div>
+          <div v-for="(item, rowIndex) in gameLengthArray"
+            :class="{ snake: bindSnake(colIndex, rowIndex), food: bindFood(colIndex, rowIndex), fahrettinKoca: characters.snake.fahrettinKoca, donaldJohnTrump: characters.snake.donaldJohnTrump }"
+            :key="rowIndex"></div>
         </li>
       </ul>
     </div>
@@ -32,20 +26,13 @@
       <button class="button--info" @click="toggleInfoModal">
         <info-icon></info-icon>
       </button>
-      <button
-        class="button--difficulty"
-        @click="toggleDifficulty"
-        :disabled="(snakeLength - 1) > 0"
-      >
-        {{this.gameDifficulties[this.gameDifficulty]}}
+      <button class="button--difficulty" @click="toggleDifficulty" :disabled="(snakeLength - 1) > 0">
+        {{ this.gameDifficulties[this.gameDifficulty] }}
       </button>
-      <VolumeButton :sound="sound" @volumeChanged="sound = $event"/>
-      <RestartButton @clicked="toggleRestartModal" :isDisabled="isModalVisible"/>
+      <VolumeButton :sound="sound" @volumeChanged="sound = $event" />
+      <RestartButton @clicked="toggleRestartModal" :isDisabled="isModalVisible" />
     </div>
-    <Characters
-      :characters="characters" 
-      @characterChanged="characters = $event"
-    />
+    <Characters :characters="characters" @characterChanged="characters = $event" />
   </section>
 </template>
 
@@ -97,11 +84,11 @@ export default {
       bestScore: {},
       maxScore: 100,
       characters: {
-          snake: {
-              sponge: true,
-              fahrettinKoca: false,
-              donaldJohnTrump: false
-          }
+        snake: {
+          sponge: true,
+          fahrettinKoca: false,
+          donaldJohnTrump: false
+        }
       },
     };
   },
@@ -150,7 +137,7 @@ export default {
   },
 
   watch: {
-    snakeLength: function(newLen, oldLen) {
+    snakeLength: function (newLen, oldLen) {
       if (newLen > oldLen) {
         this.scoreAnimation = true;
         setTimeout(() => {
@@ -223,7 +210,7 @@ export default {
             }
           });
 
-          this.bestScore = this.bestScores.reduce(function(prev, current) {
+          this.bestScore = this.bestScores.reduce(function (prev, current) {
             return prev.user__score > current.user__score ? prev : current;
           });
         });

@@ -1,47 +1,43 @@
 <template>
   <div class="game__header">
-    <p
-      class="game__header-score game__header-score--best"
-      :class="{'has-loading': !areScoresFetched}"
-      title="Best Score"
-    >
+    <p class="game__header-score game__header-score--best" :class="{ 'has-loading': !areScoresFetched }" title="Best Score">
       Best Score
       <br />
-      <span id="bestScore" :data-tooltip="bestScore.user__name">{{this.bestScore.user__score}}</span>
+      <span id="bestScore" :data-tooltip="bestScore.user__name">{{ this.bestScore.user__score }}</span>
     </p>
     <p class="game__header-score" title="Score">
       Score
       <br />
-      <span id="score">{{score}}
-        
-        <span id="scoreAnimation" :class="{active: scoreAnimation}">+1</span>
+      <span id="score">{{ score }}
+
+        <span id="scoreAnimation" :class="{ active: scoreAnimation }">+1</span>
       </span>
     </p>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'Header',
-    props: {
-      bestScore : {
-        type: Object,
-        default : null
-      },
-      score: {
-        type: Number,
-        default: 0
-      },
-      scoreAnimation : {
-        type: Boolean,
-        default: false
-      },
-      areScoresFetched : {
-        type: Boolean,
-        default : false
-      }
+export default {
+  name: 'Header',
+  props: {
+    bestScore: {
+      type: Object,
+      default: null
+    },
+    score: {
+      type: Number,
+      default: 0
+    },
+    scoreAnimation: {
+      type: Boolean,
+      default: false
+    },
+    areScoresFetched: {
+      type: Boolean,
+      default: false
     }
   }
+}
 </script>
 
 <style lang="stylus">
