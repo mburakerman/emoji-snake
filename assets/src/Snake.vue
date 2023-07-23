@@ -97,11 +97,7 @@ export default {
 
   computed: {
     gameLengthArray() {
-      var arr = [];
-      for (var i = 0; i < this.gameLength; i++) {
-        arr.push(i);
-      }
-      return arr;
+      return Array.from({ length: this.gameLength }, (_, index) => index);
     }
   },
 
