@@ -23,7 +23,9 @@ module.exports = {
     "react-hooks",
     "functional",
   ],
-  rules: {},
+  rules: {
+    "@typescript-eslint/ban-ts-comment": "off",
+  },
   settings: {
     react: {
       version: "detect",
