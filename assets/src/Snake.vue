@@ -2,6 +2,7 @@
   <section class="game" @keydown.esc="isModalVisible = false">
     <Header :score="snakeLength - 1" :bestScore="bestScore" :isScoreAnimationActive="scoreAnimation"
       :areScoresFetched="areScoresFetched" />
+
     <div class="game__area">
       <div class="game__area-overlay" :class="{ active: isModalVisible }">
         <button class="game__area-overlay-close" @click="isModalVisible = false" v-if="!isGameOver">
@@ -22,6 +23,7 @@
         </li>
       </ul>
     </div>
+
     <div class="game__footer">
       <button class="button--info" @click="toggleInfoModal">
         <info-icon></info-icon>
@@ -29,9 +31,11 @@
       <button class="button--difficulty" @click="toggleDifficulty" :disabled="(snakeLength - 1) > 0">
         {{ this.gameDifficulties[this.gameDifficulty] }}
       </button>
+
       <VolumeButton :sound="sound" @volumeChanged="sound = $event" />
       <RestartButton @clicked="toggleRestartModal" :isDisabled="isModalVisible" />
     </div>
+
     <Characters :characters="characters" @characterChanged="characters = $event" />
   </section>
 </template>
