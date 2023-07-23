@@ -1,6 +1,6 @@
 <template>
   <section class="game" @keydown.esc="isModalVisible = false">
-    <Header :score="snakeLength - 1" :bestScore="bestScore" :scoreAnimation="scoreAnimation"
+    <HeaderReact :score="snakeLength - 1" :bestScore="bestScore" :isScoreAnimationActive="scoreAnimation"
       :areScoresFetched="areScoresFetched" />
     <div class="game__area">
       <div class="game__area-overlay" :class="{ active: isModalVisible }">
@@ -47,6 +47,8 @@ import Header from './components/Header'
 import Characters from './components/Characters'
 import VolumeButton from './components/VolumeButton'
 import RestartButton from './components/RestartButton'
+import { Header as HeaderReact } from "./components/Header.tsx"
+import { applyReactInVue } from 'vuereact-combined'
 
 export default {
   name: "Snake",
@@ -56,7 +58,8 @@ export default {
     Header,
     Characters,
     VolumeButton,
-    RestartButton
+    RestartButton,
+    HeaderReact: applyReactInVue(HeaderReact)
   },
   data() {
     return {
@@ -572,29 +575,6 @@ export default {
 
     &.button--volume {
       margin-right: 10px;
-    }
-  }
-}
-
-// score
-#score {
-  position: relative;
-
-  #scoreAnimation {
-    visibility: hidden;
-    position: absolute;
-    top: 0;
-    left: 5px;
-    color: #a7e9af;
-    font-size: 18px;
-    font-weight: bold;
-
-    &.active {
-      display: inline-block;
-      transition: all 0.4s linear;
-      transform: translatey(-40px);
-      visibility: visible;
-      opacity: 1;
     }
   }
 }

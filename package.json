@@ -16,6 +16,7 @@
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "styled-components": "^4.4.1",
     "uuid": "^7.0.3",
     "vue": "^2.6.11",
     "vue-feather-icons": "^5.0.0",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
+    "@types/styled-components": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
     "@vue/component-compiler-utils": "^3.1.2",

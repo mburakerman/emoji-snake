@@ -1,20 +1,16 @@
 <template>
   <div>
-    <HeaderReact />
     <Snake />
   </div>
 </template>
 
 <script>
 import Snake from "./Snake.vue";
-import { Header } from "./components/Header.tsx"
-import { applyReactInVue } from 'vuereact-combined'
 
 export default {
   name: "App",
   components: {
     Snake,
-    HeaderReact: applyReactInVue(Header)
   }
 };
 </script>
