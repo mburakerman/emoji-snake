@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "parcel index.html -p 3003",
     "build": "parcel build index.html --public-url ./"
   },
   "author": "Mehmet Burak Erman",
@@ -13,17 +13,22 @@
     "firebase": "^7.13.2",
     "hammerjs": "^2.0.8",
     "normalize.css": "^8.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "uuid": "^7.0.3",
     "vue": "^2.6.11",
     "vue-feather-icons": "^5.0.0",
     "vue-hot-reload-api": "^2.3.4",
     "vue-icon": "^2.1.2",
-    "vue-sweetalert2": "^3.0.3"
+    "vue-sweetalert2": "^3.0.3",
+    "vuereact-combined": "^1.2.11"
   },
   "devDependencies": {
+    "@types/react": "^18.2.15",
     "@vue/component-compiler-utils": "^3.1.2",
     "parcel-bundler": "^1.12.4",
     "stylus": "^0.54.7",
+    "typescript": "^5.1.6",
     "vue-template-compiler": "^2.6.11"
   },
   "alias": {
