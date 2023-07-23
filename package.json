@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel index.html -p 3003",
-    "build": "parcel build index.html --public-url ./"
+    "build": "parcel build index.html --public-url ./",
+    "lint": "\"./node_modules/.bin/eslint\" . --ext ts,tsx"
   },
   "author": "Mehmet Burak Erman",
   "license": "ISC",
@@ -25,7 +26,15 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
     "@vue/component-compiler-utils": "^3.1.2",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-functional": "^5.0.8",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "parcel-bundler": "^1.12.4",
     "prettier": "^3.0.0",
     "stylus": "^0.54.7",
