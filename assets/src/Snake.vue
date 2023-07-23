@@ -32,7 +32,7 @@
         {{ this.gameDifficulties[this.gameDifficulty] }}
       </button>
 
-      <VolumeButton :sound="sound" @volumeChanged="sound = $event" />
+      <VolumeButton :sound="sound" @click="(val) => sound = val" />
       <RestartButton @click="toggleRestartModal" :disabled="isModalVisible" />
     </div>
 
@@ -48,9 +48,9 @@ import {
 } from "vue-feather-icons";
 import db from "../firebaseInit.js";
 import Characters from './components/Characters'
-import VolumeButton from './components/VolumeButton'
 import { Header } from "./components/Header.tsx"
 import { RestartButton } from "./components/RestartButton.tsx"
+import { VolumeButton } from "./components/VolumeButton.tsx"
 import { applyReactInVue } from 'vuereact-combined'
 
 const MAX_SCORE = 100
@@ -61,7 +61,7 @@ export default {
     InfoIcon,
     XIcon,
     Characters,
-    VolumeButton,
+    VolumeButton: applyReactInVue(VolumeButton),
     RestartButton: applyReactInVue(RestartButton),
     Header: applyReactInVue(Header),
   },
