@@ -49,6 +49,8 @@ import RestartButton from './components/RestartButton'
 import { Header as HeaderReact } from "./components/Header.tsx"
 import { applyReactInVue } from 'vuereact-combined'
 
+const MAX_SCORE = 100
+
 export default {
   name: "Snake",
   components: {
@@ -83,7 +85,6 @@ export default {
       bestScores: [],
       areScoresFetched: false,
       bestScore: {},
-      maxScore: 100,
       characters: {
         snake: {
           sponge: true,
@@ -321,7 +322,7 @@ export default {
         this.playAudio(this.sound.food, 0.1);
 
         // max score is reached
-        if (this.snakeLength - 1 == this.maxScore) {
+        if (this.snakeLength - 1 == MAX_SCORE) {
           clearInterval(this.gameAnimationTimer);
           this.$swal({
             allowOutsideClick: false,
