@@ -43,7 +43,6 @@ import {
   XIcon,
 } from "vue-feather-icons";
 import db from "../firebaseInit.js";
-import Header from './components/Header'
 import Characters from './components/Characters'
 import VolumeButton from './components/VolumeButton'
 import RestartButton from './components/RestartButton'
@@ -55,7 +54,6 @@ export default {
   components: {
     InfoIcon,
     XIcon,
-    Header,
     Characters,
     VolumeButton,
     RestartButton,
