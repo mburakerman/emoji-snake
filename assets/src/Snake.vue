@@ -324,19 +324,15 @@ export default {
 
         if (this.snakeLength - 1 === MAX_SCORE) {
           clearInterval(this.gameAnimationTimer);
-          this.showMaxScoreReachedAlert();
+          this.$swal({
+            allowOutsideClick: false,
+            title: "🎉 Hooray!",
+            text: "You have reached the maximum score!",
+          }).then(() => {
+            this.showBestScoreAlert();
+          });
         }
       }
-    },
-
-    showMaxScoreReachedAlert() {
-      this.$swal({
-        allowOutsideClick: false,
-        title: "🎉 Hooray!",
-        text: "You have reached the maximum score!",
-      }).then(() => {
-        this.showBestScoreAlert();
-      });
     },
 
     bindSnakeDirections(e) {
