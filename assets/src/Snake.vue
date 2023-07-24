@@ -16,8 +16,8 @@
         <button v-if="wantRestart" @click="gameOver">OK</button>
       </div>
       <ul>
-        <li v-for="(item, colIndex) in gameLengthArray" :key="colIndex">
-          <div v-for="(item, rowIndex) in gameLengthArray"
+        <li v-for="(item, colIndex) in gameLength" :key="colIndex">
+          <div v-for="(item, rowIndex) in gameLength"
             :class="{ snake: bindSnake(colIndex, rowIndex), food: bindFood(colIndex, rowIndex), fahrettinKoca: characters.snake.fahrettinKoca, donaldJohnTrump: characters.snake.donaldJohnTrump }"
             :key="rowIndex"></div>
         </li>
@@ -101,12 +101,6 @@ export default {
         }
       },
     };
-  },
-
-  computed: {
-    gameLengthArray() {
-      return Array.from({ length: this.gameLength }, (_, index) => index);
-    }
   },
 
   created() {
