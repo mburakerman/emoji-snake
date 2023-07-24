@@ -45,7 +45,6 @@
 <script>
 import { v4 as uuidv4 } from "uuid";
 import {
-  InfoIcon,
   XIcon,
 } from "vue-feather-icons";
 import db from "../firebaseInit.js";
@@ -62,7 +61,6 @@ const MAX_SCORE = 100
 export default {
   name: "Snake",
   components: {
-    InfoIcon,
     XIcon,
     Characters,
     DifficultyButton: applyReactInVue(DifficultyButton),
