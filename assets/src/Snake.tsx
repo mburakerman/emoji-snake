@@ -22,7 +22,7 @@ const GAME_LENGTH = 20;
 type GameDifficulty = "easy" | "medium" | "hard";
 
 export const Snake = () => {
-  const [snake, setSnake] = useState([]);
+  const [snake, setSnake] = useState<any>([]);
   const [snakeLength, setSnakeLength] = useState(1);
   const [snakeDirection, setSnakeDirection] = useState("right");
   const [food, setFood] = useState([{ x: 5, y: 7 }]);
@@ -140,6 +140,31 @@ export const Snake = () => {
       .catch((error: Error) => {
         console.error("Error fetching scores:", error);
       });
+  };
+
+  const addNewHighScore = (scoreData: any) => {
+    db.collection("scores")
+      .doc()
+      .set(scoreData)
+      .then(() => {
+        fetchScores(gameDifficulties[gameDifficulty]);
+      });
+  };
+
+  const bindSnake = (x: any, y: any) => {
+    for (let i = 0; i < snake.length; i++) {
+      if (snake[i].x === x && snake[i].y === y) {
+        return true;
+      }
+    }
+  };
+
+  const bindFood = (x: any, y: any) => {
+    for (const item of food) {
+      if (item.x === x && item.y === y) {
+        return true;
+      }
+    }
   };
 
   // @ts-ignore
