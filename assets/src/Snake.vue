@@ -38,7 +38,7 @@
       <RestartButton @click="toggleRestartModal" :disabled="isModalVisible" />
     </div>
 
-    <Characters :characters="characters" @characterChanged="characters = $event" />
+    <Characters :characters="characters" @click="(val) => characters = val" />
   </section>
 </template>
 
@@ -48,12 +48,12 @@ import {
   XIcon,
 } from "vue-feather-icons";
 import db from "../firebaseInit.js";
-import Characters from './components/Characters'
 import { Header } from "./components/Header.tsx"
 import { DifficultyButton } from "./components/DifficultyButton.tsx"
 import { InfoButton } from "./components/InfoButton.tsx"
 import { RestartButton } from "./components/RestartButton.tsx"
 import { VolumeButton } from "./components/VolumeButton.tsx"
+import { Characters } from "./components/Characters.tsx"
 import { applyReactInVue } from 'vuereact-combined'
 
 const MAX_SCORE = 100
@@ -64,7 +64,7 @@ export default {
   name: "Snake",
   components: {
     XIcon,
-    Characters,
+    Characters: applyReactInVue(Characters),
     DifficultyButton: applyReactInVue(DifficultyButton),
     InfoButton: applyReactInVue(InfoButton),
     VolumeButton: applyReactInVue(VolumeButton),
