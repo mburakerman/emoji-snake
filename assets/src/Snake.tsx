@@ -21,8 +21,13 @@ const GAME_LENGTH = 20;
 
 type GameDifficulty = "easy" | "medium" | "hard";
 
+type Snake = {
+  x: number;
+  y: number;
+};
+
 export const Snake = () => {
-  const [snake, setSnake] = useState<any>([]);
+  const [snake, setSnake] = useState<Snake[]>([]);
   const [snakeLength, setSnakeLength] = useState(1);
   const [snakeDirection, setSnakeDirection] = useState("right");
   const [food, setFood] = useState([{ x: 5, y: 7 }]);
@@ -243,8 +248,7 @@ export const Snake = () => {
 
         preventSnakeToBiteItself(snakeHead);
 
-        // length of snake
-        setSnake((prevSnake: any) => {
+        setSnake((prevSnake) => {
           const newSnake = [...prevSnake, { x: snakeHead.x, y: snakeHead.y }];
           if (newSnake.length > snakeLength) {
             newSnake.shift();
