@@ -338,6 +338,66 @@ export const Snake = () => {
         areScoresFetched={areScoresFetched}
       />
 
+      <div className="game__area">
+        <div className={`game__area-overlay ${isModalVisible ? "active" : ""}`}>
+          <button
+            className="game__area-overlay-close"
+            onClick={() => setIsModalVisible(false)}
+            style={{ display: !isGameOver ? "block" : "none" }}
+          >
+            X
+          </button>
+          <div
+            className="game__area-overlay-content"
+            dangerouslySetInnerHTML={{ __html: modalTemplate }}
+          ></div>
+          <div style={{ display: !wantRestart ? "block" : "none" }}>
+            <button
+              style={{ display: !isGameOver ? "block" : "none" }}
+              onClick={() => setIsModalVisible(false)}
+            >
+              OK
+            </button>
+            <button
+              style={{ display: isGameOver ? "block" : "none" }}
+              onClick={gameOver}
+            >
+              Try Again
+            </button>
+          </div>
+          <button
+            style={{ display: wantRestart ? "block" : "none" }}
+            onClick={gameOver}
+          >
+            OK
+          </button>
+        </div>
+        <ul>
+          {Array.from({ length: gameLength }).map((_, colIndex) => (
+            <li key={colIndex}>
+              {Array.from({ length: gameLength }).map((_, rowIndex) => (
+                <div
+                  key={rowIndex}
+                  className={`${
+                    bindSnake(colIndex, rowIndex)
+                      ? "snake"
+                      : bindFood(colIndex, rowIndex)
+                      ? "food"
+                      : ""
+                  } ${
+                    characters.snake.fahrettinKoca
+                      ? "fahrettinKoca"
+                      : characters.snake.donaldJohnTrump
+                      ? "donaldJohnTrump"
+                      : ""
+                  }`}
+                ></div>
+              ))}
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <div className="game__footer">
         <InfoButton
           onClick={(val) => {
