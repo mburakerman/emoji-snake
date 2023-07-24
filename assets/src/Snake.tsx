@@ -28,7 +28,9 @@ export const Snake = () => {
   const [food, setFood] = useState([{ x: 5, y: 7 }]);
   const [gameSpeed, setGameSpeed] = useState(100);
   const [gameLength] = useState(GAME_LENGTH);
-  const [gameAnimationTimer, setGameAnimationTimer] = useState(null);
+  const [gameAnimationTimer, setGameAnimationTimer] = useState<ReturnType<
+    typeof setInterval
+  > | null>(null);
   const [isGameOver, setIsGameOver] = useState(false);
   const [gameDifficulties] = useState<GameDifficulty[]>([
     "easy",
@@ -200,6 +202,131 @@ export const Snake = () => {
       //fetchScores(gameDifficulties[newDifficulty]);
       return newDifficulty;
     });
+  };
+
+  const animateSnake = () => {
+    const snakeHead = snake[snake.length - 1];
+
+    setGameAnimationTimer(
+      setInterval(() => {
+        // right
+        if (snakeDirection === "right") {
+          snakeHead.x += 1;
+        }
+        // left
+        else if (snakeDirection === "left") {
+          snakeHead.x -= 1;
+        }
+        // up
+        else if (snakeDirection === "up") {
+          snakeHead.y -= 1;
+        }
+        // down
+        else if (snakeDirection === "down") {
+          snakeHead.y += 1;
+        }
+
+        // game area check
+        if (snakeHead.x === gameLength) {
+          snakeHead.x = 0;
+        }
+        if (snakeHead.x === -1) {
+          snakeHead.x = gameLength - 1;
+        }
+        if (snakeHead.y === -1) {
+          snakeHead.y = gameLength - 1;
+        }
+        if (snakeHead.y === gameLength) {
+          snakeHead.y = 0;
+        }
+
+        preventSnakeToBiteItself(snakeHead);
+
+        // length of snake
+        setSnake((prevSnake: any) => {
+          const newSnake = [...prevSnake, { x: snakeHead.x, y: snakeHead.y }];
+          if (newSnake.length > snakeLength) {
+            newSnake.shift();
+          }
+          return newSnake;
+        });
+
+        updatePoint();
+      }, gameSpeed)
+    );
+  };
+
+  const preventSnakeToBiteItself = (head: any) => {
+    if (snakeLength < 2) {
+      return;
+    }
+    for (let i = 0; i < snake.length; i++) {
+      if (snake[i].x === head.x && snake[i].y === head.y) {
+        //toggleGameOverModal();
+        // show best score alert
+        const score = snakeLength - 1;
+        // @ts-ignore
+        if (score > bestScore.user__score) {
+          //showBestScoreAlert();
+        }
+      }
+    }
+  };
+
+  const updatePoint = () => {
+    const snakeHead = snake[snake.length - 1];
+
+    if (food[0].x === snakeHead.x && food[0].y === snakeHead.y) {
+      setSnakeLength((prevLength) => prevLength + 1);
+      setFood([getRandomDirection()]);
+      playAudio(sound.food, 0.1);
+
+      // max score is reached
+      if (snakeLength - 1 === MAX_SCORE) {
+        //clearInterval(gameAnimationTimer);
+        /* Use the appropriate modal library here (e.g., React Modal or custom implementation) to show the alert. */
+      }
+    }
+  };
+
+  const bindSnakeDirections = (e: any) => {
+    e.preventDefault();
+
+    const directions: any = {
+      37: "left",
+      38: "up",
+      39: "right",
+      40: "down",
+    };
+    // direction control check
+    if (directions[e.keyCode] !== undefined) {
+      if (
+        (snakeDirection === "right" && directions[e.keyCode] === "left") ||
+        (snakeDirection === "left" && directions[e.keyCode] === "right") ||
+        (snakeDirection === "down" && directions[e.keyCode] === "up") ||
+        (snakeDirection === "up" && directions[e.keyCode] === "down")
+      ) {
+        return false;
+      }
+
+      setSnakeDirection(directions[e.keyCode]);
+      playAudio(sound.direction, 0.05);
+    }
+  };
+
+  const getRandomDirection = () => {
+    const maxPosition = gameLength;
+    return {
+      x: Math.floor(Math.random() * maxPosition),
+      y: Math.floor(Math.random() * maxPosition),
+    };
+  };
+
+  const gameOver = () => {
+    setIsGameOver(false);
+    setIsModalVisible(!isModalVisible);
+    setWantRestart(false);
+    init();
   };
 
   return (
