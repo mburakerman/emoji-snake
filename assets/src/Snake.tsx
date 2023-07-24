@@ -211,48 +211,41 @@ export const Snake = () => {
   };
 
   const animateSnake = () => {
-    const snakeHead = snake[snake.length - 1];
-
     setGameAnimationTimer(
       setInterval(() => {
-        // right
-        if (snakeDirection === "right") {
-          snakeHead.x += 1;
-        }
-        // left
-        else if (snakeDirection === "left") {
-          snakeHead.x -= 1;
-        }
-        // up
-        else if (snakeDirection === "up") {
-          snakeHead.y -= 1;
-        }
-        // down
-        else if (snakeDirection === "down") {
-          snakeHead.y += 1;
-        }
-
-        // game area check
-        if (snakeHead.x === gameLength) {
-          snakeHead.x = 0;
-        }
-        if (snakeHead.x === -1) {
-          snakeHead.x = gameLength - 1;
-        }
-        if (snakeHead.y === -1) {
-          snakeHead.y = gameLength - 1;
-        }
-        if (snakeHead.y === gameLength) {
-          snakeHead.y = 0;
-        }
-
-        preventSnakeToBiteItself(snakeHead);
-
         setSnake((prevSnake) => {
-          const newSnake = [...prevSnake, { x: snakeHead.x, y: snakeHead.y }];
+          const newSnake = [...prevSnake];
+          const snakeHead = newSnake[newSnake.length - 1];
+
+          // Calculate the new position of the snake's head based on the direction
+          if (snakeDirection === "right") {
+            snakeHead.x += 1;
+          } else if (snakeDirection === "left") {
+            snakeHead.x -= 1;
+          } else if (snakeDirection === "up") {
+            snakeHead.y -= 1;
+          } else if (snakeDirection === "down") {
+            snakeHead.y += 1;
+          }
+
+          // game area check
+          if (snakeHead.x === gameLength) {
+            snakeHead.x = 0;
+          } else if (snakeHead.x === -1) {
+            snakeHead.x = gameLength - 1;
+          } else if (snakeHead.y === -1) {
+            snakeHead.y = gameLength - 1;
+          } else if (snakeHead.y === gameLength) {
+            snakeHead.y = 0;
+          }
+
+          preventSnakeToBiteItself(newSnake);
+
           if (newSnake.length > snakeLength) {
+            // If the snake is longer than snakeLength, remove the tail segment
             newSnake.shift();
           }
+
           return newSnake;
         });
 
@@ -261,19 +254,25 @@ export const Snake = () => {
     );
   };
 
-  const preventSnakeToBiteItself = (head: any) => {
-    if (snakeLength < 2) {
+  const preventSnakeToBiteItself = (snakeSegments: string | any[]) => {
+    if (snakeSegments.length < 2) {
       return;
     }
-    for (let i = 0; i < snake.length; i++) {
-      if (snake[i].x === head.x && snake[i].y === head.y) {
+
+    const snakeHead = snakeSegments[snakeSegments.length - 1];
+    for (let i = 0; i < snakeSegments.length - 1; i++) {
+      // Check if the snake's head collides with any other segment of the snake
+      if (
+        snakeHead.x === snakeSegments[i].x &&
+        snakeHead.y === snakeSegments[i].y
+      ) {
         toggleGameOverModal();
-        // show best score alert
-        const score = snakeLength - 1;
+        const score = snakeSegments.length - 1;
         // @ts-ignore
         if (score > bestScore.user__score) {
-          //showBestScoreAlert();
+          // showBestScoreAlert();
         }
+        break;
       }
     }
   };
