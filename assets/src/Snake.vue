@@ -187,7 +187,6 @@ export default {
         });
     },
     fetchScores(difficulty) {
-      var that = this;
       this.bestScores = [];
       this.areScoresFetched = false;
       this.bestScore = {};
@@ -196,8 +195,8 @@ export default {
         .get()
         .then(query => {
           query.forEach(item => {
-            that.areScoresFetched = true;
-            var scores = item.data();
+            this.areScoresFetched = true;
+            const scores = item.data();
 
             if (scores.user__difficulty !== undefined) {
               if (scores.user__difficulty === difficulty) {
@@ -210,9 +209,12 @@ export default {
             }
           });
 
-          this.bestScore = this.bestScores.reduce(function (prev, current) {
+          this.bestScore = this.bestScores.reduce((prev, current) => {
             return prev.user__score > current.user__score ? prev : current;
           });
+        })
+        .catch(error => {
+          console.error("Error fetching scores:", error);
         });
     },
     addNewHighScore(scoreData) {
