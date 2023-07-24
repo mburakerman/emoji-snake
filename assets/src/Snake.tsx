@@ -62,21 +62,22 @@ export const Snake = () => {
     fetchScores(gameDifficulties[gameDifficulty]);
     init();
 
-    // Clean up
     return () => {
-      //clearInterval(gameAnimationTimer);
-      //window.removeEventListener("keyup", bindSnakeDirections);
+      // @ts-ignore
+      clearInterval(gameAnimationTimer);
+      window.removeEventListener("keyup", bindSnakeDirections);
     };
   }, [gameDifficulty]);
 
   const init = () => {
-    //clearInterval(gameAnimationTimer);
+    // @ts-ignore
+    clearInterval(gameAnimationTimer);
     setSnake([]);
     setSnakeLength(1);
-    //setSnake((prevSnake) => [getRandomDirection()]);
+    setSnake((prevSnake: any) => [getRandomDirection()]);
     setScoreAnimation(false);
 
-    //animateSnake();
+    animateSnake();
   };
 
   useEffect(() => {
