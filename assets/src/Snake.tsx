@@ -263,7 +263,7 @@ export const Snake = () => {
     }
     for (let i = 0; i < snake.length; i++) {
       if (snake[i].x === head.x && snake[i].y === head.y) {
-        //toggleGameOverModal();
+        toggleGameOverModal();
         // show best score alert
         const score = snakeLength - 1;
         // @ts-ignore
@@ -272,6 +272,16 @@ export const Snake = () => {
         }
       }
     }
+  };
+
+  const toggleGameOverModal = () => {
+    setIsGameOver(true);
+    // @ts-ignore
+    clearInterval(gameAnimationTimer);
+    setModalTemplate(
+      `<p>😷<br />Game Over!<br />Your score is ${snakeLength - 1}.</p>`
+    );
+    setIsModalVisible(!isModalVisible);
   };
 
   const updatePoint = () => {
@@ -284,7 +294,8 @@ export const Snake = () => {
 
       // max score is reached
       if (snakeLength - 1 === MAX_SCORE) {
-        //clearInterval(gameAnimationTimer);
+        // @ts-ignore
+        clearInterval(gameAnimationTimer);
         /* Use the appropriate modal library here (e.g., React Modal or custom implementation) to show the alert. */
       }
     }
