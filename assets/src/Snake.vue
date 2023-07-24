@@ -57,6 +57,8 @@ import { VolumeButton } from "./components/VolumeButton.tsx"
 import { applyReactInVue } from 'vuereact-combined'
 
 const MAX_SCORE = 100
+const GAME_LENGTH = 20
+
 
 export default {
   name: "Snake",
@@ -76,7 +78,7 @@ export default {
       snakeDirection: "right",
       food: [{ x: 5, y: 7 }],
       gameSpeed: 100,
-      gameLength: 20,
+      gameLength: GAME_LENGTH,
       gameAnimationTimer: null,
       isGameOver: false,
       gameDifficulties: ["easy", "medium", "hard"],
