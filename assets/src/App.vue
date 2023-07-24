@@ -1,5 +1,7 @@
 <template>
   <div>
+    <SnakeReact />
+    <div style="margin: 50px 0;"></div>
     <Snake />
     <GlobalStyles />
   </div>
@@ -9,12 +11,14 @@
 import Snake from "./Snake.vue";
 import { GlobalStyles } from "./styles/globalStyles.ts";
 import { applyReactInVue } from 'vuereact-combined'
+import { Snake as SnakeReact } from "./Snake.tsx";
 
 export default {
   name: "App",
   components: {
     Snake,
-    GlobalStyles: applyReactInVue(GlobalStyles)
+    GlobalStyles: applyReactInVue(GlobalStyles),
+    SnakeReact: applyReactInVue(SnakeReact),
   }
 };
 </script>
