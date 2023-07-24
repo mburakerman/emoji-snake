@@ -30,9 +30,9 @@
         this.isModalVisible = !this.isModalVisible;
       }" />
 
-      <button class="button--difficulty" @click="toggleDifficulty" :disabled="(snakeLength - 1) > 0">
+      <DifficultyButton @click="toggleDifficulty" :disabled="(snakeLength - 1) > 0">
         {{ this.gameDifficulties[this.gameDifficulty] }}
-      </button>
+      </DifficultyButton>
 
       <VolumeButton :sound="sound" @click="(val) => sound = val" />
       <RestartButton @click="toggleRestartModal" :disabled="isModalVisible" />
@@ -51,6 +51,7 @@ import {
 import db from "../firebaseInit.js";
 import Characters from './components/Characters'
 import { Header } from "./components/Header.tsx"
+import { DifficultyButton } from "./components/DifficultyButton.tsx"
 import { InfoButton } from "./components/InfoButton.tsx"
 import { RestartButton } from "./components/RestartButton.tsx"
 import { VolumeButton } from "./components/VolumeButton.tsx"
@@ -64,6 +65,7 @@ export default {
     InfoIcon,
     XIcon,
     Characters,
+    DifficultyButton: applyReactInVue(DifficultyButton),
     InfoButton: applyReactInVue(InfoButton),
     VolumeButton: applyReactInVue(VolumeButton),
     RestartButton: applyReactInVue(RestartButton),
@@ -543,28 +545,9 @@ export default {
   }
 }
 
-// game footer
 .game__footer {
   display: flex;
   justify-content: flex-end;
-
-  button {
-    svg {
-      color: #fff;
-      width: 22px;
-      height: 22px;
-    }
-
-
-    &.button--difficulty {
-      margin-right: 10px;
-      text-transform: capitalize;
-    }
-
-    &.button--volume {
-      margin-right: 10px;
-    }
-  }
 }
 </style>
  
