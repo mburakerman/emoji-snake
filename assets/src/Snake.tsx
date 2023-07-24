@@ -2,8 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Hammer from "hammerjs";
-import { applyVueInReact } from "vuereact-combined";
 // @ts-ignore
 import db from "../firebaseInit.js";
 
@@ -85,31 +83,44 @@ export const Snake = () => {
     animateSnake();
   };
 
-  useEffect(() => {
-    // @ts-ignore
-    const swipeGestures = new Hammer(document.querySelector(".game"));
-    swipeGestures.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
+  const handleKeyPress = (event: any) => {
+    switch (event.key) {
+      case "ArrowLeft":
+        if (snakeDirection !== "right") {
+          setSnakeDirection("left");
+          playAudio(sound.direction, 0.05);
+        }
+        break;
+      case "ArrowRight":
+        console.log("RİGGGHT");
+        if (snakeDirection !== "left") {
+          setSnakeDirection("right");
+          playAudio(sound.direction, 0.05);
+        }
+        break;
+      case "ArrowUp":
+        if (snakeDirection !== "down") {
+          setSnakeDirection("up");
+          playAudio(sound.direction, 0.05);
+        }
+        break;
+      case "ArrowDown":
+        if (snakeDirection !== "up") {
+          setSnakeDirection("down");
+          playAudio(sound.direction, 0.05);
+        }
+        break;
+      default:
+        break;
+    }
+  };
 
-    swipeGestures.on("swipeleft", () => {
-      if (snakeDirection === "right") return;
-      setSnakeDirection("left");
-      playAudio(sound.direction, 0.05);
-    });
-    swipeGestures.on("swiperight", () => {
-      if (snakeDirection === "left") return;
-      setSnakeDirection("right");
-      playAudio(sound.direction, 0.05);
-    });
-    swipeGestures.on("swipeup", () => {
-      if (snakeDirection === "down") return;
-      setSnakeDirection("up");
-      playAudio(sound.direction, 0.05);
-    });
-    swipeGestures.on("swipedown", () => {
-      if (snakeDirection === "up") return;
-      setSnakeDirection("down");
-      playAudio(sound.direction, 0.05);
-    });
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
   }, [snakeDirection]);
 
   const fetchScores = (difficulty: GameDifficulty) => {
@@ -352,7 +363,6 @@ export const Snake = () => {
         isScoreAnimationActive={scoreAnimation}
         areScoresFetched={areScoresFetched}
       />
-
       <div className="game__area">
         <div className={`game__area-overlay ${isModalVisible ? "active" : ""}`}>
           <button
@@ -412,7 +422,6 @@ export const Snake = () => {
           ))}
         </ul>
       </div>
-
       <div className="game__footer">
         <InfoButton
           onClick={(val) => {
@@ -430,7 +439,6 @@ export const Snake = () => {
         <VolumeButton sound={sound} onClick={(val) => setSound(val as any)} />
         <RestartButton onClick={toggleRestartModal} disabled={isModalVisible} />
       </div>
-
       <Characters
         characters={characters}
         onClick={(val) => setCharacters(val as any)}
