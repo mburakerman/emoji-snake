@@ -25,9 +25,11 @@
     </div>
 
     <div class="game__footer">
-      <button class="button--info" @click="toggleInfoModal">
-        <info-icon></info-icon>
-      </button>
+      <InfoButton @click="(val) => {
+        modalTemplate = val
+        this.isModalVisible = !this.isModalVisible;
+      }" />
+
       <button class="button--difficulty" @click="toggleDifficulty" :disabled="(snakeLength - 1) > 0">
         {{ this.gameDifficulties[this.gameDifficulty] }}
       </button>
@@ -49,6 +51,7 @@ import {
 import db from "../firebaseInit.js";
 import Characters from './components/Characters'
 import { Header } from "./components/Header.tsx"
+import { InfoButton } from "./components/InfoButton.tsx"
 import { RestartButton } from "./components/RestartButton.tsx"
 import { VolumeButton } from "./components/VolumeButton.tsx"
 import { applyReactInVue } from 'vuereact-combined'
@@ -61,6 +64,7 @@ export default {
     InfoIcon,
     XIcon,
     Characters,
+    InfoButton: applyReactInVue(InfoButton),
     VolumeButton: applyReactInVue(VolumeButton),
     RestartButton: applyReactInVue(RestartButton),
     Header: applyReactInVue(Header),
@@ -396,16 +400,6 @@ export default {
       this.isModalVisible = !this.isModalVisible;
       this.wantRestart = true;
     },
-    toggleInfoModal() {
-      this.modalTemplate = `<p>💡<br> Use your arrow buttons or swipe left, right, top or bottom to nagivate.</p>
-        <br />
-        <p>
-          If your score is better than current best score, your score will be saved. You can save your name or leave it anonymous.
-          <br />You can also see who has the best score by tapping on best score.
-        </p>
-        <p>Maximum score is 100. Have fun!</p>`;
-      this.isModalVisible = !this.isModalVisible;
-    },
     toggleDifficulty() {
       this.gameDifficulty++;
       if (this.gameDifficulty > 2) {
@@ -561,9 +555,6 @@ export default {
       height: 22px;
     }
 
-    &.button--info {
-      margin-right: auto;
-    }
 
     &.button--difficulty {
       margin-right: 10px;
