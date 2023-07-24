@@ -313,26 +313,30 @@ export default {
     },
 
     updatePoint() {
-      var snakeHead = this.snake[this.snake.length - 1];
+      const snakeHead = this.snake[this.snake.length - 1];
+      const food = this.food[0];
 
-      if (this.food[0].x === snakeHead.x && this.food[0].y === snakeHead.y) {
+      if (food.x === snakeHead.x && food.y === snakeHead.y) {
         this.snakeLength++;
         this.food = [];
         this.food.push(this.getRandomDirection());
         this.playAudio(this.sound.food, 0.1);
 
-        // max score is reached
-        if (this.snakeLength - 1 == MAX_SCORE) {
+        if (this.snakeLength - 1 === MAX_SCORE) {
           clearInterval(this.gameAnimationTimer);
-          this.$swal({
-            allowOutsideClick: false,
-            title: "🎉 Hooray!",
-            text: "You have reached the maximum score!"
-          }).then(() => {
-            this.showBestScoreAlert();
-          });
+          this.showMaxScoreReachedAlert();
         }
       }
+    },
+
+    showMaxScoreReachedAlert() {
+      this.$swal({
+        allowOutsideClick: false,
+        title: "🎉 Hooray!",
+        text: "You have reached the maximum score!",
+      }).then(() => {
+        this.showBestScoreAlert();
+      });
     },
 
     bindSnakeDirections(e) {
