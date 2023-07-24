@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Hammer from "hammerjs";
 import { applyVueInReact } from "vuereact-combined";
+// @ts-ignore
+import db from "../firebaseInit.js";
 
 import { Header } from "./components/Header";
 import { DifficultyButton } from "./components/DifficultyButton";
@@ -17,6 +19,8 @@ const StyledContainer = styled.div``;
 const MAX_SCORE = 100;
 const GAME_LENGTH = 20;
 
+type GameDifficulty = "easy" | "medium" | "hard";
+
 export const Snake = () => {
   const [snake, setSnake] = useState([]);
   const [snakeLength, setSnakeLength] = useState(1);
@@ -26,7 +30,11 @@ export const Snake = () => {
   const [gameLength] = useState(GAME_LENGTH);
   const [gameAnimationTimer, setGameAnimationTimer] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [gameDifficulties] = useState(["easy", "medium", "hard"]);
+  const [gameDifficulties] = useState<GameDifficulty[]>([
+    "easy",
+    "medium",
+    "hard",
+  ]);
   const [gameDifficulty, setGameDifficulty] = useState(1);
   const [scoreAnimation, setScoreAnimation] = useState(false);
   const [modalTemplate, setModalTemplate] = useState("");
@@ -47,6 +55,27 @@ export const Snake = () => {
       donaldJohnTrump: false,
     },
   });
+
+  useEffect(() => {
+    fetchScores(gameDifficulties[gameDifficulty]);
+    init();
+
+    // Clean up
+    return () => {
+      //clearInterval(gameAnimationTimer);
+      //window.removeEventListener("keyup", bindSnakeDirections);
+    };
+  }, [gameDifficulty]);
+
+  const init = () => {
+    //clearInterval(gameAnimationTimer);
+    setSnake([]);
+    setSnakeLength(1);
+    //setSnake((prevSnake) => [getRandomDirection()]);
+    setScoreAnimation(false);
+
+    //animateSnake();
+  };
 
   useEffect(() => {
     // @ts-ignore
@@ -74,6 +103,44 @@ export const Snake = () => {
       playAudio(sound.direction, 0.05);
     });
   }, [snakeDirection]);
+
+  const fetchScores = (difficulty: GameDifficulty) => {
+    setBestScores([]);
+    setAreScoresFetched(false);
+    setBestScore({});
+
+    db.collection("scores")
+      .get()
+      .then((query: any) => {
+        const fetchedScores: any = [];
+        query.forEach((item: any) => {
+          setAreScoresFetched(true);
+          const scores = item.data();
+          if (scores.user__difficulty !== undefined) {
+            if (scores.user__difficulty === difficulty) {
+              fetchedScores.push(scores);
+            }
+          } else {
+            if (difficulty === "medium") {
+              fetchedScores.push(scores);
+            }
+          }
+        });
+
+        setBestScores(fetchedScores);
+        setBestScore(
+          fetchedScores.reduce(
+            (
+              prev: { user__score: number },
+              current: { user__score: number }
+            ) => (prev.user__score > current.user__score ? prev : current)
+          )
+        );
+      })
+      .catch((error: Error) => {
+        console.error("Error fetching scores:", error);
+      });
+  };
 
   // @ts-ignore
   const playAudio = (audioSource, audioVolume: number) => {
