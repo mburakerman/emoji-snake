@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Hammer from "hammerjs";
 import { applyVueInReact } from "vuereact-combined";
 
 import { Header } from "./components/Header";
@@ -45,6 +47,41 @@ export const Snake = () => {
       donaldJohnTrump: false,
     },
   });
+
+  useEffect(() => {
+    // @ts-ignore
+    const swipeGestures = new Hammer(document.querySelector(".game"));
+    swipeGestures.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
+
+    swipeGestures.on("swipeleft", () => {
+      if (snakeDirection === "right") return;
+      setSnakeDirection("left");
+      playAudio(sound.direction, 0.05);
+    });
+    swipeGestures.on("swiperight", () => {
+      if (snakeDirection === "left") return;
+      setSnakeDirection("right");
+      playAudio(sound.direction, 0.05);
+    });
+    swipeGestures.on("swipeup", () => {
+      if (snakeDirection === "down") return;
+      setSnakeDirection("up");
+      playAudio(sound.direction, 0.05);
+    });
+    swipeGestures.on("swipedown", () => {
+      if (snakeDirection === "up") return;
+      setSnakeDirection("down");
+      playAudio(sound.direction, 0.05);
+    });
+  }, [snakeDirection]);
+
+  // @ts-ignore
+  const playAudio = (audioSource, audioVolume: number) => {
+    if (sound.isMuted) return;
+    const audio = new Audio(audioSource);
+    audio.volume = audioVolume;
+    audio.play();
+  };
 
   const toggleRestartModal = () => {
     setModalTemplate(`<p>🧼<br> Restart?</p>`);
