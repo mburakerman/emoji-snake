@@ -30,6 +30,7 @@ export const Snake = () => {
   const [food, setFood] = useState([{ x: 5, y: 7 }]);
   const [gameSpeed, setGameSpeed] = useState(100);
   const [gameLength] = useState(GAME_LENGTH);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [gameAnimationTimer, setGameAnimationTimer] = useState<ReturnType<
     typeof setInterval
   > | null>(null);
@@ -81,43 +82,7 @@ export const Snake = () => {
     setSnake(() => [getRandomDirection()]);
     setScoreAnimation(false);
 
-    animateSnake();
-  };
-
-  useEffect(() => {
-    animateSnake();
-  }, [snakeDirection]);
-
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    switch (event.key) {
-      case "ArrowLeft":
-        if (snakeDirection !== "right") {
-          setSnakeDirection("left");
-          playAudio(sound.direction, 0.05);
-        }
-        break;
-      case "ArrowRight":
-        console.log("RİGGGHT");
-        if (snakeDirection !== "left") {
-          setSnakeDirection("right");
-          playAudio(sound.direction, 0.05);
-        }
-        break;
-      case "ArrowUp":
-        if (snakeDirection !== "down") {
-          setSnakeDirection("up");
-          playAudio(sound.direction, 0.05);
-        }
-        break;
-      case "ArrowDown":
-        if (snakeDirection !== "up") {
-          setSnakeDirection("down");
-          playAudio(sound.direction, 0.05);
-        }
-        break;
-      default:
-        break;
-    }
+    // animateSnake();
   };
 
   useEffect(() => {
@@ -180,51 +145,80 @@ export const Snake = () => {
     });
   };
 
-  const animateSnake = useCallback(() => {
-    // @ts-ignore
-    clearInterval(gameAnimationTimer);
-    setGameAnimationTimer(
-      setInterval(() => {
-        setSnake((prevSnake) => {
-          const newSnake = [...prevSnake];
-          const snakeHead = newSnake[newSnake.length - 1];
+  const moveSnake = useCallback(() => {
+    setSnake((prevSnake) => {
+      const newSnake = [...prevSnake];
+      const snakeHead = newSnake[newSnake.length - 1];
 
-          // Calculate the new position of the snake's head based on the direction
-          if (snakeDirection === "right") {
-            snakeHead.x += 1;
-          } else if (snakeDirection === "left") {
-            snakeHead.x -= 1;
-          } else if (snakeDirection === "up") {
-            snakeHead.y -= 1;
-          } else if (snakeDirection === "down") {
-            snakeHead.y += 1;
-          }
+      // Calculate the new position of the snake's head based on the direction
+      if (snakeDirection === "right") {
+        snakeHead.x += 1;
+      } else if (snakeDirection === "left") {
+        snakeHead.x -= 1;
+      } else if (snakeDirection === "up") {
+        snakeHead.y -= 1;
+      } else if (snakeDirection === "down") {
+        snakeHead.y += 1;
+      }
 
-          // game area check
-          if (snakeHead.x === gameLength) {
-            snakeHead.x = 0;
-          } else if (snakeHead.x === -1) {
-            snakeHead.x = gameLength - 1;
-          } else if (snakeHead.y === -1) {
-            snakeHead.y = gameLength - 1;
-          } else if (snakeHead.y === gameLength) {
-            snakeHead.y = 0;
-          }
+      // game area check
+      if (snakeHead.x === gameLength) {
+        snakeHead.x = 0;
+      } else if (snakeHead.x === -1) {
+        snakeHead.x = gameLength - 1;
+      } else if (snakeHead.y === -1) {
+        snakeHead.y = gameLength - 1;
+      } else if (snakeHead.y === gameLength) {
+        snakeHead.y = 0;
+      }
 
-          preventSnakeToBiteItself(newSnake);
+      preventSnakeToBiteItself(newSnake);
 
-          if (newSnake.length > snakeLength) {
-            // If the snake is longer than snakeLength, remove the tail segment
-            newSnake.shift();
-          }
+      if (newSnake.length > snakeLength) {
+        // If the snake is longer than snakeLength, remove the tail segment
+        newSnake.shift();
+      }
 
-          return newSnake;
-        });
+      return newSnake;
+    });
 
-        updatePoint();
-      }, gameSpeed)
-    );
-  }, [snakeDirection, gameSpeed]);
+    updatePoint();
+  }, [snakeDirection, gameLength, snakeLength]);
+
+  const handleKeyPress = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (
+        !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)
+      ) {
+        return;
+      }
+
+      const isOppositeDirection = () => {
+        return (
+          (event.key === "ArrowLeft" && snakeDirection === "right") ||
+          (event.key === "ArrowRight" && snakeDirection === "left") ||
+          (event.key === "ArrowUp" && snakeDirection === "down") ||
+          (event.key === "ArrowDown" && snakeDirection === "up")
+        );
+      };
+
+      if (!isOppositeDirection()) {
+        setSnakeDirection(event.key.replace("Arrow", "").toLowerCase());
+        playAudio(sound.direction, 0.05);
+      }
+    },
+    [snakeDirection, sound.direction]
+  );
+
+  useEffect(() => {
+    if (!isGameOver) {
+      const gameInterval = setInterval(() => {
+        moveSnake();
+      }, gameSpeed);
+
+      return () => clearInterval(gameInterval);
+    }
+  }, [moveSnake, gameSpeed, isGameOver]);
 
   const preventSnakeToBiteItself = (snakeSegments: string | any[]) => {
     if (snakeSegments.length < 2) {
