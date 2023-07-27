@@ -78,13 +78,13 @@ export const Snake = () => {
     clearInterval(gameAnimationTimer);
     setSnake([]);
     setSnakeLength(1);
-    setSnake((prevSnake: any) => [getRandomDirection()]);
+    setSnake(() => [getRandomDirection()]);
     setScoreAnimation(false);
 
     animateSnake();
   };
 
-  const handleKeyPress = (event: any) => {
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
     switch (event.key) {
       case "ArrowLeft":
         if (snakeDirection !== "right") {
@@ -117,14 +117,16 @@ export const Snake = () => {
   };
 
   useEffect(() => {
+    // @ts-ignore
     document.addEventListener("keydown", handleKeyPress);
 
     return () => {
+      // @ts-ignore
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [snakeDirection]);
 
-  const bindSnake = (x: any, y: any) => {
+  const bindSnake = (x: number, y: number) => {
     for (let i = 0; i < snake.length; i++) {
       if (snake[i].x === x && snake[i].y === y) {
         return true;
@@ -132,7 +134,7 @@ export const Snake = () => {
     }
   };
 
-  const bindFood = (x: any, y: any) => {
+  const bindFood = (x: number, y: number) => {
     for (const item of food) {
       if (item.x === x && item.y === y) {
         return true;
@@ -140,8 +142,7 @@ export const Snake = () => {
     }
   };
 
-  // @ts-ignore
-  const playAudio = (audioSource, audioVolume: number) => {
+  const playAudio = (audioSource: string, audioVolume: number) => {
     if (sound.isMuted) return;
     const audio = new Audio(audioSource);
     audio.volume = audioVolume;
