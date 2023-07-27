@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -61,6 +60,7 @@ export const Snake = () => {
   const { areScoresFetched, bestScore } = useBestScores(
     gameDifficulties[gameDifficulty]
   );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { addNewHighScore } = useHighScore();
 
   useEffect(() => {
