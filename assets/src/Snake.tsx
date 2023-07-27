@@ -23,9 +23,11 @@ type Snake = {
   y: number;
 };
 
+const INITIAL_SNAKE_LENGTH = 1;
+
 export const Snake = () => {
   const [snake, setSnake] = useState<Snake[]>([]);
-  const [snakeLength, setSnakeLength] = useState(1);
+  const [snakeLength, setSnakeLength] = useState(INITIAL_SNAKE_LENGTH);
   const [snakeDirection, setSnakeDirection] = useState("right");
   const [food, setFood] = useState([{ x: 5, y: 7 }]);
   const [gameSpeed, setGameSpeed] = useState(100);
@@ -78,7 +80,7 @@ export const Snake = () => {
     // @ts-ignore
     clearInterval(gameAnimationTimer);
     setSnake([]);
-    setSnakeLength(1);
+    setSnakeLength(INITIAL_SNAKE_LENGTH);
     setSnake(() => [getRandomDirection()]);
     setScoreAnimation(false);
   };
