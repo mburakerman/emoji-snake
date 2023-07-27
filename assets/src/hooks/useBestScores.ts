@@ -4,30 +4,35 @@ import { GameDifficulty } from "../Snake";
 
 import db from "../../firebaseInit";
 
+type Score = {
+  user__difficulty: GameDifficulty;
+  user__score: number;
+};
+
 export const useBestScores = (difficulty: GameDifficulty) => {
-  const [bestScores, setBestScores] = useState<any>([]);
-  const [areScoresFetched, setAreScoresFetched] = useState<boolean>(false);
-  const [bestScore, setBestScore] = useState<any>({});
+  const [bestScores, setBestScores] = useState<Score[]>([]);
+  const [areScoresFetched, setAreScoresFetched] = useState(false);
+  const [bestScore, setBestScore] = useState<Score | null>(null);
 
   useEffect(() => {
     const fetchScores = async () => {
       try {
         setBestScores([]);
         setAreScoresFetched(false);
-        setBestScore({});
+        setBestScore(null);
 
         const querySnapshot = await db.collection("scores").get();
 
-        const fetchedScores: any = [];
+        const fetchedScores: Score[] = [];
         querySnapshot.forEach((item) => {
           setAreScoresFetched(true);
-          const scores = item.data();
+          const scores = item.data() as Score;
+
+          // medium is default difficulty
           if (
-            scores.user__difficulty !== undefined &&
+            difficulty === "medium" ||
             scores.user__difficulty === difficulty
           ) {
-            fetchedScores.push(scores);
-          } else if (difficulty === "medium") {
             fetchedScores.push(scores);
           }
         });
@@ -35,9 +40,8 @@ export const useBestScores = (difficulty: GameDifficulty) => {
         setBestScores(fetchedScores);
 
         const highestScore = fetchedScores.reduce(
-          (prev: any, current: any) =>
-            prev.user__score > current.user__score ? prev : current,
-          {}
+          (prev: Score, current: Score) =>
+            prev.user__score > current.user__score ? prev : current
         );
         setBestScore(highestScore);
       } catch (error) {
