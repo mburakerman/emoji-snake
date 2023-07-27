@@ -149,10 +149,7 @@ export const Snake = () => {
 
   useEffect(() => {
     if (!isGameOver) {
-      const gameInterval = setInterval(() => {
-        moveSnake();
-      }, gameSpeed);
-
+      const gameInterval = setInterval(moveSnake, gameSpeed);
       return () => clearInterval(gameInterval);
     }
   }, [moveSnake, gameSpeed, isGameOver]);
