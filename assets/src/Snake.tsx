@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { Header } from "./components/Header";
@@ -95,7 +95,7 @@ export const Snake = () => {
     };
   }, []);
 
-  const moveSnake = useCallback(() => {
+  const moveSnake = () => {
     setSnake((prevSnake) => {
       const newSnake = [...prevSnake];
       const snakeHead = newSnake[newSnake.length - 1];
@@ -134,7 +134,7 @@ export const Snake = () => {
     });
 
     updatePoint();
-  }, [snakeDirection, gameLength, snakeLength]);
+  };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const validKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
