@@ -102,6 +102,7 @@ export const Snake = () => {
       if (snakeDirection === "right") {
         snakeHead.x += 1;
       } else if (snakeDirection === "left") {
+        console.log("left");
         snakeHead.x -= 1;
       } else if (snakeDirection === "up") {
         snakeHead.y -= 1;
@@ -135,27 +136,18 @@ export const Snake = () => {
 
   const handleKeyPress = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (
-        !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)
-      ) {
+      const validKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
+      const { key } = event;
+
+      if (!validKeys.includes(key)) {
         return;
       }
 
-      const isOppositeDirection = () => {
-        return (
-          (event.key === "ArrowLeft" && snakeDirection === "right") ||
-          (event.key === "ArrowRight" && snakeDirection === "left") ||
-          (event.key === "ArrowUp" && snakeDirection === "down") ||
-          (event.key === "ArrowDown" && snakeDirection === "up")
-        );
-      };
-
-      if (!isOppositeDirection()) {
-        setSnakeDirection(event.key.replace("Arrow", "").toLowerCase());
-        playAudio(sound.direction, 0.05);
-      }
+      const direction = key.replace("Arrow", "").toLowerCase();
+      setSnakeDirection(direction);
+      playAudio(sound.direction, 0.05);
     },
-    [snakeDirection, sound.direction]
+    [setSnakeDirection, sound.direction]
   );
 
   useEffect(() => {
