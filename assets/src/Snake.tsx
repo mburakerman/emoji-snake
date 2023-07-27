@@ -134,21 +134,18 @@ export const Snake = () => {
     updatePoint();
   }, [snakeDirection, gameLength, snakeLength]);
 
-  const handleKeyPress = useCallback(
-    (event: React.KeyboardEvent<HTMLDivElement>) => {
-      const validKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
-      const { key } = event;
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const validKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
+    const { key } = event;
 
-      if (!validKeys.includes(key)) {
-        return;
-      }
+    if (!validKeys.includes(key)) {
+      return;
+    }
 
-      const direction = key.replace("Arrow", "").toLowerCase();
-      setSnakeDirection(direction);
-      playAudio(sound.direction, 0.05);
-    },
-    [setSnakeDirection, sound.direction]
-  );
+    const direction = key.replace("Arrow", "").toLowerCase();
+    setSnakeDirection(direction);
+    playAudio(sound.direction, 0.05);
+  };
 
   useEffect(() => {
     if (!isGameOver) {
