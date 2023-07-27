@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { Header } from "./components/Header";
@@ -84,6 +84,10 @@ export const Snake = () => {
     animateSnake();
   };
 
+  useEffect(() => {
+    animateSnake();
+  }, [snakeDirection]);
+
   const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
     switch (event.key) {
       case "ArrowLeft":
@@ -124,7 +128,7 @@ export const Snake = () => {
       // @ts-ignore
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, [snakeDirection]);
+  }, []);
 
   const bindSnake = (x: number, y: number) => {
     for (let i = 0; i < snake.length; i++) {
@@ -176,7 +180,9 @@ export const Snake = () => {
     });
   };
 
-  const animateSnake = () => {
+  const animateSnake = useCallback(() => {
+    // @ts-ignore
+    clearInterval(gameAnimationTimer);
     setGameAnimationTimer(
       setInterval(() => {
         setSnake((prevSnake) => {
@@ -218,7 +224,7 @@ export const Snake = () => {
         updatePoint();
       }, gameSpeed)
     );
-  };
+  }, [snakeDirection, gameSpeed]);
 
   const preventSnakeToBiteItself = (snakeSegments: string | any[]) => {
     if (snakeSegments.length < 2) {
