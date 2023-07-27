@@ -23,7 +23,8 @@
     "vue-hot-reload-api": "^2.3.4",
     "vue-icon": "^2.1.2",
     "vue-sweetalert2": "^3.0.3",
-    "vuereact-combined": "^1.2.11"
+    "vuereact-combined": "^1.2.11",
+    "zustand": "^4.3.9"
   },
   "devDependencies": {
     "@types/hammerjs": "^2.0.41",

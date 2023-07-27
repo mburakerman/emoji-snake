@@ -2,8 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-// @ts-ignore
-import db from "../firebaseInit.js";
 
 import { Header } from "./components/Header";
 import { DifficultyButton } from "./components/DifficultyButton";
@@ -11,13 +9,15 @@ import { InfoButton } from "./components/InfoButton";
 import { RestartButton } from "./components/RestartButton";
 import { VolumeButton } from "./components/VolumeButton";
 import { Characters } from "./components/Characters";
+import { useBestScores } from "./hooks/useBestScores";
+import { useHighScore } from "./hooks/useHighScore";
 
 const StyledContainer = styled.div``;
 
 const MAX_SCORE = 100;
 const GAME_LENGTH = 20;
 
-type GameDifficulty = "easy" | "medium" | "hard";
+export type GameDifficulty = "easy" | "medium" | "hard";
 
 type Snake = {
   x: number;
@@ -50,9 +50,6 @@ export const Snake = () => {
     direction: require("./assets/sound/direction.mp3"),
     isMuted: false,
   });
-  const [bestScores, setBestScores] = useState([]);
-  const [areScoresFetched, setAreScoresFetched] = useState(false);
-  const [bestScore, setBestScore] = useState({});
   const [characters, setCharacters] = useState({
     snake: {
       sponge: true,
@@ -61,8 +58,12 @@ export const Snake = () => {
     },
   });
 
+  const { areScoresFetched, bestScore } = useBestScores(
+    gameDifficulties[gameDifficulty]
+  );
+  const { addNewHighScore } = useHighScore();
+
   useEffect(() => {
-    fetchScores(gameDifficulties[gameDifficulty]);
     init();
 
     return () => {
@@ -122,53 +123,6 @@ export const Snake = () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [snakeDirection]);
-
-  const fetchScores = (difficulty: GameDifficulty) => {
-    setBestScores([]);
-    setAreScoresFetched(false);
-    setBestScore({});
-
-    db.collection("scores")
-      .get()
-      .then((query: any) => {
-        const fetchedScores: any = [];
-        query.forEach((item: any) => {
-          setAreScoresFetched(true);
-          const scores = item.data();
-          if (scores.user__difficulty !== undefined) {
-            if (scores.user__difficulty === difficulty) {
-              fetchedScores.push(scores);
-            }
-          } else {
-            if (difficulty === "medium") {
-              fetchedScores.push(scores);
-            }
-          }
-        });
-
-        setBestScores(fetchedScores);
-        setBestScore(
-          fetchedScores.reduce(
-            (
-              prev: { user__score: number },
-              current: { user__score: number }
-            ) => (prev.user__score > current.user__score ? prev : current)
-          )
-        );
-      })
-      .catch((error: Error) => {
-        console.error("Error fetching scores:", error);
-      });
-  };
-
-  const addNewHighScore = (scoreData: any) => {
-    db.collection("scores")
-      .doc()
-      .set(scoreData)
-      .then(() => {
-        fetchScores(gameDifficulties[gameDifficulty]);
-      });
-  };
 
   const bindSnake = (x: any, y: any) => {
     for (let i = 0; i < snake.length; i++) {
