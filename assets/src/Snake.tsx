@@ -98,13 +98,11 @@ export const Snake = () => {
   const moveSnake = () => {
     setSnake((prevSnake) => {
       const newSnake = [...prevSnake];
-      const snakeHead = newSnake[newSnake.length - 1];
+      const snakeHead = { ...newSnake[newSnake.length - 1] };
 
-      // Calculate the new position of the snake's head based on the direction
       if (snakeDirection === "right") {
         snakeHead.x += 1;
       } else if (snakeDirection === "left") {
-        console.log("left");
         snakeHead.x -= 1;
       } else if (snakeDirection === "up") {
         snakeHead.y -= 1;
@@ -125,8 +123,8 @@ export const Snake = () => {
 
       preventSnakeToBiteItself(newSnake);
 
+      newSnake.push(snakeHead);
       if (newSnake.length > snakeLength) {
-        // If the snake is longer than snakeLength, remove the tail segment
         newSnake.shift();
       }
 
