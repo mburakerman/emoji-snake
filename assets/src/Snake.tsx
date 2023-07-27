@@ -81,8 +81,6 @@ export const Snake = () => {
     setSnakeLength(1);
     setSnake(() => [getRandomDirection()]);
     setScoreAnimation(false);
-
-    // animateSnake();
   };
 
   useEffect(() => {
@@ -94,56 +92,6 @@ export const Snake = () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
-
-  const bindSnake = (x: number, y: number) => {
-    for (let i = 0; i < snake.length; i++) {
-      if (snake[i].x === x && snake[i].y === y) {
-        return true;
-      }
-    }
-  };
-
-  const bindFood = (x: number, y: number) => {
-    for (const item of food) {
-      if (item.x === x && item.y === y) {
-        return true;
-      }
-    }
-  };
-
-  const playAudio = (audioSource: string, audioVolume: number) => {
-    if (sound.isMuted) return;
-    const audio = new Audio(audioSource);
-    audio.volume = audioVolume;
-    audio.play();
-  };
-
-  const toggleRestartModal = () => {
-    setModalTemplate(`<p>🧼<br> Restart?</p>`);
-    setIsModalVisible(!isModalVisible);
-    setWantRestart(true);
-  };
-
-  const toggleDifficulty = () => {
-    setGameDifficulty((prevDifficulty) => {
-      let newDifficulty = prevDifficulty + 1;
-      if (newDifficulty > 2) {
-        newDifficulty = 0;
-      }
-
-      const initSpeed = 100;
-      if (newDifficulty === 0) {
-        setGameSpeed(initSpeed + 20);
-      } else if (newDifficulty === 1) {
-        setGameSpeed(initSpeed);
-      } else {
-        setGameSpeed(initSpeed - 20);
-      }
-
-      //fetchScores(gameDifficulties[newDifficulty]);
-      return newDifficulty;
-    });
-  };
 
   const moveSnake = useCallback(() => {
     setSnake((prevSnake) => {
@@ -219,6 +167,56 @@ export const Snake = () => {
       return () => clearInterval(gameInterval);
     }
   }, [moveSnake, gameSpeed, isGameOver]);
+
+  const bindSnake = (x: number, y: number) => {
+    for (let i = 0; i < snake.length; i++) {
+      if (snake[i].x === x && snake[i].y === y) {
+        return true;
+      }
+    }
+  };
+
+  const bindFood = (x: number, y: number) => {
+    for (const item of food) {
+      if (item.x === x && item.y === y) {
+        return true;
+      }
+    }
+  };
+
+  const playAudio = (audioSource: string, audioVolume: number) => {
+    if (sound.isMuted) return;
+    const audio = new Audio(audioSource);
+    audio.volume = audioVolume;
+    audio.play();
+  };
+
+  const toggleRestartModal = () => {
+    setModalTemplate(`<p>🧼<br> Restart?</p>`);
+    setIsModalVisible(!isModalVisible);
+    setWantRestart(true);
+  };
+
+  const toggleDifficulty = () => {
+    setGameDifficulty((prevDifficulty) => {
+      let newDifficulty = prevDifficulty + 1;
+      if (newDifficulty > 2) {
+        newDifficulty = 0;
+      }
+
+      const initSpeed = 100;
+      if (newDifficulty === 0) {
+        setGameSpeed(initSpeed + 20);
+      } else if (newDifficulty === 1) {
+        setGameSpeed(initSpeed);
+      } else {
+        setGameSpeed(initSpeed - 20);
+      }
+
+      //fetchScores(gameDifficulties[newDifficulty]);
+      return newDifficulty;
+    });
+  };
 
   const preventSnakeToBiteItself = (snakeSegments: string | any[]) => {
     if (snakeSegments.length < 2) {
