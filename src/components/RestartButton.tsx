@@ -1,4 +1,5 @@
 import React from "react";
+import { RestartIcon } from "./icons/RestartIcon";
 
 type Props = {
   disabled: boolean;
@@ -13,7 +14,7 @@ export const RestartButton = ({ disabled, onClick }: Props) => {
       title="Restart"
       disabled={disabled}
     >
-      --refresh-icon--
+      <RestartIcon />
     </button>
   );
 };

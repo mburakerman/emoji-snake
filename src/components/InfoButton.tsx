@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { InfoIcon } from "./icons/InfoIcon";
 
 type Props = {
   onClick: (val: string) => void;
@@ -21,5 +22,9 @@ export const InfoButton = ({ onClick }: Props) => {
     onClick(modalTemplate);
   };
 
-  return <StyledCButton onClick={handleClick}>--info-icon--</StyledCButton>;
+  return (
+    <StyledCButton onClick={handleClick}>
+      <InfoIcon />
+    </StyledCButton>
+  );
 };

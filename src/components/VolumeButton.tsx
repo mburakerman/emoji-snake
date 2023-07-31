@@ -1,4 +1,6 @@
 import React from "react";
+import { VolumeIcon } from "./icons/VolumeIcon";
+import { MutedVolumeIcon } from "./icons/MutedVolumeIcon";
 
 type SoundProps = {
   isMuted: boolean;
@@ -27,7 +29,7 @@ export const VolumeButton = ({ sound, onClick }: Props) => {
 
   return (
     <button className="button--volume" title="Volume" onClick={handleClick}>
-      {sound.isMuted ? "--mute-icon--" : "--volume-icon--"}
+      {sound.isMuted ? <MutedVolumeIcon /> : <VolumeIcon />}
     </button>
   );
 };
