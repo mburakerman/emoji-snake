@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { CrownIcon } from "./icons/CrownIcon";
 
 type Props = {
   bestScore: unknown;
@@ -8,12 +9,20 @@ type Props = {
   areScoresFetched: boolean;
 };
 
+const StyledCrownIcon = styled(CrownIcon)`
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  transform: rotate(20deg);
+  font-size: 18px;
+`;
+
 const StyledContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-const StyledScore = styled.p`
+const scoreStyle = `
   background-color: #43465a;
   padding: 5px 10px;
   border-radius: 4px;
@@ -27,17 +36,14 @@ const StyledScore = styled.p`
   @media screen and (max-width: 500px) {
     font-size: 15px;
   }
+`;
 
-  &.is-best {
-    &:after {
-      content: "👑";
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      transform: rotate(20deg);
-      font-size: 18px;
-    }
-  }
+const StyledBestScore = styled.p`
+  ${scoreStyle}
+`;
+
+const StyledScore = styled.p`
+  ${scoreStyle}
 `;
 
 const StyledScoreInner = styled.span`
@@ -70,13 +76,12 @@ export const Header = ({
 }: Props) => {
   return (
     <StyledContainer>
-      <StyledScore
-        className={`${areScoresFetched ? "is-best" : "is-best has-loading"}`}
-      >
+      <StyledBestScore className={`${areScoresFetched ? " " : "has-loading"}`}>
         Best Score
+        <StyledCrownIcon />
         {/* @ts-ignore */}
         <span id="bestScore">{bestScore?.user__score}</span>
-      </StyledScore>
+      </StyledBestScore>
       <StyledScore>
         Score
         <StyledScoreInner>
