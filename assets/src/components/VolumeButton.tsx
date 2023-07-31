@@ -1,9 +1,4 @@
 import React from "react";
-import { Volume2Icon, VolumeXIcon } from "vue-feather-icons";
-import { applyVueInReact } from "vuereact-combined";
-
-const Volume2IconReact = applyVueInReact(Volume2Icon);
-const VolumeXIconReact = applyVueInReact(VolumeXIcon);
 
 type SoundProps = {
   isMuted: boolean;
@@ -32,7 +27,7 @@ export const VolumeButton = ({ sound, onClick }: Props) => {
 
   return (
     <button className="button--volume" title="Volume" onClick={handleClick}>
-      {sound.isMuted ? <Volume2IconReact /> : <VolumeXIconReact />}
+      {sound.isMuted ? "--mute-icon--" : "--volume-icon--"}
     </button>
   );
 };

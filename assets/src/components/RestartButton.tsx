@@ -1,8 +1,4 @@
 import React from "react";
-import { RefreshCwIcon } from "vue-feather-icons";
-import { applyVueInReact } from "vuereact-combined";
-
-const RefreshIcon = applyVueInReact(RefreshCwIcon);
 
 type Props = {
   disabled: boolean;
@@ -17,7 +13,7 @@ export const RestartButton = ({ disabled, onClick }: Props) => {
       title="Restart"
       disabled={disabled}
     >
-      <RefreshIcon />
+      --refresh-icon--
     </button>
   );
 };

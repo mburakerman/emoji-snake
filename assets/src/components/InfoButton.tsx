@@ -1,9 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { InfoIcon } from "vue-feather-icons";
-import { applyVueInReact } from "vuereact-combined";
-
-const InfoIconReact = applyVueInReact(InfoIcon);
 
 type Props = {
   onClick: (val: string) => void;
@@ -25,9 +21,5 @@ export const InfoButton = ({ onClick }: Props) => {
     onClick(modalTemplate);
   };
 
-  return (
-    <StyledCButton onClick={handleClick}>
-      <InfoIconReact />
-    </StyledCButton>
-  );
+  return <StyledCButton onClick={handleClick}>--info-icon--</StyledCButton>;
 };

@@ -1,56 +1,43 @@
 {
   "name": "virusnake",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
+  "license": "ISC",
   "scripts": {
-    "start": "parcel index.html -p 3003",
-    "build": "parcel build index.html --public-url ./",
+    "start": "vite --port 3003",
+    "build": "vite build",
+    "preview": "vite preview",
     "lint": "\"./node_modules/.bin/eslint\" . --ext ts,tsx"
   },
-  "author": "Mehmet Burak Erman",
-  "license": "ISC",
   "dependencies": {
     "firebase": "^7.24.0",
     "hammerjs": "^2.0.8",
-    "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^4.4.1",
     "uuid": "^7.0.3",
-    "vue": "^2.6.11",
-    "vue-feather-icons": "^5.0.0",
-    "vue-hot-reload-api": "^2.3.4",
-    "vue-icon": "^2.1.2",
-    "vue-sweetalert2": "^3.0.3",
     "vuereact-combined": "^1.2.11",
     "zustand": "^4.3.9"
   },
   "devDependencies": {
+    "@rollup/plugin-url": "^8.0.1",
     "@types/firebase": "^3.2.1",
     "@types/hammerjs": "^2.0.41",
     "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
     "@types/styled-components": "^4.4.1",
-    "@types/vue-feather-icons": "^5.0.4",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
-    "@vue/component-compiler-utils": "^3.1.2",
+    "@vitejs/plugin-react": "^4.0.3",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-functional": "^5.0.8",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "parcel-bundler": "^1.12.4",
     "prettier": "^3.0.0",
-    "stylus": "^0.54.7",
     "typescript": "^5.1.6",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "alias": {
-    "vue": "./node_modules/vue/dist/vue.common.js"
-  },
-  "posthtml": {
-    "recognizeSelfClosing": true
+    "vite": "^4.4.7"
   }
 }

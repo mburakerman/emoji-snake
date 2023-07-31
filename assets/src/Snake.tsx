@@ -10,6 +10,10 @@ import { VolumeButton } from "./components/VolumeButton";
 import { Characters } from "./components/Characters";
 import { useBestScores } from "./hooks/useBestScores";
 import { useHighScore } from "./hooks/useHighScore";
+// @ts-ignore
+import foodSound from "./assets/sound/food.mp3";
+// @ts-ignore
+import directionSound from "./assets/sound/direction.mp3";
 
 const StyledContainer = styled.div``;
 
@@ -48,8 +52,8 @@ export const Snake = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [wantRestart, setWantRestart] = useState(false);
   const [sound, setSound] = useState({
-    food: require("./assets/sound/food.mp3"),
-    direction: require("./assets/sound/direction.mp3"),
+    food: new Audio(foodSound),
+    direction: new Audio(directionSound),
     isMuted: false,
   });
   const [characters, setCharacters] = useState({
@@ -144,6 +148,7 @@ export const Snake = () => {
 
     const direction = key.replace("Arrow", "").toLowerCase();
     setSnakeDirection(direction);
+    // @ts-ignore
     playAudio(sound.direction, 0.05);
   };
 
@@ -243,6 +248,7 @@ export const Snake = () => {
     if (food[0].x === snakeHead.x && food[0].y === snakeHead.y) {
       setSnakeLength((prevLength) => prevLength + 1);
       setFood([getRandomDirection()]);
+      // @ts-ignore
       playAudio(sound.food, 0.1);
 
       // max score is reached
@@ -275,6 +281,7 @@ export const Snake = () => {
       }
 
       setSnakeDirection(directions[e.keyCode]);
+      // @ts-ignore
       playAudio(sound.direction, 0.05);
     }
   };
