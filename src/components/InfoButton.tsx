@@ -6,8 +6,18 @@ type Props = {
   onClick: (val: string) => void;
 };
 
-const StyledCButton = styled.button`
+const StyledContainer = styled.button`
+  cursor: pointer;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #43465a;
   margin-right: auto;
+
+  &:disabled {
+    opacity: 0.5;
+  }
 `;
 
 export const InfoButton = ({ onClick }: Props) => {
@@ -23,8 +33,8 @@ export const InfoButton = ({ onClick }: Props) => {
   };
 
   return (
-    <StyledCButton onClick={handleClick}>
+    <StyledContainer onClick={handleClick}>
       <InfoIcon />
-    </StyledCButton>
+    </StyledContainer>
   );
 };

@@ -32,22 +32,7 @@ h1 {
   }
 }
 
-button {
-  cursor: pointer;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  background-color: #43465a;
-
-  &:disabled {
-    opacity: 0.5;
-  }
-
-  &.swal2-styled.swal2-confirm {
-    background-color: #43465a;
-  }
-}
+ 
 
 main {
   width: 400px;

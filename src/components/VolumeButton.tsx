@@ -1,6 +1,7 @@
 import React from "react";
 import { VolumeIcon } from "./icons/VolumeIcon";
 import { MutedVolumeIcon } from "./icons/MutedVolumeIcon";
+import styled from "styled-components";
 
 type SoundProps = {
   isMuted: boolean;
@@ -10,6 +11,20 @@ type Props = {
   sound: SoundProps;
   onClick: (val: SoundProps) => void;
 };
+
+const StyledContainer = styled.button`
+  cursor: pointer;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #43465a;
+  margin-right: 10px;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+`;
 
 export const VolumeButton = ({ sound, onClick }: Props) => {
   const isMobile = () => {
@@ -28,8 +43,8 @@ export const VolumeButton = ({ sound, onClick }: Props) => {
   }
 
   return (
-    <button className="button--volume" title="Volume" onClick={handleClick}>
+    <StyledContainer title="Volume" onClick={handleClick}>
       {sound.isMuted ? <MutedVolumeIcon /> : <VolumeIcon />}
-    </button>
+    </StyledContainer>
   );
 };
