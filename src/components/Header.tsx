@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { CrownIcon } from "./icons/CrownIcon";
-import { Score } from "../hooks/useBestScores";
+import { Score, BestScore } from "../hooks/useBestScores";
 
 type Props = {
-  bestScore: Score | null;
+  bestScore: BestScore;
   score: Score["user__score"];
   isScoreAnimationActive: boolean;
   areScoresFetched: boolean;
