@@ -4,8 +4,10 @@ import { GameDifficulty } from "../Snake";
 
 import db from "../firebaseInit";
 
-type Score = {
-  user__difficulty: GameDifficulty;
+export type Score = {
+  user__difficulty?: GameDifficulty;
+  user__id: string;
+  user__name: string;
   user__score: number;
 };
 

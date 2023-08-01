@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { CrownIcon } from "./icons/CrownIcon";
+import { Score } from "../hooks/useBestScores";
 
 type Props = {
-  bestScore: unknown;
-  score: number;
+  bestScore: Score | null;
+  score: Score["user__score"];
   isScoreAnimationActive: boolean;
   areScoresFetched: boolean;
 };
@@ -36,6 +37,38 @@ const scoreStyle = `
   @media screen and (max-width: 500px) {
     font-size: 15px;
   }
+
+  [data-tooltip] {
+    &:after {
+      position: absolute;
+      font-size: 13px;
+      border-radius: 4px;
+      content: attr(data-tooltip);
+      padding: 5px 14px;
+      background-color: rgba(32, 33, 44, 0.9);
+      color: #fff;
+      text-align: center;
+      z-index: 1;
+      pointer-events: none;
+      display: block;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%, 0px);
+      width: 100%;
+    }
+  
+    &:hover {
+      &:after {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, 5px);
+      }
+    }
+  }
+  
 `;
 
 const StyledBestScore = styled.p`
@@ -79,8 +112,9 @@ export const Header = ({
       <StyledBestScore className={`${areScoresFetched ? " " : "has-loading"}`}>
         Best Score
         <StyledCrownIcon />
-        {/* @ts-ignore */}
-        <span id="bestScore">{bestScore?.user__score}</span>
+        <span data-tooltip={bestScore?.user__name}>
+          {bestScore?.user__score}
+        </span>
       </StyledBestScore>
       <StyledScore>
         Score
