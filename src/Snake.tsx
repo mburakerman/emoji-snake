@@ -92,17 +92,22 @@ const GAME_LENGTH = 20;
 
 export type GameDifficulty = "easy" | "medium" | "hard";
 
+type SnakeDirection = "left" | "right" | "up" | "down";
+
 type Snake = {
   x: number;
   y: number;
 };
 
 const INITIAL_SNAKE_LENGTH = 1;
+const INITIAL_SNAKE_DIRECTION: SnakeDirection = "right";
 
 export const Snake = () => {
   const [snake, setSnake] = useState<Snake[]>([]);
   const [snakeLength, setSnakeLength] = useState(INITIAL_SNAKE_LENGTH);
-  const [snakeDirection, setSnakeDirection] = useState("right");
+  const [snakeDirection, setSnakeDirection] = useState<SnakeDirection>(
+    INITIAL_SNAKE_DIRECTION
+  );
   const [food, setFood] = useState([{ x: 5, y: 7 }]);
   const [gameSpeed, setGameSpeed] = useState(100);
   const [gameLength] = useState(GAME_LENGTH);
@@ -208,7 +213,7 @@ export const Snake = () => {
       return;
     }
 
-    const direction = key.replace("Arrow", "").toLowerCase();
+    const direction = key.replace("Arrow", "").toLowerCase() as SnakeDirection;
     setSnakeDirection(direction);
     // @ts-ignore
     playAudio(sound.direction, 0.05);
