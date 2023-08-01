@@ -94,12 +94,8 @@ export const Snake = () => {
   const [gameSpeed, setGameSpeed] = useState(INITIAL_GAME_SPEED);
   const [gameLength] = useState(GAME_LENGTH);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [gameDifficulties] = useState<GameDifficulty[]>([
-    "easy",
-    "medium",
-    "hard",
-  ]);
-  const [gameDifficulty, setGameDifficulty] = useState(1);
+  const [gameDifficulty, setGameDifficulty] =
+    useState<GameDifficulty>("medium");
   const [scoreAnimation, setScoreAnimation] = useState(false);
   const [modalTemplate, setModalTemplate] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -110,15 +106,13 @@ export const Snake = () => {
     isMuted: false,
   });
 
-  const { areScoresFetched, bestScore } = useBestScores(
-    gameDifficulties[gameDifficulty]
-  );
+  const { areScoresFetched, bestScore } = useBestScores(gameDifficulty);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { addNewHighScore } = useHighScore();
 
   useEffect(() => {
     init();
-  }, [gameDifficulty]);
+  }, [gameDifficulty, gameSpeed]);
 
   const init = () => {
     setSnake([]);
@@ -227,18 +221,27 @@ export const Snake = () => {
 
   const toggleDifficulty = () => {
     setGameDifficulty((prevDifficulty) => {
-      let newDifficulty = prevDifficulty + 1;
-      if (newDifficulty > 2) {
-        newDifficulty = 0;
-      }
+      let newDifficulty = prevDifficulty;
 
-      const initSpeed = 100;
-      if (newDifficulty === 0) {
-        setGameSpeed(initSpeed + 20);
-      } else if (newDifficulty === 1) {
-        setGameSpeed(initSpeed);
-      } else {
-        setGameSpeed(initSpeed - 20);
+      switch (prevDifficulty) {
+        case "easy":
+          newDifficulty = "medium";
+          setGameSpeed(INITIAL_GAME_SPEED);
+          break;
+
+        case "medium":
+          newDifficulty = "hard";
+          setGameSpeed(INITIAL_GAME_SPEED - 20);
+          break;
+
+        case "hard":
+          newDifficulty = "easy";
+          setGameSpeed(INITIAL_GAME_SPEED + 20);
+          break;
+
+        default:
+          newDifficulty = "medium";
+          setGameSpeed(INITIAL_GAME_SPEED);
       }
 
       return newDifficulty;
@@ -313,13 +316,14 @@ export const Snake = () => {
 
   return (
     <StyledContainer>
+      {gameDifficulty}
+      gameSpeed {gameSpeed}
       <Header
         score={snakeLength - 1}
         bestScore={bestScore}
         isScoreAnimationActive={scoreAnimation}
         areScoresFetched={areScoresFetched}
       />
-
       <StyledGameAreaContainer>
         <Modal
           isModalVisible={isModalVisible}
@@ -346,7 +350,6 @@ export const Snake = () => {
           ))}
         </StyledGameArea>
       </StyledGameAreaContainer>
-
       <StyledGameFooter>
         <InfoButton
           onClick={(val) => {
@@ -358,7 +361,7 @@ export const Snake = () => {
           onClick={toggleDifficulty}
           disabled={snakeLength - 1 > 0}
         >
-          {gameDifficulties[gameDifficulty]}
+          {gameDifficulty}
         </DifficultyButton>
         <VolumeButton sound={sound} setSound={setSound} />
         <RestartButton onClick={toggleRestartModal} disabled={isModalVisible} />
