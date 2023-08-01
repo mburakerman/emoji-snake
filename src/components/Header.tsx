@@ -109,12 +109,14 @@ export const Header = ({
 }: Props) => {
   return (
     <StyledContainer>
-      <StyledBestScore className={`${areScoresFetched ? " " : "has-loading"}`}>
+      <StyledBestScore>
         Best Score
         <StyledCrownIcon />
-        <span data-tooltip={bestScore?.user__name}>
-          {bestScore?.user__score}
-        </span>
+        {areScoresFetched ? (
+          <span data-tooltip={bestScore?.user__name}>
+            {bestScore?.user__score}
+          </span>
+        ) : null}
       </StyledBestScore>
       <StyledScore>
         Score

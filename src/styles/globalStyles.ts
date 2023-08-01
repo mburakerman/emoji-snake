@@ -22,27 +22,6 @@ body {
   padding: 10px 0;
 }
 
-/// app.vue styles
-.has-loading {
-  position: relative;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    background: url('./img/loading.svg') rgba(#15161d, 0.8) center center no-repeat;
-    background-size: 20%;
-    overflow: hidden;
-    z-index: 9999999;
-  }
-}
- 
 @keyframes scale {
   from {
     transform: scale(1);
@@ -52,5 +31,4 @@ body {
     transform: scale(1.4);
   }
 }
- 
 `;
