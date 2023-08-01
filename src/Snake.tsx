@@ -81,6 +81,7 @@ const INITIAL_SNAKE_LENGTH = 1;
 const INITIAL_SNAKE_DIRECTION: SnakeDirection = "right";
 const INITIAL_FOOD_COORDINATES = [{ x: 5, y: 7 }];
 
+const CHARACTER = "🐍";
 const FOODS = ["🍎", "🍄", "🔮", "💣"];
 
 export const Snake = () => {
@@ -340,7 +341,7 @@ export const Snake = () => {
   };
 
   return (
-    <StyledContainer className="game">
+    <StyledContainer>
       <Header
         score={snakeLength - 1}
         bestScore={bestScore}
@@ -364,7 +365,7 @@ export const Snake = () => {
               {Array.from({ length: gameLength }).map((_, rowIndex) => (
                 <div key={rowIndex}>
                   {bindSnake(colIndex, rowIndex) ? (
-                    <>🐍</>
+                    <>{CHARACTER}</>
                   ) : bindFood(colIndex, rowIndex) ? (
                     <>🍎</>
                   ) : null}
