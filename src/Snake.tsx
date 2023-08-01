@@ -96,7 +96,6 @@ export const Snake = () => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [gameDifficulty, setGameDifficulty] =
     useState<GameDifficulty>("medium");
-
   const [modalTemplate, setModalTemplate] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [wantRestart, setWantRestart] = useState(false);
@@ -121,14 +120,25 @@ export const Snake = () => {
   };
 
   useEffect(() => {
-    // @ts-ignore
     document.addEventListener("keydown", handleKeyPress);
 
     return () => {
-      // @ts-ignore
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+
+  const handleKeyPress = (event: KeyboardEvent) => {
+    const validKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
+    const { key } = event;
+
+    if (!validKeys.includes(key)) {
+      return;
+    }
+
+    const direction = key.replace("Arrow", "").toLowerCase() as SnakeDirection;
+    setSnakeDirection(direction);
+    playAudio(sound.direction, 0.05);
+  };
 
   const moveSnake = () => {
     setSnake((prevSnake) => {
@@ -167,19 +177,6 @@ export const Snake = () => {
     });
 
     updatePoint();
-  };
-
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const validKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
-    const { key } = event;
-
-    if (!validKeys.includes(key)) {
-      return;
-    }
-
-    const direction = key.replace("Arrow", "").toLowerCase() as SnakeDirection;
-    setSnakeDirection(direction);
-    playAudio(sound.direction, 0.05);
   };
 
   useEffect(() => {
@@ -274,7 +271,7 @@ export const Snake = () => {
     setIsGameOver(true);
 
     setModalTemplate(
-      `<p>😷<br />Game Over!<br />Your score is ${snakeLength - 1}.</p>`
+      `<p>😔<br />Game Over!<br />Your score is ${snakeLength - 1}.</p>`
     );
     setIsModalVisible(!isModalVisible);
   };
