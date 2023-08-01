@@ -105,6 +105,7 @@ type Snake = {
 
 const INITIAL_SNAKE_LENGTH = 1;
 const INITIAL_SNAKE_DIRECTION: SnakeDirection = "right";
+const INITIAL_FOOD_COORDINATES = [{ x: 5, y: 7 }];
 
 export const Snake = () => {
   const [snake, setSnake] = useState<Snake[]>([]);
@@ -112,7 +113,7 @@ export const Snake = () => {
   const [snakeDirection, setSnakeDirection] = useState<SnakeDirection>(
     INITIAL_SNAKE_DIRECTION
   );
-  const [food, setFood] = useState([{ x: 5, y: 7 }]);
+  const [food, setFood] = useState(INITIAL_FOOD_COORDINATES);
   const [gameSpeed, setGameSpeed] = useState(100);
   const [gameLength] = useState(GAME_LENGTH);
   const [isGameOver, setIsGameOver] = useState(false);
