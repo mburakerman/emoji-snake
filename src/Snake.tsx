@@ -214,7 +214,6 @@ export const Snake = () => {
 
     const direction = key.replace("Arrow", "").toLowerCase() as SnakeDirection;
     setSnakeDirection(direction);
-    // @ts-ignore
     playAudio(sound.direction, 0.05);
   };
 
@@ -313,7 +312,6 @@ export const Snake = () => {
     if (food[0].x === snakeHead.x && food[0].y === snakeHead.y) {
       setSnakeLength((prevLength) => prevLength + 1);
       setFood([getRandomDirection()]);
-      // @ts-ignore
       playAudio(sound.food, 0.1);
 
       // max score is reached
@@ -344,7 +342,6 @@ export const Snake = () => {
       }
 
       setSnakeDirection(directions[e.keyCode]);
-      // @ts-ignore
       playAudio(sound.direction, 0.05);
     }
   };
