@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { CrownIcon } from "./icons/CrownIcon";
 import { Score, BestScore } from "../hooks/useBestScores";
 
@@ -101,6 +101,26 @@ const StyledScoreInner = styled.span`
   }
 `;
 
+const StyledAnimatedScore = styled.span<{ active: boolean }>`
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 5px;
+  color: #a7e9af;
+  font-size: 18px;
+  font-weight: bold;
+
+  ${({ active }) =>
+    active &&
+    css`
+      display: inline-block;
+      transition: all 0.4s linear;
+      transform: translatey(-40px);
+      visibility: visible !important;
+      opacity: 1 !important;
+    `}
+`;
+
 export const Header = ({
   bestScore,
   score,
@@ -122,9 +142,9 @@ export const Header = ({
         Score
         <StyledScoreInner>
           {score}
-          <span className={`${isScoreAnimationActive ? "is-animated" : ""}`}>
+          <StyledAnimatedScore active={isScoreAnimationActive}>
             +1
-          </span>
+          </StyledAnimatedScore>
         </StyledScoreInner>
       </StyledScore>
     </StyledContainer>

@@ -308,13 +308,17 @@ export const Snake = () => {
     setIsModalVisible(!isModalVisible);
   };
 
-  const updatePoint = () => {
+  const updatePoint = async () => {
     const snakeHead = snake[snake.length - 1];
 
     if (food[0].x === snakeHead.x && food[0].y === snakeHead.y) {
       setSnakeLength((prevLength) => prevLength + 1);
       setFood([getRandomDirection()]);
       playAudio(sound.food, 0.1);
+      // set animation false after 300ms to properly show score animation
+      setScoreAnimation(true);
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      setScoreAnimation(false);
 
       // max score is reached
       if (snakeLength - 1 === MAX_SCORE) {
