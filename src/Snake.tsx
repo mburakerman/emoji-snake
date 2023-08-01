@@ -244,7 +244,6 @@ export const Snake = () => {
         setGameSpeed(initSpeed - 20);
       }
 
-      //fetchScores(gameDifficulties[newDifficulty]);
       return newDifficulty;
     });
   };
