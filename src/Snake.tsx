@@ -7,11 +7,7 @@ import { DifficultyButton } from "./components/DifficultyButton";
 import { InfoButton } from "./components/InfoButton";
 import { RestartButton } from "./components/RestartButton";
 import { VolumeButton } from "./components/VolumeButton";
-import {
-  Characters,
-  Character,
-  INITIAL_CHARACTER,
-} from "./components/Characters";
+
 import { Modal } from "./components/Modal";
 import { useBestScores } from "./hooks/useBestScores";
 import { useHighScore } from "./hooks/useHighScore";
@@ -59,29 +55,6 @@ const StyledGameArea = styled.ul`
         width: 17px;
         height: 17px;
       }
-
-      &.snake {
-        background-image: url("./img/sponge.png");
-        background-size: cover;
-
-        &.donaldJohnTrump {
-          background-image: url("./img/donald-john-trump.png");
-          background-size: 100% 100%;
-        }
-
-        &.fahrettinKoca {
-          background-image: url("./img/fahrettin-koca.png");
-          background-size: 100% 100%;
-        }
-      }
-
-      &.food {
-        animation-name: scale;
-        animation-duration: 0.4s;
-        animation-timing-function: ease-in-out;
-        background-image: url("./img/virus.png");
-        background-size: cover;
-      }
     }
   }
 `;
@@ -108,6 +81,8 @@ const INITIAL_SNAKE_LENGTH = 1;
 const INITIAL_SNAKE_DIRECTION: SnakeDirection = "right";
 const INITIAL_FOOD_COORDINATES = [{ x: 5, y: 7 }];
 
+const FOODS = ["🍎", "🍄", "🔮", "💣"];
+
 export const Snake = () => {
   const [snake, setSnake] = useState<Snake[]>([]);
   const [snakeLength, setSnakeLength] = useState(INITIAL_SNAKE_LENGTH);
@@ -133,8 +108,6 @@ export const Snake = () => {
     direction: directionSound,
     isMuted: false,
   });
-  const [selectedCharacter, setSelectedCharacter] =
-    useState<Character>(INITIAL_CHARACTER);
 
   const { areScoresFetched, bestScore } = useBestScores(
     gameDifficulties[gameDifficulty]
@@ -390,16 +363,13 @@ export const Snake = () => {
           {Array.from({ length: gameLength }).map((_, colIndex) => (
             <li key={colIndex}>
               {Array.from({ length: gameLength }).map((_, rowIndex) => (
-                <div
-                  key={rowIndex}
-                  className={`${
-                    bindSnake(colIndex, rowIndex)
-                      ? "snake"
-                      : bindFood(colIndex, rowIndex)
-                      ? "food"
-                      : ""
-                  } ${selectedCharacter}`}
-                ></div>
+                <div key={rowIndex}>
+                  {bindSnake(colIndex, rowIndex) ? (
+                    <>🐍</>
+                  ) : bindFood(colIndex, rowIndex) ? (
+                    <>🍎</>
+                  ) : null}
+                </div>
               ))}
             </li>
           ))}
@@ -422,11 +392,6 @@ export const Snake = () => {
         <VolumeButton sound={sound} setSound={setSound} />
         <RestartButton onClick={toggleRestartModal} disabled={isModalVisible} />
       </StyledGameFooter>
-
-      <Characters
-        selectedCharacter={selectedCharacter}
-        setSelectedCharacter={setSelectedCharacter}
-      />
     </StyledContainer>
   );
 };
