@@ -106,10 +106,6 @@ export const Snake = () => {
   const [food, setFood] = useState([{ x: 5, y: 7 }]);
   const [gameSpeed, setGameSpeed] = useState(100);
   const [gameLength] = useState(GAME_LENGTH);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [gameAnimationTimer, setGameAnimationTimer] = useState<ReturnType<
-    typeof setInterval
-  > | null>(null);
   const [isGameOver, setIsGameOver] = useState(false);
   const [gameDifficulties] = useState<GameDifficulty[]>([
     "easy",
@@ -144,15 +140,11 @@ export const Snake = () => {
     init();
 
     return () => {
-      // @ts-ignore
-      clearInterval(gameAnimationTimer);
       window.removeEventListener("keyup", bindSnakeDirections);
     };
   }, [gameDifficulty]);
 
   const init = () => {
-    // @ts-ignore
-    clearInterval(gameAnimationTimer);
     setSnake([]);
     setSnakeLength(INITIAL_SNAKE_LENGTH);
     setSnake(() => [getRandomDirection()]);
@@ -304,8 +296,7 @@ export const Snake = () => {
 
   const toggleGameOverModal = () => {
     setIsGameOver(true);
-    // @ts-ignore
-    clearInterval(gameAnimationTimer);
+
     setModalTemplate(
       `<p>😷<br />Game Over!<br />Your score is ${snakeLength - 1}.</p>`
     );
@@ -323,8 +314,6 @@ export const Snake = () => {
 
       // max score is reached
       if (snakeLength - 1 === MAX_SCORE) {
-        // @ts-ignore
-        clearInterval(gameAnimationTimer);
         /* Use the appropriate modal library here (e.g., React Modal or custom implementation) to show the alert. */
       }
     }
