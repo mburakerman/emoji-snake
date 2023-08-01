@@ -413,7 +413,7 @@ export const Snake = () => {
         >
           {gameDifficulties[gameDifficulty]}
         </DifficultyButton>
-        <VolumeButton sound={sound} onClick={(val) => setSound(val)} />
+        <VolumeButton sound={sound} setSound={setSound} />
         <RestartButton onClick={toggleRestartModal} disabled={isModalVisible} />
       </StyledGameFooter>
 

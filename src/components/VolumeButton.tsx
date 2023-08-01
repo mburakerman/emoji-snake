@@ -11,7 +11,7 @@ type Sound = {
 
 type Props = {
   sound: Sound;
-  onClick: (val: Sound) => void;
+  setSound: (val: Sound) => void;
 };
 
 const StyledContainer = styled.button`
@@ -28,7 +28,7 @@ const StyledContainer = styled.button`
   }
 `;
 
-export const VolumeButton = ({ sound, onClick }: Props) => {
+export const VolumeButton = ({ sound, setSound }: Props) => {
   const isMobile = () => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
@@ -37,7 +37,7 @@ export const VolumeButton = ({ sound, onClick }: Props) => {
 
   const handleClick = () => {
     const updatedSound = { ...sound, isMuted: !sound.isMuted };
-    onClick(updatedSound);
+    setSound(updatedSound);
   };
 
   if (isMobile()) {
