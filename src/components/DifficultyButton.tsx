@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 type Props = {
-  onClick: () => void;
+  changeDifficulty: () => void;
   disabled: boolean;
   children: React.ReactNode;
 };
@@ -23,9 +23,9 @@ const StyledContainer = styled.button`
   }
 `;
 
-export const DifficultyButton = ({ onClick, children, disabled }: Props) => {
+export const DifficultyButton = ({ changeDifficulty, children, disabled }: Props) => {
   return (
-    <StyledContainer onClick={onClick} disabled={disabled}>
+    <StyledContainer onClick={changeDifficulty} disabled={disabled}>
       {children}
     </StyledContainer>
   );
