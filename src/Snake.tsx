@@ -8,6 +8,7 @@ import { InfoButton } from "./components/InfoButton";
 import { RestartButton } from "./components/RestartButton";
 import { VolumeButton } from "./components/VolumeButton";
 import { Characters } from "./components/Characters";
+import { Modal } from "./components/Modal";
 import { useBestScores } from "./hooks/useBestScores";
 import { useHighScore } from "./hooks/useHighScore";
 // @ts-ignore
@@ -310,39 +311,15 @@ export const Snake = () => {
         areScoresFetched={areScoresFetched}
       />
       <div className="game__area">
-        <div className={`game__area-overlay ${isModalVisible ? "active" : ""}`}>
-          <button
-            className="game__area-overlay-close"
-            onClick={() => setIsModalVisible(false)}
-            style={{ display: !isGameOver ? "block" : "none" }}
-          >
-            X
-          </button>
-          <div
-            className="game__area-overlay-content"
-            dangerouslySetInnerHTML={{ __html: modalTemplate }}
-          ></div>
-          <div style={{ display: !wantRestart ? "block" : "none" }}>
-            <button
-              style={{ display: !isGameOver ? "block" : "none" }}
-              onClick={() => setIsModalVisible(false)}
-            >
-              OK
-            </button>
-            <button
-              style={{ display: isGameOver ? "block" : "none" }}
-              onClick={gameOver}
-            >
-              Try Again
-            </button>
-          </div>
-          <button
-            style={{ display: wantRestart ? "block" : "none" }}
-            onClick={gameOver}
-          >
-            OK
-          </button>
-        </div>
+        <Modal
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          modalTemplate={modalTemplate}
+          wantRestart={wantRestart}
+          isGameOver={isGameOver}
+          gameOver={gameOver}
+        />
+
         <ul>
           {Array.from({ length: gameLength }).map((_, colIndex) => (
             <li key={colIndex}>

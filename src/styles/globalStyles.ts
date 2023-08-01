@@ -125,44 +125,6 @@ main {
   margin: 10px 0;
   overflow: hidden;
 
-  .game__area-overlay {
-    position: absolute;
-    background-color: rgba(32, 33, 44, 0.9);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    padding: 15px;
-    text-align: center;
-    visibility: hidden;
-    opacity: 0;
-    transition: all 0.1s linear;
-
-    &.active {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    .game__area-overlay-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 1px;
-      background-color: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.75;
-    }
-
-    .game__area-overlay-content {
-      margin: 10px 0;
-    }
-  }
-
   ul {
     display: flex;
 
