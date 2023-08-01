@@ -210,7 +210,7 @@ export const Snake = () => {
   };
 
   const toggleRestartModal = () => {
-    setModalTemplate(`<p>🧼<br> Restart?</p>`);
+    setModalTemplate(`<p>💫<br> Restart?</p>`);
     setIsModalVisible(!isModalVisible);
     setWantRestart(true);
   };
