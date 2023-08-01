@@ -316,8 +316,6 @@ export const Snake = () => {
 
   return (
     <StyledContainer>
-      {gameDifficulty}
-      gameSpeed {gameSpeed}
       <Header
         score={snakeLength - 1}
         bestScore={bestScore}
