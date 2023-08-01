@@ -118,10 +118,6 @@ export const Snake = () => {
 
   useEffect(() => {
     init();
-
-    return () => {
-      window.removeEventListener("keyup", bindSnakeDirections);
-    };
   }, [gameDifficulty]);
 
   const init = () => {
@@ -297,31 +293,6 @@ export const Snake = () => {
       if (snakeLength - 1 === MAX_SCORE) {
         /* Use the appropriate modal library here (e.g., React Modal or custom implementation) to show the alert. */
       }
-    }
-  };
-
-  const bindSnakeDirections = (e: any) => {
-    e.preventDefault();
-
-    const directions: any = {
-      37: "left",
-      38: "up",
-      39: "right",
-      40: "down",
-    };
-    // direction control check
-    if (directions[e.keyCode] !== undefined) {
-      if (
-        (snakeDirection === "right" && directions[e.keyCode] === "left") ||
-        (snakeDirection === "left" && directions[e.keyCode] === "right") ||
-        (snakeDirection === "down" && directions[e.keyCode] === "up") ||
-        (snakeDirection === "up" && directions[e.keyCode] === "down")
-      ) {
-        return false;
-      }
-
-      setSnakeDirection(directions[e.keyCode]);
-      playAudio(sound.direction, 0.05);
     }
   };
 
