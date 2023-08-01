@@ -11,13 +11,12 @@
     "lint": "\"./node_modules/.bin/eslint\" . --ext ts,tsx"
   },
   "dependencies": {
+    "@types/styled-components": "^5.1.26",
     "firebase": "^7.24.0",
     "hammerjs": "^2.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "styled-components": "^4.4.1",
-    "uuid": "^7.0.3",
-    "vuereact-combined": "^1.2.11",
+    "styled-components": "^6.0.5",
     "zustand": "^4.3.9"
   },
   "devDependencies": {
@@ -26,7 +25,6 @@
     "@types/hammerjs": "^2.0.41",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "@types/styled-components": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
     "@vitejs/plugin-react": "^4.0.3",
