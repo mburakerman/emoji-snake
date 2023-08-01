@@ -96,7 +96,7 @@ export const Snake = () => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [gameDifficulty, setGameDifficulty] =
     useState<GameDifficulty>("medium");
-  const [scoreAnimation, setScoreAnimation] = useState(false);
+
   const [modalTemplate, setModalTemplate] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [wantRestart, setWantRestart] = useState(false);
@@ -118,7 +118,6 @@ export const Snake = () => {
     setSnake([]);
     setSnakeLength(INITIAL_SNAKE_LENGTH);
     setSnake(() => [getRandomDirection()]);
-    setScoreAnimation(false);
   };
 
   useEffect(() => {
@@ -287,10 +286,6 @@ export const Snake = () => {
       setSnakeLength((prevLength) => prevLength + 1);
       setFood([getRandomDirection()]);
       playAudio(sound.food, 0.1);
-      // set animation false after 300ms to properly show score animation
-      setScoreAnimation(true);
-      await new Promise((resolve) => setTimeout(resolve, 300));
-      setScoreAnimation(false);
 
       // max score is reached
       if (snakeLength - 1 === MAX_SCORE) {
@@ -316,12 +311,7 @@ export const Snake = () => {
 
   return (
     <StyledContainer>
-      <Header
-        score={snakeLength - 1}
-        bestScore={bestScore}
-        isScoreAnimationActive={scoreAnimation}
-        areScoresFetched={areScoresFetched}
-      />
+      <Header score={snakeLength - 1} bestScore={bestScore} />
       <StyledGameAreaContainer>
         <Modal
           isModalVisible={isModalVisible}

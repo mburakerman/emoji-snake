@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { CrownIcon } from "./icons/CrownIcon";
 import { Score, BestScore } from "../hooks/useBestScores";
 
 type Props = {
-  bestScore: BestScore;
   score: Score["user__score"];
-  isScoreAnimationActive: boolean;
-  areScoresFetched: boolean;
+  bestScore: BestScore;
 };
 
 const StyledCrownIcon = styled(CrownIcon)`
@@ -121,22 +119,26 @@ const StyledAnimatedScore = styled.span<{ active: boolean }>`
     `}
 `;
 
-export const Header = ({
-  bestScore,
-  score,
-  isScoreAnimationActive,
-  areScoresFetched,
-}: Props) => {
+export const Header = ({ bestScore, score }: Props) => {
+  const [isScoreAnimationActive, setIsScoreAnimation] = useState(false);
+
+  useEffect(() => {
+    const animateScore = async () => {
+      setIsScoreAnimation(true);
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      setIsScoreAnimation(false);
+    };
+    animateScore();
+  }, [score]);
+
   return (
     <StyledContainer>
       <StyledBestScore>
         Best Score
         <StyledCrownIcon />
-        {areScoresFetched ? (
-          <span data-tooltip={bestScore?.user__name}>
-            {bestScore?.user__score}
-          </span>
-        ) : null}
+        <span data-tooltip={bestScore?.user__name}>
+          {bestScore?.user__score}
+        </span>
       </StyledBestScore>
       <StyledScore>
         Score
