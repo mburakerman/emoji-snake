@@ -3,13 +3,15 @@ import { VolumeIcon } from "./icons/VolumeIcon";
 import { MutedVolumeIcon } from "./icons/MutedVolumeIcon";
 import styled from "styled-components";
 
-type SoundProps = {
+type Sound = {
+  food: string;
+  direction: string;
   isMuted: boolean;
 };
 
 type Props = {
-  sound: SoundProps;
-  onClick: (val: SoundProps) => void;
+  sound: Sound;
+  onClick: (val: Sound) => void;
 };
 
 const StyledContainer = styled.button`
