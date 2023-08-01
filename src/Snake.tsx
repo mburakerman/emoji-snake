@@ -7,7 +7,11 @@ import { DifficultyButton } from "./components/DifficultyButton";
 import { InfoButton } from "./components/InfoButton";
 import { RestartButton } from "./components/RestartButton";
 import { VolumeButton } from "./components/VolumeButton";
-import { Characters } from "./components/Characters";
+import {
+  Characters,
+  Character,
+  INITIAL_CHARACTER,
+} from "./components/Characters";
 import { Modal } from "./components/Modal";
 import { useBestScores } from "./hooks/useBestScores";
 import { useHighScore } from "./hooks/useHighScore";
@@ -127,13 +131,8 @@ export const Snake = () => {
     direction: new Audio(directionSound),
     isMuted: false,
   });
-  const [characters, setCharacters] = useState({
-    snake: {
-      sponge: true,
-      fahrettinKoca: false,
-      donaldJohnTrump: false,
-    },
-  });
+  const [selectedCharacter, setSelectedCharacter] =
+    useState<Character>(INITIAL_CHARACTER);
 
   const { areScoresFetched, bestScore } = useBestScores(
     gameDifficulties[gameDifficulty]
@@ -396,13 +395,7 @@ export const Snake = () => {
                       : bindFood(colIndex, rowIndex)
                       ? "food"
                       : ""
-                  } ${
-                    characters.snake.fahrettinKoca
-                      ? "fahrettinKoca"
-                      : characters.snake.donaldJohnTrump
-                      ? "donaldJohnTrump"
-                      : ""
-                  }`}
+                  } ${selectedCharacter}`}
                 ></div>
               ))}
             </li>
@@ -428,8 +421,8 @@ export const Snake = () => {
       </StyledGameFooter>
 
       <Characters
-        characters={characters}
-        onClick={(val) => setCharacters(val as any)}
+        selectedCharacter={selectedCharacter}
+        setSelectedCharacter={setSelectedCharacter}
       />
     </StyledContainer>
   );

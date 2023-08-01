@@ -1,18 +1,34 @@
 import React from "react";
 import styled from "styled-components";
 
-type Characters = {
-  snake: {
-    // sponge: boolean;
-    // fahrettinKoca: boolean;
-    // donaldJohnTrump: boolean;
-    [key: string]: boolean;
-  };
+export type Character = "donaldJohnTrump" | "sponge" | "fahrettinKoca";
+
+type CharacterData = {
+  name: string;
+  value: Character;
 };
+
 type Props = {
-  characters: Characters;
-  onClick: (value: Characters) => void;
+  selectedCharacter: Character;
+  setSelectedCharacter: (value: Character) => void;
 };
+
+const data: CharacterData[] = [
+  {
+    name: "Donald Trump",
+    value: "donaldJohnTrump",
+  },
+  {
+    name: "Sponge",
+    value: "sponge",
+  },
+  {
+    name: "Fahrettin Koca",
+    value: "fahrettinKoca",
+  },
+];
+
+export const INITIAL_CHARACTER: Character = "sponge";
 
 const StyledContainer = styled.div`
   margin: 20px auto 0px;
@@ -39,51 +55,19 @@ const StyledCharacter = styled.li<{ selected: boolean }>`
   opacity: ${({ selected }) => (selected ? 1 : 0.5)};
 `;
 
-const data = [
-  {
-    name: "Donald Trump",
-    value: "donaldJohnTrump",
-  },
-  {
-    name: "Sponge",
-    value: "sponge",
-  },
-  {
-    name: "Fahrettin Koca",
-    value: "fahrettinKoca",
-  },
-];
-
-export const Characters = ({ characters, onClick }: Props) => {
-  const toggleSnakeCharacter = (character: string) => {
-    characters.snake.sponge = false;
-    characters.snake.donaldJohnTrump = false;
-    characters.snake.fahrettinKoca = false;
-
-    if (character === "donaldJohnTrump") {
-      characters.snake.donaldJohnTrump = !characters.snake.donaldJohnTrump;
-    } else if (character === "fahrettinKoca") {
-      characters.snake.fahrettinKoca = !characters.snake.fahrettinKoca;
-    } else {
-      characters.snake.sponge = !characters.snake.sponge;
-    }
-
-    onClick({ ...characters });
-  };
-
-  const selectedCharacter = Object.keys(characters.snake).find(
-    (key) => characters.snake[key] === true
-  );
-
+export const Characters = ({
+  selectedCharacter,
+  setSelectedCharacter,
+}: Props) => {
   return (
     <StyledContainer>
       <StyledTitle>Characters</StyledTitle>
       <ul>
         {data.map(({ name, value }) => (
           <StyledCharacter
-            selected={String(selectedCharacter) === value}
+            selected={selectedCharacter === value}
             key={value}
-            onClick={() => toggleSnakeCharacter(value)}
+            onClick={() => setSelectedCharacter(value)}
           >
             {name}
           </StyledCharacter>
