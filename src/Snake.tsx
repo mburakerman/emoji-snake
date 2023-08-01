@@ -127,8 +127,8 @@ export const Snake = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [wantRestart, setWantRestart] = useState(false);
   const [sound, setSound] = useState({
-    food: new Audio(foodSound),
-    direction: new Audio(directionSound),
+    food: foodSound,
+    direction: directionSound,
     isMuted: false,
   });
   const [selectedCharacter, setSelectedCharacter] =
