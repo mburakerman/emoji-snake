@@ -22,37 +22,6 @@ body {
   padding: 10px 0;
 }
 
-h1 {
-  text-align: center;
-  font-size: 30px !important;
-}
-@media screen and (max-width: 768px) {
-  h1 {
-    font-size: 25px !important;
-  }
-}
-
- 
-
-main {
-  width: 400px;
-  padding: 0px 5px;
-  margin: 50px auto;
-
-  > svg {
-    cursor: pointer;
-  }
-
-  @media screen and (max-width: 500px) {
-    width: 340px;
-  }
-
-  p {
-    font-size: 15px;
-    opacity: 0.9;
-  }
-}
-
 [data-tooltip] {
   &:after {
     position: absolute;
@@ -107,75 +76,6 @@ main {
   }
 }
  
-.game {
-  margin: 0 auto;
-  width: 400px;
-  max-width: 100%;
-}
-
-@media screen and (max-width: 500px) {
-  .game {
-    width: 340px;
-  }
-}
-
-// game area
-.game__area {
-  position: relative;
-  margin: 10px 0;
-  overflow: hidden;
-
-  ul {
-    display: flex;
-
-    li {
-      list-style: none;
-      min-width: 20px;
-      min-height: 20px;
-      border-right: 0;
-
-      @media screen and (max-width: 500px) {
-        min-width: 17px;
-        min-height: 17px;
-      }
-
-      > div {
-        background-color: #2d2f3d;
-        width: 20px;
-        height: 20px;
-
-        @media screen and (max-width: 500px) {
-          width: 17px;
-          height: 17px;
-        }
-
-        &.snake {
-          background-image: url('./img/sponge.png');
-          background-size: cover;
-
-          &.donaldJohnTrump {
-            background-image: url('./img/donald-john-trump.png');
-            background-size: 100% 100%;
-          }
-
-          &.fahrettinKoca {
-            background-image: url('./img/fahrettin-koca.png');
-            background-size: 100% 100%;
-          }
-        }
-
-        &.food {
-          animation-name: scale;
-          animation-duration: 0.4s;
-          animation-timing-function: ease-in-out;
-          background-image: url('./img/virus.png');
-          background-size: cover;
-        }
-      }
-    }
-  }
-}
-
 @keyframes scale {
   from {
     transform: scale(1);
@@ -185,9 +85,5 @@ main {
     transform: scale(1.4);
   }
 }
-
-.game__footer {
-  display: flex;
-  justify-content: flex-end;
-}
+ 
 `;

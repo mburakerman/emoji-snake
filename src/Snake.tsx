@@ -16,7 +16,76 @@ import foodSound from "../public/sound/food.mp3";
 // @ts-ignore
 import directionSound from "../public/sound/direction.mp3";
 
-const StyledContainer = styled.div``;
+const StyledContainer = styled.div`
+  margin: 0 auto;
+  width: 400px;
+  max-width: 100%;
+
+  @media screen and (max-width: 500px) {
+    width: 340px;
+  }
+`;
+
+const StyledGameAreaContainer = styled.div`
+  position: relative;
+  margin: 10px 0;
+  overflow: hidden;
+`;
+
+const StyledGameArea = styled.ul`
+  display: flex;
+
+  li {
+    list-style: none;
+    min-width: 20px;
+    min-height: 20px;
+    border-right: 0;
+
+    @media screen and (max-width: 500px) {
+      min-width: 17px;
+      min-height: 17px;
+    }
+
+    > div {
+      background-color: #2d2f3d;
+      width: 20px;
+      height: 20px;
+
+      @media screen and (max-width: 500px) {
+        width: 17px;
+        height: 17px;
+      }
+
+      &.snake {
+        background-image: url("./img/sponge.png");
+        background-size: cover;
+
+        &.donaldJohnTrump {
+          background-image: url("./img/donald-john-trump.png");
+          background-size: 100% 100%;
+        }
+
+        &.fahrettinKoca {
+          background-image: url("./img/fahrettin-koca.png");
+          background-size: 100% 100%;
+        }
+      }
+
+      &.food {
+        animation-name: scale;
+        animation-duration: 0.4s;
+        animation-timing-function: ease-in-out;
+        background-image: url("./img/virus.png");
+        background-size: cover;
+      }
+    }
+  }
+`;
+
+const StyledGameFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
 
 const MAX_SCORE = 100;
 const GAME_LENGTH = 20;
@@ -310,7 +379,8 @@ export const Snake = () => {
         isScoreAnimationActive={scoreAnimation}
         areScoresFetched={areScoresFetched}
       />
-      <div className="game__area">
+
+      <StyledGameAreaContainer>
         <Modal
           isModalVisible={isModalVisible}
           setIsModalVisible={setIsModalVisible}
@@ -320,7 +390,7 @@ export const Snake = () => {
           gameOver={gameOver}
         />
 
-        <ul>
+        <StyledGameArea>
           {Array.from({ length: gameLength }).map((_, colIndex) => (
             <li key={colIndex}>
               {Array.from({ length: gameLength }).map((_, rowIndex) => (
@@ -343,9 +413,10 @@ export const Snake = () => {
               ))}
             </li>
           ))}
-        </ul>
-      </div>
-      <div className="game__footer">
+        </StyledGameArea>
+      </StyledGameAreaContainer>
+
+      <StyledGameFooter>
         <InfoButton
           onClick={(val) => {
             setModalTemplate(val);
@@ -358,10 +429,10 @@ export const Snake = () => {
         >
           {gameDifficulties[gameDifficulty]}
         </DifficultyButton>
-
         <VolumeButton sound={sound} onClick={(val) => setSound(val as any)} />
         <RestartButton onClick={toggleRestartModal} disabled={isModalVisible} />
-      </div>
+      </StyledGameFooter>
+
       <Characters
         characters={characters}
         onClick={(val) => setCharacters(val as any)}
