@@ -7,7 +7,6 @@ import { DifficultyButton } from "./components/DifficultyButton";
 import { InfoButton } from "./components/InfoButton";
 import { RestartButton } from "./components/RestartButton";
 import { VolumeButton } from "./components/VolumeButton";
-
 import { Modal } from "./components/Modal";
 import { useBestScores } from "./hooks/useBestScores";
 import { useHighScore } from "./hooks/useHighScore";
@@ -215,7 +214,7 @@ export const Snake = () => {
     setWantRestart(true);
   };
 
-  const toggleDifficulty = () => {
+  const changeDifficulty = () => {
     setGameDifficulty((prevDifficulty) => {
       let newDifficulty = prevDifficulty;
 
@@ -343,7 +342,7 @@ export const Snake = () => {
           }}
         />
         <DifficultyButton
-          onClick={toggleDifficulty}
+          changeDifficulty={changeDifficulty}
           disabled={snakeLength - 1 > 0}
         >
           {gameDifficulty}
