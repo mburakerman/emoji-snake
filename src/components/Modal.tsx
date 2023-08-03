@@ -5,10 +5,7 @@ import { CloseIcon } from "./icons/CloseIcon";
 type Props = {
   isModalVisible: boolean;
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isGameOver: boolean;
-  gameOver: () => void;
-  modalTemplate: string;
-  wantRestart: boolean;
+  children: React.ReactNode;
 };
 
 const StyledContainer = styled.div<{ active: boolean }>`
@@ -47,53 +44,17 @@ const StyledCloseButton = styled.button`
   cursor: pointer;
 `;
 
-const StyledTryAgainButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
-  margin-top: 10px;
-`;
-
-const StyledRestartButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
-  margin-top: 10px;
-`;
-
 export const Modal = ({
   isModalVisible,
   setIsModalVisible,
-  isGameOver,
-  gameOver,
-  modalTemplate,
-  wantRestart,
+  children,
 }: Props) => {
   return (
     <StyledContainer active={isModalVisible}>
-      {!isGameOver ? (
-        <StyledCloseButton onClick={() => setIsModalVisible(false)}>
-          <CloseIcon />
-        </StyledCloseButton>
-      ) : null}
-
-      <div dangerouslySetInnerHTML={{ __html: modalTemplate }}></div>
-
-      {wantRestart ? (
-        <StyledRestartButton onClick={gameOver}>Restart</StyledRestartButton>
-      ) : isGameOver ? (
-        <StyledTryAgainButton onClick={gameOver}>
-          Try Again
-        </StyledTryAgainButton>
-      ) : null}
+      <StyledCloseButton onClick={() => setIsModalVisible(false)}>
+        <CloseIcon />
+      </StyledCloseButton>
+      {children}
     </StyledContainer>
   );
 };

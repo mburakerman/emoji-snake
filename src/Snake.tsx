@@ -63,6 +63,17 @@ const StyledGameFooter = styled.div`
   justify-content: flex-end;
 `;
 
+const StyledRestartButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 10px;
+`;
+
 const MAX_SCORE = 100;
 const GAME_LENGTH = 20;
 
@@ -95,9 +106,9 @@ export const Snake = () => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [gameDifficulty, setGameDifficulty] =
     useState<GameDifficulty>("medium");
-  const [modalTemplate, setModalTemplate] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [wantRestart, setWantRestart] = useState(false);
+  const [isRestartModalVisible, setIsRestartModalVisible] = useState(false);
+  const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
+  const [isGameOverModalVisible, setIsGameOverModalVisible] = useState(false);
   const [sound, setSound] = useState({
     food: foodSound,
     direction: directionSound,
@@ -208,12 +219,6 @@ export const Snake = () => {
     audio.play();
   };
 
-  const toggleRestartModal = () => {
-    setModalTemplate(`<p>💫<br> Restart?</p>`);
-    setIsModalVisible(!isModalVisible);
-    setWantRestart(true);
-  };
-
   const changeDifficulty = () => {
     setGameDifficulty((prevDifficulty) => {
       let newDifficulty = prevDifficulty;
@@ -255,7 +260,8 @@ export const Snake = () => {
         snakeHead.x === snakeSegments[i].x &&
         snakeHead.y === snakeSegments[i].y
       ) {
-        toggleGameOverModal();
+        setIsGameOver(true);
+        setIsGameOverModalVisible(true);
         const score = snakeSegments.length - 1;
         // @ts-ignore
         if (score > bestScore.user__score) {
@@ -264,15 +270,6 @@ export const Snake = () => {
         break;
       }
     }
-  };
-
-  const toggleGameOverModal = () => {
-    setIsGameOver(true);
-
-    setModalTemplate(
-      `<p>😔<br />Game Over!<br />Your score is ${snakeLength - 1}.</p>`
-    );
-    setIsModalVisible(!isModalVisible);
   };
 
   const updatePoint = async () => {
@@ -300,8 +297,6 @@ export const Snake = () => {
 
   const gameOver = () => {
     setIsGameOver(false);
-    setIsModalVisible(!isModalVisible);
-    setWantRestart(false);
     init();
   };
 
@@ -310,13 +305,48 @@ export const Snake = () => {
       <Header score={snakeLength - 1} bestScore={bestScore} />
       <StyledGameAreaContainer>
         <Modal
-          isModalVisible={isModalVisible}
-          setIsModalVisible={setIsModalVisible}
-          modalTemplate={modalTemplate}
-          wantRestart={wantRestart}
-          isGameOver={isGameOver}
-          gameOver={gameOver}
-        />
+          isModalVisible={isRestartModalVisible}
+          setIsModalVisible={setIsRestartModalVisible}
+        >
+          <p>
+            💫 <br /> Restart?
+          </p>
+          <StyledRestartButton
+            onClick={() => {
+              gameOver();
+              setIsRestartModalVisible(false);
+            }}
+          >
+            Restart
+          </StyledRestartButton>
+        </Modal>
+        <Modal
+          isModalVisible={isInfoModalVisible}
+          setIsModalVisible={setIsInfoModalVisible}
+        >
+          <p>
+            💡
+            <br /> Use your arrow buttons or swipe left, right, top or bottom to
+            nagivate.
+          </p>
+          <br />
+          <p>
+            If your score is better than current best score, your score will be
+            saved. You can save your name or leave it anonymous.
+            <br />
+            You can also see who has the best score by tapping on best score.
+          </p>
+          <p>Maximum score is 100. Have fun!</p>
+        </Modal>
+        <Modal
+          isModalVisible={isGameOverModalVisible}
+          setIsModalVisible={setIsGameOverModalVisible}
+        >
+          <p>
+            😔 <br /> Game Over! <br />
+            Your score is {snakeLength - 1}.
+          </p>
+        </Modal>
 
         <StyledGameArea>
           {Array.from({ length: gameLength }).map((_, colIndex) => (
@@ -336,10 +366,7 @@ export const Snake = () => {
       </StyledGameAreaContainer>
       <StyledGameFooter>
         <InfoButton
-          onClick={(val) => {
-            setModalTemplate(val);
-            setIsModalVisible(!isModalVisible);
-          }}
+          onClick={() => setIsInfoModalVisible(!isInfoModalVisible)}
         />
         <DifficultyButton
           changeDifficulty={changeDifficulty}
@@ -348,7 +375,10 @@ export const Snake = () => {
           {gameDifficulty}
         </DifficultyButton>
         <VolumeButton sound={sound} setSound={setSound} />
-        <RestartButton onClick={toggleRestartModal} disabled={isModalVisible} />
+        <RestartButton
+          onClick={() => setIsRestartModalVisible(!isRestartModalVisible)}
+          disabled={isRestartModalVisible}
+        />
       </StyledGameFooter>
     </StyledContainer>
   );
