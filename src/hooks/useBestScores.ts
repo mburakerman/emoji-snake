@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { GameDifficulty } from "../Snake";
 
-import db from "../firebaseInit";
+import db from "../firebase";
 
 export type Score = {
   user__difficulty?: GameDifficulty;

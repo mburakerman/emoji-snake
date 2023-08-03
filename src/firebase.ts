@@ -1,4 +1,7 @@
-export default {
+import firebase from "firebase";
+import "firebase/firestore";
+
+const firebaseConfig = {
   apiKey: "AIzaSyCEsqxYPr3D2dyxnVIlO4yR7Rk5fjBWsvw",
   authDomain: "virusnake-f78a2.firebaseapp.com",
   databaseURL: "https://virusnake-f78a2.firebaseio.com",
@@ -8,3 +11,6 @@ export default {
   appId: "1:888051625379:web:ed1e41ba948f7569c83e16",
   measurementId: "G-QJ5HV93T2Y",
 };
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+export default firebaseApp.firestore();

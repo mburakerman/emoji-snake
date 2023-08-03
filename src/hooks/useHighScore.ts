@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
-import db from "../firebaseInit";
+import db from "../firebase";
 
 export const useHighScore = () => {
   const [loading, setLoading] = useState(false);
