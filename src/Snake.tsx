@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import directionSound from "../public/sound/direction.mp3";
@@ -12,6 +12,7 @@ import { RestartButton } from "./components/RestartButton";
 import { VolumeButton } from "./components/VolumeButton";
 import { useBestScores } from "./hooks/useBestScores";
 import { useHighScore } from "./hooks/useHighScore";
+import { Direction, useTouch } from "./hooks/useTouch";
 
 const StyledContainer = styled.div`
   margin: 0 auto;
@@ -79,7 +80,7 @@ const GAME_LENGTH = 20;
 
 export type GameDifficulty = "easy" | "medium" | "hard";
 
-type SnakeDirection = "left" | "right" | "up" | "down";
+export type SnakeDirection = "left" | "right" | "up" | "down";
 
 type Coordinates = {
   x: number;
@@ -96,6 +97,8 @@ const CHARACTER = "🐍";
 const FOODS = ["🍎", "🍄", "🔮", "💣"];
 
 export const Snake = () => {
+  const ref = useRef<HTMLDivElement | null>(null);
+
   const [snakeCoordinates, setSnakeCoordinates] = useState<Coordinates[]>([]);
   const [snakeLength, setSnakeLength] = useState(INITIAL_SNAKE_LENGTH);
   const [snakeDirection, setSnakeDirection] = useState<SnakeDirection>(
@@ -153,6 +156,11 @@ export const Snake = () => {
     setSnakeDirection(direction);
     playAudio(sound.direction, 0.05);
   };
+
+  const handleTouchDirection = (direction: Direction) => {
+    setSnakeDirection(direction);
+  };
+  useTouch(ref, handleTouchDirection);
 
   const moveSnake = () => {
     setSnakeCoordinates((prevSnake) => {
@@ -281,7 +289,7 @@ export const Snake = () => {
   };
 
   return (
-    <StyledContainer>
+    <StyledContainer ref={ref}>
       <Header score={snakeLength - 1} bestScore={bestScore} />
       <StyledGameAreaContainer>
         <Modal
