@@ -321,10 +321,11 @@ export const Snake = () => {
           {bestScore && snakeLength - 1 > bestScore?.user__score ? (
             <div>
               <p>
-                Congrats 🎉. <br /> You have made the best score!
+                Congrats 🎉
+                <br /> You have made the best score!
               </p>
-              <p>You can save your name:</p>
               <input
+                placeholder="Save your name"
                 type="text"
                 value={bestScoreUserName}
                 onChange={(event) => {
