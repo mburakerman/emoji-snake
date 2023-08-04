@@ -264,8 +264,7 @@ export const Snake = () => {
         setIsGameOver(true);
         setIsGameOverModalVisible(true);
         const score = snakeSegments.length - 1;
-        // @ts-ignore
-        if (score > bestScore.user__score) {
+        if (bestScore?.user__score && score > bestScore.user__score) {
           // showBestScoreAlert();
         }
         break;
@@ -303,8 +302,6 @@ export const Snake = () => {
     setIsGameOver(false);
     init();
   };
-
-  console.log("snake", snakeCoordinates);
 
   return (
     <StyledContainer>
