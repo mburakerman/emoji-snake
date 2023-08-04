@@ -308,9 +308,7 @@ export const Snake = () => {
           isModalVisible={isRestartModalVisible}
           setIsModalVisible={setIsRestartModalVisible}
         >
-          <p>
-            💫 <br /> Restart?
-          </p>
+          💫 <br /> Restart?
           <StyledRestartButton
             onClick={() => {
               gameOver();
@@ -328,24 +326,33 @@ export const Snake = () => {
             💡
             <br /> Use your arrow buttons or swipe left, right, top or bottom to
             nagivate.
-          </p>
-          <br />
-          <p>
+            <br />
+            <br />
             If your score is better than current best score, your score will be
             saved. You can save your name or leave it anonymous.
             <br />
+            <br />
             You can also see who has the best score by tapping on best score.
+            <br />
+            <br />
+            Maximum score is 100. <br />
+            Have fun!
           </p>
-          <p>Maximum score is 100. Have fun!</p>
         </Modal>
         <Modal
           isModalVisible={isGameOverModalVisible}
           setIsModalVisible={setIsGameOverModalVisible}
         >
-          <p>
-            😔 <br /> Game Over! <br />
-            Your score is {snakeLength - 1}.
-          </p>
+          😔 <br /> Game Over! <br />
+          Your score is {snakeLength - 1}.
+          <StyledRestartButton
+            onClick={() => {
+              gameOver();
+              setIsRestartModalVisible(false);
+            }}
+          >
+            Play Again 🐍
+          </StyledRestartButton>
         </Modal>
 
         <StyledGameArea>
