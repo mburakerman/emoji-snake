@@ -82,7 +82,7 @@ export type GameDifficulty = "easy" | "medium" | "hard";
 
 type SnakeDirection = "left" | "right" | "up" | "down";
 
-type Snake = {
+type Coordinates = {
   x: number;
   y: number;
 };
@@ -96,12 +96,12 @@ const CHARACTER = "🐍";
 const FOODS = ["🍎", "🍄", "🔮", "💣"];
 
 export const Snake = () => {
-  const [snake, setSnake] = useState<Snake[]>([]);
+  const [snakeCoordinates, setSnakeCoordinates] = useState<Coordinates[]>([]);
   const [snakeLength, setSnakeLength] = useState(INITIAL_SNAKE_LENGTH);
   const [snakeDirection, setSnakeDirection] = useState<SnakeDirection>(
     INITIAL_SNAKE_DIRECTION
   );
-  const [foodCoordinates, setFoodCoordinates] = useState(
+  const [foodCoordinates, setFoodCoordinates] = useState<Coordinates>(
     INITIAL_FOOD_COORDINATES
   );
   const [gameSpeed, setGameSpeed] = useState(INITIAL_GAME_SPEED);
@@ -127,9 +127,9 @@ export const Snake = () => {
   }, [gameDifficulty, gameSpeed]);
 
   const init = () => {
-    setSnake([]);
+    setSnakeCoordinates([]);
     setSnakeLength(INITIAL_SNAKE_LENGTH);
-    setSnake(() => [getRandomDirection()]);
+    setSnakeCoordinates(() => [getRandomDirection()]);
   };
 
   useEffect(() => {
@@ -154,7 +154,7 @@ export const Snake = () => {
   };
 
   const moveSnake = () => {
-    setSnake((prevSnake) => {
+    setSnakeCoordinates((prevSnake) => {
       const newSnake = [...prevSnake];
       const snakeHead = { ...newSnake[newSnake.length - 1] };
 
@@ -200,8 +200,8 @@ export const Snake = () => {
   }, [moveSnake, gameSpeed, isGameOver]);
 
   const bindSnake = (x: number, y: number) => {
-    for (let i = 0; i < snake.length; i++) {
-      if (snake[i].x === x && snake[i].y === y) {
+    for (let i = 0; i < snakeCoordinates.length; i++) {
+      if (snakeCoordinates[i].x === x && snakeCoordinates[i].y === y) {
         return true;
       }
     }
@@ -274,7 +274,7 @@ export const Snake = () => {
   };
 
   const updatePoint = async () => {
-    const snakeHead = snake[snake.length - 1];
+    const snakeHead = snakeCoordinates[snakeCoordinates.length - 1];
 
     if (
       foodCoordinates.x === snakeHead.x &&
@@ -303,6 +303,8 @@ export const Snake = () => {
     setIsGameOver(false);
     init();
   };
+
+  console.log("snake", snakeCoordinates);
 
   return (
     <StyledContainer>
@@ -335,7 +337,7 @@ export const Snake = () => {
           <StyledRestartButton
             onClick={() => {
               gameOver();
-              setIsRestartModalVisible(false);
+              setIsGameOverModalVisible(false);
             }}
           >
             Play Again 🐍
