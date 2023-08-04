@@ -233,7 +233,7 @@ export const Snake = () => {
     });
   };
 
-  const preventSnakeToBiteItself = (snakeSegments: string | any[]) => {
+  const preventSnakeToBiteItself = (snakeSegments: Coordinates[]) => {
     if (snakeSegments.length < 2) {
       return;
     }
