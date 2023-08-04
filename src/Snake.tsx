@@ -90,7 +90,7 @@ type Snake = {
 const INITIAL_GAME_SPEED = 100;
 const INITIAL_SNAKE_LENGTH = 1;
 const INITIAL_SNAKE_DIRECTION: SnakeDirection = "right";
-const INITIAL_FOOD_COORDINATES = [{ x: 5, y: 7 }];
+const INITIAL_FOOD_COORDINATES = { x: 5, y: 7 };
 
 const CHARACTER = "🐍";
 const FOODS = ["🍎", "🍄", "🔮", "💣"];
@@ -208,10 +208,8 @@ export const Snake = () => {
   };
 
   const bindFood = (x: number, y: number) => {
-    for (const item of foodCoordinates) {
-      if (item.x === x && item.y === y) {
-        return true;
-      }
+    if (foodCoordinates.x === x && foodCoordinates.y === y) {
+      return true;
     }
   };
 
@@ -279,11 +277,11 @@ export const Snake = () => {
     const snakeHead = snake[snake.length - 1];
 
     if (
-      foodCoordinates[0].x === snakeHead.x &&
-      foodCoordinates[0].y === snakeHead.y
+      foodCoordinates.x === snakeHead.x &&
+      foodCoordinates.y === snakeHead.y
     ) {
       setSnakeLength((prevLength) => prevLength + 1);
-      setFoodCoordinates([getRandomDirection()]);
+      setFoodCoordinates(getRandomDirection());
       playAudio(sound.food, 0.1);
 
       // max score is reached
