@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -241,7 +240,6 @@ export const Snake = () => {
 
     const snakeHead = snakeSegments[snakeSegments.length - 1];
     for (let i = 0; i < snakeSegments.length - 1; i++) {
-      // Check if the snake's head collides with any other segment of the snake
       if (
         snakeHead.x === snakeSegments[i].x &&
         snakeHead.y === snakeSegments[i].y
