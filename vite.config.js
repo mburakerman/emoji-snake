@@ -1,6 +1,6 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 import url from "@rollup/plugin-url";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [
@@ -9,6 +9,6 @@ export default defineConfig({
         plugins: [["babel-plugin-styled-components"]],
       },
     }),
-    url()
+    url(),
   ],
 });
