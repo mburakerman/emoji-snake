@@ -3,10 +3,10 @@ import { useState } from "react";
 import db from "../firebase";
 import { Score } from "./useBestScores";
 
-export const useHighScore = () => {
+export const useAddBestScore = () => {
   const [loading, setLoading] = useState(false);
 
-  const addNewHighScore = async (scoreData: Score) => {
+  const addBestScore = async (scoreData: Score) => {
     try {
       setLoading(true);
 
@@ -18,5 +18,5 @@ export const useHighScore = () => {
     }
   };
 
-  return { addNewHighScore, loading };
+  return { addBestScore, loading };
 };

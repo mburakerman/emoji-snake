@@ -11,8 +11,8 @@ import { InfoModal } from "./components/InfoModal";
 import { Modal } from "./components/Modal";
 import { RestartButton } from "./components/RestartButton";
 import { VolumeButton } from "./components/VolumeButton";
+import { useAddBestScore } from "./hooks/useAddBestScore";
 import { useBestScores } from "./hooks/useBestScores";
-import { useHighScore } from "./hooks/useHighScore";
 import { Direction, useTouch } from "./hooks/useTouch";
 
 const StyledContainer = styled.div`
@@ -124,7 +124,7 @@ export const Snake = () => {
   const [bestScoreUserName, setBestScoreUserName] = useState("");
 
   const { bestScore } = useBestScores(gameDifficulty);
-  const { addNewHighScore, loading: addNewHighScoreLoading } = useHighScore();
+  const { addBestScore, loading: addNewHighScoreLoading } = useAddBestScore();
 
   useEffect(() => {
     init();
@@ -334,7 +334,7 @@ export const Snake = () => {
               />
               <button
                 onClick={() => {
-                  addNewHighScore({
+                  addBestScore({
                     user__id: cuid(),
                     user__name: bestScoreUserName || "anonymous",
                     user__score: snakeLength - 1,
