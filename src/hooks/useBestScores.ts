@@ -13,13 +13,11 @@ export type Score = {
 export type BestScore = Score | null;
 
 export const useBestScores = (difficulty: GameDifficulty) => {
-  const [bestScores, setBestScores] = useState<Score[]>([]);
   const [areScoresFetched, setAreScoresFetched] = useState(false);
   const [bestScore, setBestScore] = useState<BestScore>(null);
 
   const fetchBestScores = async () => {
     try {
-      setBestScores([]);
       setAreScoresFetched(false);
       setBestScore(null);
 
@@ -38,14 +36,12 @@ export const useBestScores = (difficulty: GameDifficulty) => {
         }
       });
 
-      setBestScores(fetchedScores);
-
       const highestScore = fetchedScores.reduce((prev, current) =>
         prev.user__score > current.user__score ? prev : current
       );
       setBestScore(highestScore);
     } catch (error) {
-      console.error("Error fetching scores:", error);
+      console.error(error);
     }
   };
 
@@ -53,5 +49,5 @@ export const useBestScores = (difficulty: GameDifficulty) => {
     fetchBestScores();
   }, [difficulty]);
 
-  return { bestScores, areScoresFetched, bestScore, fetchBestScores };
+  return { areScoresFetched, bestScore, fetchBestScores };
 };
