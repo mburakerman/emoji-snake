@@ -8,6 +8,7 @@ import { InfoButton } from "./components/InfoButton";
 import { RestartButton } from "./components/RestartButton";
 import { VolumeButton } from "./components/VolumeButton";
 import { Modal } from "./components/Modal";
+import { InfoModal } from "./components/InfoModal";
 import { useBestScores } from "./hooks/useBestScores";
 import { useHighScore } from "./hooks/useHighScore";
 // @ts-ignore
@@ -318,27 +319,10 @@ export const Snake = () => {
             Restart
           </StyledRestartButton>
         </Modal>
-        <Modal
+        <InfoModal
           isModalVisible={isInfoModalVisible}
           setIsModalVisible={setIsInfoModalVisible}
-        >
-          <p>
-            💡
-            <br /> Use your arrow buttons or swipe left, right, top or bottom to
-            nagivate.
-            <br />
-            <br />
-            If your score is better than current best score, your score will be
-            saved. You can save your name or leave it anonymous.
-            <br />
-            <br />
-            You can also see who has the best score by tapping on best score.
-            <br />
-            <br />
-            Maximum score is 100. <br />
-            Have fun!
-          </p>
-        </Modal>
+        />
         <Modal
           isModalVisible={isGameOverModalVisible}
           setIsModalVisible={setIsGameOverModalVisible}
