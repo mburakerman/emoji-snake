@@ -13,14 +13,14 @@ export const InfoModal = ({ isModalVisible, setIsModalVisible }: Props) => {
       <div>
         💡
         <br /> Use your arrow buttons or swipe left, right, top or bottom to
-        nagivate.
+        move the snake.
         <br />
         <br />
         If your score is better than current best score, your score will be
         saved. You can save your name or leave it anonymous.
         <br />
         <br />
-        You can also see who has the best score by tapping on best score.
+        You can also see who has the best score by hovering over the best score.
         <br />
         <br />
         Have fun!
