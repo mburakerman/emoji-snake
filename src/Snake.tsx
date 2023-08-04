@@ -77,6 +77,23 @@ const StyledRestartButton = styled.button`
   margin-top: 10px;
 `;
 
+const StyledAddBestScoreInput = styled.input`
+  border: none;
+  padding: 3px 6px;
+  border-radius: 4px;
+  margin-right: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+const StyledAddBestScoreButton = styled.button`
+  border: none;
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background-color: #50fa7b;
+`;
+
 const GAME_LENGTH = 20;
 
 export type GameDifficulty = "easy" | "medium" | "hard";
@@ -324,7 +341,7 @@ export const Snake = () => {
                 Congrats 🎉
                 <br /> You have made the best score!
               </p>
-              <input
+              <StyledAddBestScoreInput
                 placeholder="Save your name"
                 type="text"
                 value={bestScoreUserName}
@@ -332,18 +349,21 @@ export const Snake = () => {
                   setBestScoreUserName(event.target.value);
                 }}
               />
-              <button
-                onClick={() => {
-                  addBestScore({
+              <StyledAddBestScoreButton
+                onClick={async () => {
+                  await addBestScore({
                     user__id: cuid(),
                     user__name: bestScoreUserName || "anonymous",
                     user__score: snakeLength - 1,
                   });
+                  setBestScoreUserName("");
+                  setIsGameOverModalVisible(false);
+                  gameOver();
                 }}
                 disabled={addNewHighScoreLoading}
               >
                 Save
-              </button>
+              </StyledAddBestScoreButton>
             </div>
           ) : null}
           <StyledRestartButton
