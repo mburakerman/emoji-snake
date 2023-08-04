@@ -104,9 +104,10 @@ const StyledAnimatedScore = styled.span<{ active: boolean }>`
   position: absolute;
   top: 0;
   left: 5px;
-  color: #a7e9af;
+  color: #50fa7b;
   font-size: 18px;
   font-weight: bold;
+  opacity: 1 !important;
 
   ${({ active }) =>
     active &&
@@ -115,7 +116,6 @@ const StyledAnimatedScore = styled.span<{ active: boolean }>`
       transition: all 0.4s linear;
       transform: translatey(-40px);
       visibility: visible !important;
-      opacity: 1 !important;
     `}
 `;
 
