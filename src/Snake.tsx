@@ -199,7 +199,7 @@ export const Snake = () => {
     }
   }, [moveSnake, gameSpeed, isGameOver]);
 
-  const bindSnake = (x: number, y: number) => {
+  const isSnakeBound = (x: number, y: number) => {
     for (let i = 0; i < snakeCoordinates.length; i++) {
       if (snakeCoordinates[i].x === x && snakeCoordinates[i].y === y) {
         return true;
@@ -207,7 +207,7 @@ export const Snake = () => {
     }
   };
 
-  const bindFood = (x: number, y: number) => {
+  const isFoodBound = (x: number, y: number) => {
     if (foodCoordinates.x === x && foodCoordinates.y === y) {
       return true;
     }
@@ -346,9 +346,9 @@ export const Snake = () => {
             <li key={colIndex}>
               {Array.from({ length: gameLength }).map((_, rowIndex) => (
                 <div key={rowIndex}>
-                  {bindSnake(colIndex, rowIndex) ? (
+                  {isSnakeBound(colIndex, rowIndex) ? (
                     <>{CHARACTER}</>
-                  ) : bindFood(colIndex, rowIndex) ? (
+                  ) : isFoodBound(colIndex, rowIndex) ? (
                     <>🍎</>
                   ) : null}
                 </div>
