@@ -15,7 +15,7 @@ export const InfoModal = ({ isModalVisible, setIsModalVisible }: Props) => {
         <br /> Use your arrow buttons or swipe left, right, top or bottom to
         move.
         <br />
-        👊🏼 <br /> Beat the top score, then save your name or remain anonymous.
+        👊🏼 <br /> If you beat the top score, you can save your name.
         <br />
         🔮 <br /> Discover the top scorer by hovering over the best score area.
         <br />
