@@ -1,7 +1,8 @@
 import React from "react";
-import { VolumeIcon } from "./icons/VolumeIcon";
-import { MutedVolumeIcon } from "./icons/MutedVolumeIcon";
 import styled from "styled-components";
+
+import { MutedVolumeIcon } from "./icons/MutedVolumeIcon";
+import { VolumeIcon } from "./icons/VolumeIcon";
 
 type Sound = {
   food: string;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
+
+import { BestScore,Score } from "../hooks/useBestScores";
 import { CrownIcon } from "./icons/CrownIcon";
-import { Score, BestScore } from "../hooks/useBestScores";
 
 type Props = {
   score: Score["user__score"];

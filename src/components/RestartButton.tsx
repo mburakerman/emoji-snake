@@ -1,6 +1,7 @@
 import React from "react";
-import { RestartIcon } from "./icons/RestartIcon";
 import styled from "styled-components";
+
+import { RestartIcon } from "./icons/RestartIcon";
 
 type Props = {
   disabled: boolean;

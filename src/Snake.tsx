@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { Header } from "./components/Header";
+import directionSound from "../public/sound/direction.mp3";
+import foodSound from "../public/sound/food.mp3";
 import { DifficultyButton } from "./components/DifficultyButton";
+import { Header } from "./components/Header";
 import { InfoButton } from "./components/InfoButton";
+import { InfoModal } from "./components/InfoModal";
+import { Modal } from "./components/Modal";
 import { RestartButton } from "./components/RestartButton";
 import { VolumeButton } from "./components/VolumeButton";
-import { Modal } from "./components/Modal";
-import { InfoModal } from "./components/InfoModal";
 import { useBestScores } from "./hooks/useBestScores";
 import { useHighScore } from "./hooks/useHighScore";
-import foodSound from "../public/sound/food.mp3";
-import directionSound from "../public/sound/direction.mp3";
 
 const StyledContainer = styled.div`
   margin: 0 auto;
@@ -89,6 +89,7 @@ const INITIAL_SNAKE_DIRECTION: SnakeDirection = "right";
 const INITIAL_FOOD_COORDINATES = { x: 5, y: 7 };
 
 const CHARACTER = "🐍";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const FOODS = ["🍎", "🍄", "🔮", "💣"];
 
 export const Snake = () => {
@@ -114,6 +115,7 @@ export const Snake = () => {
     isMuted: false,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { areScoresFetched, bestScore } = useBestScores(gameDifficulty);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { addNewHighScore } = useHighScore();

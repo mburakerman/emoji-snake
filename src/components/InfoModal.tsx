@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Modal, ModalProps } from "./Modal";
 
 type Props = Pick<ModalProps, "isModalVisible" | "setIsModalVisible">;

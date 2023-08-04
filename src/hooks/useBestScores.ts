@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
-import { GameDifficulty } from "../Snake";
+import { useEffect,useState } from "react";
 
 import db from "../firebase";
+import { GameDifficulty } from "../Snake";
 
 export type Score = {
   user__difficulty?: GameDifficulty;

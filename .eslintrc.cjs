@@ -1,8 +1,8 @@
-// eslint-disable-next-line no-undef
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    commonjs: true,
+    es6: true,
   },
   extends: [
     "eslint:recommended",
@@ -22,9 +22,12 @@ module.exports = {
     "prettier",
     "react-hooks",
     "functional",
+    "simple-import-sort",
   ],
   rules: {
     "@typescript-eslint/ban-ts-comment": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
   },
   settings: {
     react: {

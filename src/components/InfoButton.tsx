@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+
 import { InfoIcon } from "./icons/InfoIcon";
 
 type Props = {
