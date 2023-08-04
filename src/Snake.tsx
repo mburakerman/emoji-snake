@@ -345,6 +345,7 @@ export const Snake = () => {
       <StyledGameFooter>
         <InfoButton
           onClick={() => setIsInfoModalVisible(!isInfoModalVisible)}
+          disabled={isGameOver}
         />
         <DifficultyButton
           changeDifficulty={changeDifficulty}

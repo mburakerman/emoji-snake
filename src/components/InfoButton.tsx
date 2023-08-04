@@ -5,6 +5,7 @@ import { InfoIcon } from "./icons/InfoIcon";
 
 type Props = {
   onClick: () => void;
+  disabled?: boolean;
 };
 
 const StyledContainer = styled.button`
@@ -18,12 +19,13 @@ const StyledContainer = styled.button`
 
   &:disabled {
     opacity: 0.5;
+    cursor: not-allowed;
   }
 `;
 
-export const InfoButton = ({ onClick }: Props) => {
+export const InfoButton = ({ onClick, disabled }: Props) => {
   return (
-    <StyledContainer onClick={onClick}>
+    <StyledContainer onClick={onClick} disabled={disabled}>
       <InfoIcon />
     </StyledContainer>
   );
