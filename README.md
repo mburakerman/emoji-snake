@@ -1,3 +1,3 @@
-# Virusnake
+# Emoji Snake
 
 > A snake game
