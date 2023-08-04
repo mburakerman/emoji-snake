@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 
 import db from "../firebase";
 import { GameDifficulty } from "../Snake";
