@@ -355,7 +355,7 @@ export const Snake = () => {
         <VolumeButton sound={sound} setSound={setSound} />
         <RestartButton
           onClick={() => setIsRestartModalVisible(!isRestartModalVisible)}
-          disabled={isRestartModalVisible}
+          disabled={isRestartModalVisible || isGameOver}
         />
       </StyledGameFooter>
     </StyledContainer>
