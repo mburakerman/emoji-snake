@@ -24,7 +24,7 @@ export const useBestScores = (difficulty: GameDifficulty) => {
         setAreScoresFetched(false);
         setBestScore(null);
 
-        const querySnapshot = await db.collection("scores").get();
+        const querySnapshot = await db.collection("tests").get();
 
         const fetchedScores: Score[] = [];
         querySnapshot.forEach((item) => {

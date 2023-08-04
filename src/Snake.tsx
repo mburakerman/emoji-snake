@@ -1,3 +1,4 @@
+import cuid from "cuid";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
@@ -120,11 +121,10 @@ export const Snake = () => {
     direction: directionSound,
     isMuted: false,
   });
+  const [bestScoreUserName, setBestScoreUserName] = useState("");
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { areScoresFetched, bestScore } = useBestScores(gameDifficulty);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { addNewHighScore } = useHighScore();
+  const { bestScore } = useBestScores(gameDifficulty);
+  const { addNewHighScore, loading: addNewHighScoreLoading } = useHighScore();
 
   useEffect(() => {
     init();
@@ -316,6 +316,35 @@ export const Snake = () => {
         >
           😔 <br /> Game Over! <br />
           Your score is {snakeLength - 1}.
+          <br />
+          <br />
+          {bestScore && snakeLength - 1 > bestScore?.user__score ? (
+            <div>
+              <p>
+                Congrats 🎉. <br /> You have made the best score!
+              </p>
+              <p>You can save your name:</p>
+              <input
+                type="text"
+                value={bestScoreUserName}
+                onChange={(event) => {
+                  setBestScoreUserName(event.target.value);
+                }}
+              />
+              <button
+                onClick={() => {
+                  addNewHighScore({
+                    user__id: cuid(),
+                    user__name: bestScoreUserName || "anonymous",
+                    user__score: snakeLength - 1,
+                  });
+                }}
+                disabled={addNewHighScoreLoading}
+              >
+                Save
+              </button>
+            </div>
+          ) : null}
           <StyledRestartButton
             onClick={() => {
               gameOver();
