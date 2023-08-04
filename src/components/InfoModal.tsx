@@ -22,7 +22,6 @@ export const InfoModal = ({ isModalVisible, setIsModalVisible }: Props) => {
         You can also see who has the best score by tapping on best score.
         <br />
         <br />
-        Maximum score is 100. <br />
         Have fun!
       </div>
     </Modal>

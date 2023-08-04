@@ -75,7 +75,6 @@ const StyledRestartButton = styled.button`
   margin-top: 10px;
 `;
 
-const MAX_SCORE = 100;
 const GAME_LENGTH = 20;
 
 export type GameDifficulty = "easy" | "medium" | "hard";
@@ -249,10 +248,6 @@ export const Snake = () => {
       ) {
         setIsGameOver(true);
         setIsGameOverModalVisible(true);
-        const score = snakeSegments.length - 1;
-        if (bestScore?.user__score && score > bestScore.user__score) {
-          // showBestScoreAlert();
-        }
         break;
       }
     }
@@ -268,11 +263,6 @@ export const Snake = () => {
       setSnakeLength((prevLength) => prevLength + 1);
       setFoodCoordinates(getRandomDirection());
       playAudio(sound.food, 0.1);
-
-      // max score is reached
-      if (snakeLength - 1 === MAX_SCORE) {
-        /* Use the appropriate modal library here (e.g., React Modal or custom implementation) to show the alert. */
-      }
     }
   };
 
