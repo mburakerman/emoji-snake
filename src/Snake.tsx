@@ -199,18 +199,6 @@ export const Snake = () => {
     }
   }, [moveSnake, gameSpeed, isGameOver]);
 
-  const isSnakeBound = (x: number, y: number) => {
-    for (let i = 0; i < snakeCoordinates.length; i++) {
-      if (snakeCoordinates[i].x === x && snakeCoordinates[i].y === y) {
-        return true;
-      }
-    }
-  };
-
-  const isFoodBound = (x: number, y: number) => {
-    return foodCoordinates.x === x && foodCoordinates.y === y;
-  };
-
   const playAudio = (audioSource: string, audioVolume: number) => {
     if (sound.isMuted) return;
     const audio = new Audio(audioSource);
@@ -340,19 +328,30 @@ export const Snake = () => {
         </Modal>
 
         <StyledGameArea>
-          {Array.from({ length: gameLength }).map((_, colIndex) => (
-            <li key={colIndex}>
-              {Array.from({ length: gameLength }).map((_, rowIndex) => (
-                <div key={rowIndex}>
-                  {isSnakeBound(colIndex, rowIndex) ? (
-                    <>{CHARACTER}</>
-                  ) : isFoodBound(colIndex, rowIndex) ? (
-                    <>🍎</>
-                  ) : null}
-                </div>
-              ))}
-            </li>
-          ))}
+          {Array.from({ length: gameLength }).map((_, colIndex) => {
+            return (
+              <li key={colIndex}>
+                {Array.from({ length: gameLength }).map((_, rowIndex) => {
+                  const isSnakeBound = snakeCoordinates.some(
+                    ({ x, y }) => x === colIndex && y === rowIndex
+                  );
+                  const isFoodBound =
+                    foodCoordinates.x === colIndex &&
+                    foodCoordinates.y === rowIndex;
+
+                  return (
+                    <div key={rowIndex}>
+                      {isSnakeBound ? (
+                        <>{CHARACTER}</>
+                      ) : isFoodBound ? (
+                        <>🍎</>
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </li>
+            );
+          })}
         </StyledGameArea>
       </StyledGameAreaContainer>
       <StyledGameFooter>
