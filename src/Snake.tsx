@@ -10,9 +10,7 @@ import { Modal } from "./components/Modal";
 import { InfoModal } from "./components/InfoModal";
 import { useBestScores } from "./hooks/useBestScores";
 import { useHighScore } from "./hooks/useHighScore";
-// @ts-ignore
 import foodSound from "../public/sound/food.mp3";
-// @ts-ignore
 import directionSound from "../public/sound/direction.mp3";
 
 const StyledContainer = styled.div`
