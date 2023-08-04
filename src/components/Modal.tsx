@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { CloseIcon } from "./icons/CloseIcon";
 
-type Props = {
+export type ModalProps = {
   isModalVisible: boolean;
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   children: React.ReactNode;
@@ -48,7 +48,7 @@ export const Modal = ({
   isModalVisible,
   setIsModalVisible,
   children,
-}: Props) => {
+}: ModalProps) => {
   return (
     <StyledContainer active={isModalVisible}>
       <StyledCloseButton onClick={() => setIsModalVisible(false)}>

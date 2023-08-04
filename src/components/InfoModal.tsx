@@ -1,10 +1,7 @@
 import React from "react";
-import { Modal } from "./Modal";
+import { Modal, ModalProps } from "./Modal";
 
-type Props = {
-  isModalVisible: boolean;
-  setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-};
+type Props = Pick<ModalProps, "isModalVisible" | "setIsModalVisible">;
 
 export const InfoModal = ({ isModalVisible, setIsModalVisible }: Props) => {
   return (
