@@ -345,7 +345,7 @@ export const Snake = () => {
       <StyledGameFooter>
         <InfoButton
           onClick={() => setIsInfoModalVisible(!isInfoModalVisible)}
-          disabled={isGameOver}
+          disabled={isRestartModalVisible || isGameOver}
         />
         <DifficultyButton
           changeDifficulty={changeDifficulty}
@@ -356,7 +356,7 @@ export const Snake = () => {
         <VolumeButton sound={sound} setSound={setSound} />
         <RestartButton
           onClick={() => setIsRestartModalVisible(!isRestartModalVisible)}
-          disabled={isRestartModalVisible || isGameOver}
+          disabled={isRestartModalVisible || isInfoModalVisible || isGameOver}
         />
       </StyledGameFooter>
     </StyledContainer>
