@@ -208,9 +208,7 @@ export const Snake = () => {
   };
 
   const isFoodBound = (x: number, y: number) => {
-    if (foodCoordinates.x === x && foodCoordinates.y === y) {
-      return true;
-    }
+    return foodCoordinates.x === x && foodCoordinates.y === y;
   };
 
   const playAudio = (audioSource: string, audioVolume: number) => {
