@@ -105,6 +105,7 @@ type Coordinates = {
   y: number;
 };
 
+export const INITIAL_GAME_DIFFICULTY: GameDifficulty = "medium";
 const INITIAL_GAME_SPEED = 100;
 const INITIAL_SNAKE_LENGTH = 1;
 const INITIAL_SNAKE_DIRECTION: SnakeDirection = "right";
@@ -128,8 +129,9 @@ export const Snake = () => {
   const [gameSpeed, setGameSpeed] = useState(INITIAL_GAME_SPEED);
   const [gameLength] = useState(GAME_LENGTH);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [gameDifficulty, setGameDifficulty] =
-    useState<GameDifficulty>("medium");
+  const [gameDifficulty, setGameDifficulty] = useState<GameDifficulty>(
+    INITIAL_GAME_DIFFICULTY
+  );
   const [isRestartModalVisible, setIsRestartModalVisible] = useState(false);
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [isGameOverModalVisible, setIsGameOverModalVisible] = useState(false);
@@ -140,7 +142,7 @@ export const Snake = () => {
   });
   const [bestScoreUserName, setBestScoreUserName] = useState("");
 
-  const { bestScore } = useBestScores(gameDifficulty);
+  const { bestScore, fetchBestScores } = useBestScores(gameDifficulty);
   const { addBestScore, loading: addNewHighScoreLoading } = useAddBestScore();
 
   useEffect(() => {
@@ -359,6 +361,7 @@ export const Snake = () => {
                   setBestScoreUserName("");
                   setIsGameOverModalVisible(false);
                   gameOver();
+                  fetchBestScores();
                 }}
                 disabled={addNewHighScoreLoading}
               >
