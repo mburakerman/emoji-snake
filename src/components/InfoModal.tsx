@@ -13,17 +13,14 @@ export const InfoModal = ({ isModalVisible, setIsModalVisible }: Props) => {
       <div>
         💡
         <br /> Use your arrow buttons or swipe left, right, top or bottom to
-        move the snake.
+        move.
+        <br />
+        👊🏼 <br /> Beat the top score, then save your name or remain anonymous.
+        <br />
+        🔮 <br /> Discover the top scorer by hovering over the best score area.
         <br />
         <br />
-        If your score is better than current best score, your score will be
-        saved. You can save your name or leave it anonymous.
-        <br />
-        <br />
-        You can also see who has the best score by hovering over the best score.
-        <br />
-        <br />
-        Have fun!
+        🦄 <br /> Have fun!
       </div>
     </Modal>
   );
