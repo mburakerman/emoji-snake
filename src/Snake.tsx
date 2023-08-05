@@ -1,17 +1,16 @@
-import cuid from "cuid";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import directionSound from "../public/sound/direction.mp3";
 import foodSound from "../public/sound/food.mp3";
 import { DifficultyButton } from "./components/DifficultyButton";
+import { GameOverModal } from "./components/GameOverModal";
 import { Header } from "./components/Header";
 import { InfoButton } from "./components/InfoButton";
 import { InfoModal } from "./components/InfoModal";
 import { Modal } from "./components/Modal";
 import { RestartButton } from "./components/RestartButton";
 import { VolumeButton } from "./components/VolumeButton";
-import { useAddBestScore } from "./hooks/useAddBestScore";
 import { useBestScores } from "./hooks/useBestScores";
 import { Direction, useTouch } from "./hooks/useTouch";
 
@@ -66,7 +65,7 @@ const StyledGameFooter = styled.div`
   justify-content: flex-end;
 `;
 
-const StyledRestartButton = styled.button`
+export const StyledRestartButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,23 +74,6 @@ const StyledRestartButton = styled.button`
   padding: 4px 8px;
   border-radius: 4px;
   margin-top: 10px;
-`;
-
-const StyledAddBestScoreInput = styled.input`
-  border: none;
-  padding: 3px 6px;
-  border-radius: 4px;
-  margin-right: 5px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-`;
-
-const StyledAddBestScoreButton = styled.button`
-  border: none;
-  cursor: pointer;
-  padding: 3px 6px;
-  border-radius: 4px;
-  background-color: #50fa7b;
 `;
 
 const GAME_LENGTH = 20;
@@ -140,10 +122,8 @@ export const Snake = () => {
     direction: directionSound,
     isMuted: false,
   });
-  const [bestScoreUserName, setBestScoreUserName] = useState("");
 
-  const { bestScore, fetchBestScores } = useBestScores(gameDifficulty);
-  const { addBestScore, loading: addNewHighScoreLoading } = useAddBestScore();
+  const { bestScore } = useBestScores(gameDifficulty);
 
   useEffect(() => {
     init();
@@ -329,55 +309,13 @@ export const Snake = () => {
           isModalVisible={isInfoModalVisible}
           setIsModalVisible={setIsInfoModalVisible}
         />
-        <Modal
+        <GameOverModal
           isModalVisible={isGameOverModalVisible}
           setIsModalVisible={setIsGameOverModalVisible}
-        >
-          😔 <br /> Game Over! <br />
-          Your score is {snakeLength - 1}.
-          <br />
-          <br />
-          {bestScore && snakeLength - 1 > bestScore?.user__score ? (
-            <div>
-              <p>
-                Congrats 🎉
-                <br /> You have made the best score!
-              </p>
-              <StyledAddBestScoreInput
-                placeholder="Save your name"
-                type="text"
-                value={bestScoreUserName}
-                onChange={(event) => {
-                  setBestScoreUserName(event.target.value);
-                }}
-              />
-              <StyledAddBestScoreButton
-                onClick={async () => {
-                  await addBestScore({
-                    user__id: cuid(),
-                    user__name: bestScoreUserName || "anonymous",
-                    user__score: snakeLength - 1,
-                  });
-                  setBestScoreUserName("");
-                  setIsGameOverModalVisible(false);
-                  gameOver();
-                  fetchBestScores();
-                }}
-                disabled={addNewHighScoreLoading}
-              >
-                Save
-              </StyledAddBestScoreButton>
-            </div>
-          ) : null}
-          <StyledRestartButton
-            onClick={() => {
-              gameOver();
-              setIsGameOverModalVisible(false);
-            }}
-          >
-            Play Again 🐍
-          </StyledRestartButton>
-        </Modal>
+          gameDifficulty={gameDifficulty}
+          gameOver={gameOver}
+          score={snakeLength - 1}
+        />
 
         <StyledGameArea>
           {Array.from({ length: gameLength }).map((_, colIndex) => {
