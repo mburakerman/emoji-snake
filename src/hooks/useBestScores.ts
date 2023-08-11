@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import db from "../firebase";
-import { GameDifficulty, INITIAL_GAME_DIFFICULTY } from "../Snake";
+import { GameDifficulty } from "../Snake";
 import { useGlobalStore } from "../store";
 
 export type Score = {
@@ -13,7 +13,7 @@ export type Score = {
 
 export type BestScore = Score | null;
 
-export const useBestScores = (difficulty: GameDifficulty) => {
+export const useBestScores = () => {
   const [isFetched, setIsFetched] = useState(false);
   const setBestScore = useGlobalStore((state) => state.setBestScore);
 
@@ -27,13 +27,7 @@ export const useBestScores = (difficulty: GameDifficulty) => {
       querySnapshot.forEach((item) => {
         setIsFetched(true);
         const scores = item.data() as Score;
-
-        if (
-          difficulty === INITIAL_GAME_DIFFICULTY ||
-          scores.user__difficulty === difficulty
-        ) {
-          fetchedScores.push(scores);
-        }
+        fetchedScores.push(scores);
       });
 
       const highestScore = fetchedScores.reduce((prev, current) =>
@@ -47,7 +41,7 @@ export const useBestScores = (difficulty: GameDifficulty) => {
 
   useEffect(() => {
     fetchBestScores();
-  }, [difficulty]);
+  }, []);
 
   return { isFetched, fetchBestScores };
 };

@@ -41,7 +41,7 @@ export const GameOverModal = ({
   const [bestScoreUserName, setBestScoreUserName] = useState("");
   const { saveBestScore, loading: addNewHighScoreLoading } = useSaveBestScore();
   const bestScore = useGlobalStore((state) => state.bestScore);
-  const { fetchBestScores } = useBestScores(gameDifficulty);
+  const { fetchBestScores } = useBestScores();
 
   return (
     <Modal
