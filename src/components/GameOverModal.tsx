@@ -72,6 +72,7 @@ export const GameOverModal = ({
                 user__id: cuid(),
                 user__name: bestScoreUserName || "anonymous",
                 user__score: score,
+                user__difficulty: gameDifficulty,
               });
               setBestScoreUserName("");
               setIsModalVisible(false);
