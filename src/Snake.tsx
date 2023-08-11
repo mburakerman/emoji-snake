@@ -290,6 +290,7 @@ export const Snake = () => {
   return (
     <StyledContainer ref={ref}>
       <Header score={snakeLength - 1} bestScore={bestScore} />
+
       <StyledGameAreaContainer>
         <Modal
           isModalVisible={isRestartModalVisible}
@@ -344,6 +345,7 @@ export const Snake = () => {
           })}
         </StyledGameArea>
       </StyledGameAreaContainer>
+
       <StyledGameFooter>
         <InfoButton
           onClick={() => setIsInfoModalVisible(!isInfoModalVisible)}
