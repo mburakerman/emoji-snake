@@ -1,9 +1,18 @@
 import React from "react";
+import { styled } from "styled-components";
 
 import { FOODS } from "../Snake";
 import { Modal, ModalProps } from "./Modal";
 
 type Props = Pick<ModalProps, "isModalVisible" | "setIsModalVisible">;
+
+const StyledContent = styled.div`
+  font-size: 15px;
+
+  @media screen and (max-width: 500px) {
+    font-size: 13px;
+  }
+`;
 
 export const InfoModal = ({ isModalVisible, setIsModalVisible }: Props) => {
   return (
@@ -11,7 +20,7 @@ export const InfoModal = ({ isModalVisible, setIsModalVisible }: Props) => {
       isModalVisible={isModalVisible}
       setIsModalVisible={setIsModalVisible}
     >
-      <div>
+      <StyledContent>
         💡
         <br /> Use your arrow buttons or swipe left, right, top or bottom to
         move.
@@ -33,7 +42,7 @@ export const InfoModal = ({ isModalVisible, setIsModalVisible }: Props) => {
         <br />
         <br />
         🦄 <br /> Have fun!
-      </div>
+      </StyledContent>
     </Modal>
   );
 };
