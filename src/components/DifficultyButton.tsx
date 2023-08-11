@@ -29,7 +29,11 @@ export const DifficultyButton = ({
   disabled,
 }: Props) => {
   return (
-    <StyledButton onClick={changeDifficulty} disabled={disabled}>
+    <StyledButton
+      title="Difficulty"
+      onClick={changeDifficulty}
+      disabled={disabled}
+    >
       {children}
     </StyledButton>
   );

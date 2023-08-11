@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
-import { BestScore,Score } from "../hooks/useBestScores";
+import { BestScore, Score } from "../hooks/useBestScores";
 import { CrownIcon } from "./icons/CrownIcon";
 
 type Props = {
@@ -17,7 +17,7 @@ const StyledCrownIcon = styled(CrownIcon)`
   font-size: 18px;
 `;
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.header`
   display: flex;
   justify-content: space-between;
 `;

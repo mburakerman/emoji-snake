@@ -60,7 +60,7 @@ const StyledGameArea = styled.ul`
   }
 `;
 
-const StyledGameFooter = styled.div`
+const StyledGameFooter = styled.footer`
   display: flex;
   justify-content: flex-end;
 `;
