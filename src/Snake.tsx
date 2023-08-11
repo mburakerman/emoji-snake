@@ -94,8 +94,24 @@ const INITIAL_SNAKE_DIRECTION: SnakeDirection = "right";
 const INITIAL_FOOD_COORDINATES = { x: 5, y: 7 };
 
 const CHARACTER = "🐍";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const FOODS = ["🍎", "🍄", "🔮", "💣"];
+
+export const FOODS = [
+  {
+    score: 1,
+    food: "🍎",
+  },
+  {
+    score: 2,
+    food: "🍄",
+  },
+  {
+    score: 3,
+    food: "🔮",
+  },
+];
+
+const SECOND_FOOD_VISIBILITY_SCORE = 10;
+const THIRD_FOOD_VISIBILITY_SCORE = 10;
 
 export const Snake = () => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -108,6 +124,7 @@ export const Snake = () => {
   const [foodCoordinates, setFoodCoordinates] = useState<Coordinates>(
     INITIAL_FOOD_COORDINATES
   );
+  const [currentFood, setCurrentFood] = useState(FOODS[0]);
   const [gameSpeed, setGameSpeed] = useState(INITIAL_GAME_SPEED);
   const [gameLength] = useState(GAME_LENGTH);
   const [isGameOver, setIsGameOver] = useState(false);
@@ -263,14 +280,27 @@ export const Snake = () => {
 
   const updatePoint = async () => {
     const snakeHead = snakeCoordinates[snakeCoordinates.length - 1];
+    const isFoodEaten =
+      foodCoordinates.x === snakeHead.x && foodCoordinates.y === snakeHead.y;
 
-    if (
-      foodCoordinates.x === snakeHead.x &&
-      foodCoordinates.y === snakeHead.y
-    ) {
-      setSnakeLength((prevLength) => prevLength + 1);
+    if (isFoodEaten) {
+      setSnakeLength((prevLength) => prevLength + currentFood.score);
       setFoodCoordinates(getRandomDirection());
       playAudio(sound.food, 0.1);
+      const score = snakeLength - 1;
+
+      if (
+        score > SECOND_FOOD_VISIBILITY_SCORE &&
+        score <= THIRD_FOOD_VISIBILITY_SCORE
+      ) {
+        const availableFoods = FOODS.slice(0, -1);
+        const randomFood =
+          availableFoods[Math.floor(Math.random() * availableFoods.length)];
+        setCurrentFood(randomFood);
+      } else if (score > THIRD_FOOD_VISIBILITY_SCORE) {
+        const randomFood = FOODS[Math.floor(Math.random() * FOODS.length)];
+        setCurrentFood(randomFood);
+      }
     }
   };
 
@@ -290,7 +320,6 @@ export const Snake = () => {
   return (
     <StyledContainer ref={ref}>
       <Header score={snakeLength - 1} bestScore={bestScore} />
-
       <StyledGameAreaContainer>
         <Modal
           isModalVisible={isRestartModalVisible}
@@ -335,7 +364,7 @@ export const Snake = () => {
                       {isSnakeBound ? (
                         <>{CHARACTER}</>
                       ) : isFoodBound ? (
-                        <>🍎</>
+                        <>{currentFood.food}</>
                       ) : null}
                     </div>
                   );
