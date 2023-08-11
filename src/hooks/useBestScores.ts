@@ -14,19 +14,18 @@ export type Score = {
 export type BestScore = Score | null;
 
 export const useBestScores = (difficulty: GameDifficulty) => {
-  const [areScoresFetched, setAreScoresFetched] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
   const setBestScore = useGlobalStore((state) => state.setBestScore);
 
   const fetchBestScores = async () => {
     try {
-      setAreScoresFetched(false);
-      setBestScore(null);
+      setIsFetched(false);
 
       const querySnapshot = await db.collection("tests").get();
 
       const fetchedScores: Score[] = [];
       querySnapshot.forEach((item) => {
-        setAreScoresFetched(true);
+        setIsFetched(true);
         const scores = item.data() as Score;
 
         if (
@@ -50,5 +49,5 @@ export const useBestScores = (difficulty: GameDifficulty) => {
     fetchBestScores();
   }, [difficulty]);
 
-  return { areScoresFetched, fetchBestScores };
+  return { isFetched, fetchBestScores };
 };
