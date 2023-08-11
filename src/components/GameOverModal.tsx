@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useAddBestScore } from "../hooks/useAddBestScore";
 import { useBestScores } from "../hooks/useBestScores";
 import { GameDifficulty, StyledRestartButton } from "../Snake";
+import { useGlobalStore } from "../store";
 import { Modal, ModalProps } from "./Modal";
 
 type Props = {
@@ -39,7 +40,8 @@ export const GameOverModal = ({
 }: Props) => {
   const [bestScoreUserName, setBestScoreUserName] = useState("");
   const { addBestScore, loading: addNewHighScoreLoading } = useAddBestScore();
-  const { bestScore, fetchBestScores } = useBestScores(gameDifficulty);
+  const bestScore = useGlobalStore((state) => state.bestScore);
+  const { fetchBestScores } = useBestScores(gameDifficulty);
 
   return (
     <Modal

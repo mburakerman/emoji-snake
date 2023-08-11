@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// import { create } from "zustand";
+import { create } from "zustand";
 
-// type GlobalStore = {
-//   bestScores: any[];
-//   setBestScores: (scores: any[]) => void;
-// };
+import { BestScore } from "../hooks/useBestScores";
 
-// export const useGlobalStore = create<GlobalStore>()((set) => ({
-//   bestScores: [],
-//   setBestScores: (scores) => set(() => ({ bestScores: scores })),
-// }));
+type GlobalStore = {
+  bestScore: BestScore;
+  setBestScore: (value: BestScore) => void;
+};
+
+export const useGlobalStore = create<GlobalStore>()((set) => ({
+  bestScore: null,
+  setBestScore: (value) => set(() => ({ bestScore: value })),
+}));

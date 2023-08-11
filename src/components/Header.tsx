@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
-import { BestScore, Score } from "../hooks/useBestScores";
+import { Score } from "../hooks/useBestScores";
+import { useGlobalStore } from "../store";
 import { CrownIcon } from "./icons/CrownIcon";
 
 type Props = {
   score: Score["user__score"];
-  bestScore: BestScore;
 };
 
 const StyledCrownIcon = styled(CrownIcon)`
@@ -120,8 +120,9 @@ const StyledAnimatedScore = styled.span<{ active: boolean }>`
     `}
 `;
 
-export const Header = ({ bestScore, score }: Props) => {
+export const Header = ({ score }: Props) => {
   const [isScoreAnimationActive, setIsScoreAnimation] = useState(false);
+  const bestScore = useGlobalStore((state) => state.bestScore);
 
   useEffect(() => {
     const animateScore = async () => {

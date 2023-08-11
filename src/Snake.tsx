@@ -11,7 +11,6 @@ import { InfoModal } from "./components/InfoModal";
 import { Modal } from "./components/Modal";
 import { RestartButton } from "./components/RestartButton";
 import { VolumeButton } from "./components/VolumeButton";
-import { useBestScores } from "./hooks/useBestScores";
 import { Direction, useTouch } from "./hooks/useTouch";
 
 const StyledContainer = styled.div`
@@ -139,8 +138,6 @@ export const Snake = () => {
     direction: directionSound,
     isMuted: false,
   });
-
-  const { bestScore } = useBestScores(gameDifficulty);
 
   useEffect(() => {
     init();
@@ -319,7 +316,7 @@ export const Snake = () => {
 
   return (
     <StyledContainer ref={ref}>
-      <Header score={snakeLength - 1} bestScore={bestScore} />
+      <Header score={snakeLength - 1} />
       <StyledGameAreaContainer>
         <Modal
           isModalVisible={isRestartModalVisible}
