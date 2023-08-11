@@ -8,7 +8,7 @@ type Props = {
   disabled?: boolean;
 };
 
-const StyledContainer = styled.button`
+const StyledButton = styled.button`
   cursor: pointer;
   padding: 8px 12px;
   border: none;
@@ -25,8 +25,8 @@ const StyledContainer = styled.button`
 
 export const InfoButton = ({ onClick, disabled }: Props) => {
   return (
-    <StyledContainer onClick={onClick} disabled={disabled}>
+    <StyledButton onClick={onClick} disabled={disabled}>
       <InfoIcon />
-    </StyledContainer>
+    </StyledButton>
   );
 };

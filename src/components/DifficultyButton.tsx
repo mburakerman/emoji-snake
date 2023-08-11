@@ -7,7 +7,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const StyledContainer = styled.button`
+const StyledButton = styled.button`
   cursor: pointer;
   padding: 8px 12px;
   border: none;
@@ -23,10 +23,14 @@ const StyledContainer = styled.button`
   }
 `;
 
-export const DifficultyButton = ({ changeDifficulty, children, disabled }: Props) => {
+export const DifficultyButton = ({
+  changeDifficulty,
+  children,
+  disabled,
+}: Props) => {
   return (
-    <StyledContainer onClick={changeDifficulty} disabled={disabled}>
+    <StyledButton onClick={changeDifficulty} disabled={disabled}>
       {children}
-    </StyledContainer>
+    </StyledButton>
   );
 };

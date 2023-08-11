@@ -15,7 +15,7 @@ type Props = {
   setSound: (val: Sound) => void;
 };
 
-const StyledContainer = styled.button`
+const StyledButton = styled.button`
   cursor: pointer;
   padding: 8px 12px;
   border: none;
@@ -47,8 +47,8 @@ export const VolumeButton = ({ sound, setSound }: Props) => {
   }
 
   return (
-    <StyledContainer title="Volume" onClick={handleClick}>
+    <StyledButton title="Volume" onClick={handleClick}>
       {sound.isMuted ? <MutedVolumeIcon /> : <VolumeIcon />}
-    </StyledContainer>
+    </StyledButton>
   );
 };

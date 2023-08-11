@@ -8,7 +8,7 @@ type Props = {
   onClick: () => void;
 };
 
-const StyledContainer = styled.button`
+const StyledButton = styled.button`
   cursor: pointer;
   padding: 8px 12px;
   border: none;
@@ -24,8 +24,8 @@ const StyledContainer = styled.button`
 
 export const RestartButton = ({ disabled, onClick }: Props) => {
   return (
-    <StyledContainer onClick={onClick} title="Restart" disabled={disabled}>
+    <StyledButton onClick={onClick} title="Restart" disabled={disabled}>
       <RestartIcon />
-    </StyledContainer>
+    </StyledButton>
   );
 };
