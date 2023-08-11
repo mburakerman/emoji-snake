@@ -2,8 +2,8 @@ import cuid from "cuid";
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { useAddBestScore } from "../hooks/useAddBestScore";
 import { useBestScores } from "../hooks/useBestScores";
+import { useSaveBestScore } from "../hooks/useSaveBestScore";
 import { GameDifficulty, StyledRestartButton } from "../Snake";
 import { useGlobalStore } from "../store";
 import { Modal, ModalProps } from "./Modal";
@@ -39,7 +39,7 @@ export const GameOverModal = ({
   gameOver,
 }: Props) => {
   const [bestScoreUserName, setBestScoreUserName] = useState("");
-  const { addBestScore, loading: addNewHighScoreLoading } = useAddBestScore();
+  const { saveBestScore, loading: addNewHighScoreLoading } = useSaveBestScore();
   const bestScore = useGlobalStore((state) => state.bestScore);
   const { fetchBestScores } = useBestScores(gameDifficulty);
 
@@ -68,7 +68,7 @@ export const GameOverModal = ({
           />
           <StyledAddBestScoreButton
             onClick={async () => {
-              await addBestScore({
+              await saveBestScore({
                 user__id: cuid(),
                 user__name: bestScoreUserName || "anonymous",
                 user__score: score,
