@@ -314,6 +314,9 @@ export const Snake = () => {
     init();
   };
 
+  // @ts-ignore
+  console.log("boo", import.meta.env.VITE_FIREBASE_API_KEY);
+
   return (
     <StyledContainer ref={ref}>
       <Header score={snakeLength - 1} />
