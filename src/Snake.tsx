@@ -115,6 +115,8 @@ const THIRD_FOOD_VISIBILITY_SCORE = 10;
 
 export const Snake = () => {
   const ref = useRef<HTMLDivElement | null>(null);
+  const directionSoundRef = useRef<HTMLAudioElement>(null);
+  const foodSoundRef = useRef<HTMLAudioElement>(null);
 
   const [snakeCoordinates, setSnakeCoordinates] = useState<Coordinates[]>([]);
   const [snakeLength, setSnakeLength] = useState(INITIAL_SNAKE_LENGTH);
@@ -164,7 +166,10 @@ export const Snake = () => {
 
     const direction = key.replace("Arrow", "").toLowerCase() as SnakeDirection;
     setSnakeDirection(direction);
-    playAudio(directionSound, 0.05);
+    if (directionSoundRef.current) {
+      directionSoundRef.current.play();
+      directionSoundRef.current.volume = 0.05;
+    }
   };
 
   const handleTouchDirection = (direction: Direction) => {
@@ -217,13 +222,6 @@ export const Snake = () => {
       return () => clearInterval(gameInterval);
     }
   }, [moveSnake, gameSpeed, isGameOver]);
-
-  const playAudio = (audioSource: string, audioVolume: number) => {
-    if (isMuted) return;
-    const audio = new Audio(audioSource);
-    audio.volume = audioVolume;
-    audio.play();
-  };
 
   const changeDifficulty = () => {
     setGameDifficulty((prevDifficulty) => {
@@ -280,7 +278,11 @@ export const Snake = () => {
     if (isFoodEaten) {
       setSnakeLength((prevLength) => prevLength + currentFood.score);
       setFoodCoordinates(getRandomDirection());
-      playAudio(foodSound, 0.1);
+      if (foodSoundRef.current) {
+        foodSoundRef.current.play();
+        foodSoundRef.current.volume = 0.1;
+      }
+
       const score = snakeLength - 1;
 
       if (
@@ -386,6 +388,14 @@ export const Snake = () => {
           disabled={isRestartModalVisible || isInfoModalVisible || isGameOver}
         />
       </StyledGameFooter>
+
+      <audio ref={foodSoundRef} muted={isMuted} src={foodSound} hidden />
+      <audio
+        ref={directionSoundRef}
+        muted={isMuted}
+        src={directionSound}
+        hidden
+      />
     </StyledContainer>
   );
 };
