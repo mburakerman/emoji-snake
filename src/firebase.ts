@@ -3,8 +3,7 @@ import "firebase/firestore";
 import firebase from "firebase";
 
 const firebaseConfig = {
-  // @ts-ignore
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  apiKey: process.env.VITE_FIREBASE_API_KEY,
   authDomain: "virusnake-f78a2.firebaseapp.com",
   databaseURL: "https://virusnake-f78a2.firebaseio.com",
   projectId: "virusnake-f78a2",

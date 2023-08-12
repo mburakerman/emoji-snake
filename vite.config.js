@@ -1,6 +1,7 @@
 import url from "@rollup/plugin-url";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import EnvironmentPlugin from "vite-plugin-environment";
 
 export default defineConfig({
   plugins: [
@@ -10,5 +11,6 @@ export default defineConfig({
       },
     }),
     url(),
+    EnvironmentPlugin(["VITE_FIREBASE_API_KEY"]),
   ],
 });
