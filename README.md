@@ -1,4 +1,7 @@
-# Virusnake
+# Emoji Snake
+
 > A snake game
 
-<img src="https://raw.githubusercontent.com/mburakerman/virusnake/master/virusnake.gif" />
+## Development
+
+run `vercel env pull` to get required env variables
