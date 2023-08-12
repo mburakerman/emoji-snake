@@ -14,4 +14,8 @@ const firebaseConfig = {
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+export const COLLECTION_NAME =
+  process.env.NODE_ENV === "development" ? "tests" : "scores";
+
 export default firebaseApp.firestore();

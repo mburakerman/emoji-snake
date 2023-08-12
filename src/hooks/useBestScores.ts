@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import db from "../firebase";
+import db, { COLLECTION_NAME } from "../firebase";
 import { GameDifficulty } from "../Snake";
 import { useGlobalStore } from "../store";
 
@@ -21,7 +21,7 @@ export const useBestScores = () => {
     try {
       setIsFetched(false);
 
-      const querySnapshot = await db.collection("tests").get();
+      const querySnapshot = await db.collection(COLLECTION_NAME).get();
 
       const fetchedScores: Score[] = [];
       querySnapshot.forEach((item) => {

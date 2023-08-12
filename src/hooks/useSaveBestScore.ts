@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import db from "../firebase";
+import db, { COLLECTION_NAME } from "../firebase";
 import { Score } from "./useBestScores";
 
 export const useSaveBestScore = () => {
@@ -9,7 +9,7 @@ export const useSaveBestScore = () => {
   const saveBestScore = async (scoreData: Score) => {
     try {
       setLoading(true);
-      await db.collection("tests").add(scoreData);
+      await db.collection(COLLECTION_NAME).add(scoreData);
     } catch (err) {
       console.error(err);
     } finally {
