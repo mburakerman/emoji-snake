@@ -1,19 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
+import { useGlobalStore } from "../store";
 import { MutedVolumeIcon } from "./icons/MutedVolumeIcon";
 import { VolumeIcon } from "./icons/VolumeIcon";
-
-type Sound = {
-  food: string;
-  direction: string;
-  isMuted: boolean;
-};
-
-type Props = {
-  sound: Sound;
-  setSound: (val: Sound) => void;
-};
 
 const StyledButton = styled.button`
   cursor: pointer;
@@ -30,25 +20,23 @@ const StyledButton = styled.button`
   }
 `;
 
-export const VolumeButton = ({ sound, setSound }: Props) => {
-  const isMobile = () => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
-  };
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+};
 
-  const handleClick = () => {
-    const updatedSound = { ...sound, isMuted: !sound.isMuted };
-    setSound(updatedSound);
-  };
+export const VolumeButton = () => {
+  const isMuted = useGlobalStore((state) => state.isMuted);
+  const setIsMuted = useGlobalStore((state) => state.setIsMuted);
 
   if (isMobile()) {
     return null;
   }
 
   return (
-    <StyledButton title="Volume" onClick={handleClick}>
-      {sound.isMuted ? <MutedVolumeIcon /> : <VolumeIcon />}
+    <StyledButton title="Volume" onClick={() => setIsMuted(!isMuted)}>
+      {isMuted ? <MutedVolumeIcon /> : <VolumeIcon />}
     </StyledButton>
   );
 };

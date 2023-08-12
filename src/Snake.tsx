@@ -12,6 +12,7 @@ import { Modal } from "./components/Modal";
 import { RestartButton } from "./components/RestartButton";
 import { VolumeButton } from "./components/VolumeButton";
 import { Direction, useTouch } from "./hooks/useTouch";
+import { useGlobalStore } from "./store";
 
 const StyledContainer = styled.div`
   margin: 0 auto;
@@ -133,11 +134,7 @@ export const Snake = () => {
   const [isRestartModalVisible, setIsRestartModalVisible] = useState(false);
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [isGameOverModalVisible, setIsGameOverModalVisible] = useState(false);
-  const [sound, setSound] = useState({
-    food: foodSound,
-    direction: directionSound,
-    isMuted: false,
-  });
+  const isMuted = useGlobalStore((state) => state.isMuted);
 
   useEffect(() => {
     init();
@@ -167,7 +164,7 @@ export const Snake = () => {
 
     const direction = key.replace("Arrow", "").toLowerCase() as SnakeDirection;
     setSnakeDirection(direction);
-    playAudio(sound.direction, 0.05);
+    playAudio(directionSound, 0.05);
   };
 
   const handleTouchDirection = (direction: Direction) => {
@@ -222,7 +219,7 @@ export const Snake = () => {
   }, [moveSnake, gameSpeed, isGameOver]);
 
   const playAudio = (audioSource: string, audioVolume: number) => {
-    if (sound.isMuted) return;
+    if (isMuted) return;
     const audio = new Audio(audioSource);
     audio.volume = audioVolume;
     audio.play();
@@ -283,7 +280,7 @@ export const Snake = () => {
     if (isFoodEaten) {
       setSnakeLength((prevLength) => prevLength + currentFood.score);
       setFoodCoordinates(getRandomDirection());
-      playAudio(sound.food, 0.1);
+      playAudio(foodSound, 0.1);
       const score = snakeLength - 1;
 
       if (
@@ -383,7 +380,7 @@ export const Snake = () => {
         >
           {gameDifficulty}
         </DifficultyButton>
-        <VolumeButton sound={sound} setSound={setSound} />
+        <VolumeButton />
         <RestartButton
           onClick={() => setIsRestartModalVisible(!isRestartModalVisible)}
           disabled={isRestartModalVisible || isInfoModalVisible || isGameOver}
