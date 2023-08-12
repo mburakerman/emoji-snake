@@ -53,7 +53,7 @@ export const GameOverModal = ({
       Your score is {score}.
       <br />
       <br />
-      {score > Number(bestScore?.user__score) ? (
+      {!bestScore?.user__score || score > Number(bestScore?.user__score) ? (
         <div>
           <p>
             Congrats 🎉
