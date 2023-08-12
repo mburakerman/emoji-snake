@@ -47,6 +47,7 @@ export const GameOverModal = ({
     <Modal
       isModalVisible={isModalVisible}
       setIsModalVisible={setIsModalVisible}
+      hideCloseIcon={true}
     >
       😔 <br /> Game Over! <br />
       Your score is {score}.
@@ -75,9 +76,9 @@ export const GameOverModal = ({
                 user__difficulty: gameDifficulty,
               });
               setBestScoreUserName("");
-              setIsModalVisible(false);
               gameOver();
               fetchBestScores();
+              setIsModalVisible(false);
             }}
             disabled={addNewHighScoreLoading}
           >

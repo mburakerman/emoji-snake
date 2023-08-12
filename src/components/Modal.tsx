@@ -7,6 +7,7 @@ export type ModalProps = {
   isModalVisible: boolean;
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   children: React.ReactNode;
+  hideCloseIcon?: boolean;
 };
 
 const StyledContainer = styled.div<{ active: boolean }>`
@@ -49,12 +50,15 @@ export const Modal = ({
   isModalVisible,
   setIsModalVisible,
   children,
+  hideCloseIcon = false,
 }: ModalProps) => {
   return (
     <StyledContainer active={isModalVisible}>
-      <StyledCloseButton onClick={() => setIsModalVisible(false)}>
-        <CloseIcon />
-      </StyledCloseButton>
+      {!hideCloseIcon ? (
+        <StyledCloseButton onClick={() => setIsModalVisible(false)}>
+          <CloseIcon />
+        </StyledCloseButton>
+      ) : null}
       {children}
     </StyledContainer>
   );
