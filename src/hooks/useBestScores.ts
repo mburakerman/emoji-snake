@@ -36,6 +36,8 @@ export const useBestScores = () => {
       setBestScore(highestScore);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsFetched(true);
     }
   };
 
