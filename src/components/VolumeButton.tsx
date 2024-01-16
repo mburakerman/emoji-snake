@@ -35,7 +35,11 @@ export const VolumeButton = () => {
   }
 
   return (
-    <StyledButton title="Volume" onClick={() => setIsMuted(!isMuted)}>
+    <StyledButton
+      title="Volume"
+      onClick={() => setIsMuted(!isMuted)}
+      data-testid="volume-button"
+    >
       {isMuted ? <MutedVolumeIcon /> : <VolumeIcon />}
     </StyledButton>
   );
