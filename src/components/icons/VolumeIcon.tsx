@@ -12,6 +12,7 @@ export const VolumeIcon = ({ width = 40, height = 40 }: Props) => {
       height={height}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 72 72"
+      data-testid="volume-icon"
     >
       <g>
         <path

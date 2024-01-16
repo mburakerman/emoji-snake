@@ -8,7 +8,8 @@
     "start": "vite --port 3003",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "\"./node_modules/.bin/eslint\" . --ext ts,tsx"
+    "lint": "\"./node_modules/.bin/eslint\" . --ext ts,tsx",
+    "test:unit": "vitest"
   },
   "dependencies": {
     "cuid": "^3.0.0",
@@ -20,6 +21,9 @@
   },
   "devDependencies": {
     "@rollup/plugin-url": "^8.0.1",
+    "@testing-library/jest-dom": "^6.2.0",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.2",
     "@types/firebase": "^3.2.1",
     "@types/hammerjs": "^2.0.41",
     "@types/react": "^18.2.15",
@@ -37,9 +41,11 @@
     "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "jsdom": "^23.2.0",
     "prettier": "^3.0.0",
     "typescript": "^5.1.6",
     "vite": "^4.4.7",
-    "vite-plugin-environment": "^1.1.3"
+    "vite-plugin-environment": "^1.1.3",
+    "vitest": "^1.2.0"
   }
 }
