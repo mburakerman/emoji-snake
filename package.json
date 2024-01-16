@@ -8,7 +8,8 @@
     "start": "vite --port 3003",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "\"./node_modules/.bin/eslint\" . --ext ts,tsx"
+    "lint": "\"./node_modules/.bin/eslint\" . --ext ts,tsx",
+    "test:unit": "vitest"
   },
   "dependencies": {
     "cuid": "^3.0.0",
