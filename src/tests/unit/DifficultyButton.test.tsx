@@ -6,10 +6,11 @@ import { DifficultyButton } from "../../components/DifficultyButton";
 
 describe("DifficultyButton", () => {
   it("should call changeDifficulty on click", () => {
-    const changeDifficultyHandler = vi.fn();
+    const changeDifficultyMock = vi.fn();
+
     render(
       <DifficultyButton
-        changeDifficulty={changeDifficultyHandler}
+        changeDifficulty={changeDifficultyMock}
         disabled={false}
       >
         Difficulty
@@ -19,6 +20,6 @@ describe("DifficultyButton", () => {
     const button = screen.getByRole("button", { name: "Difficulty" });
     fireEvent.click(button);
 
-    expect(changeDifficultyHandler).toHaveBeenCalledTimes(1);
+    expect(changeDifficultyMock).toHaveBeenCalledTimes(1);
   });
 });
