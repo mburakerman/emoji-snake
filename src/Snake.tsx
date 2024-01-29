@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import useSound from "use-sound";
 
 import directionSound from "../public/sound/direction.mp3";
 import foodSound from "../public/sound/food.mp3";
@@ -115,8 +116,14 @@ const THIRD_FOOD_VISIBILITY_SCORE = 10;
 
 export const Snake = () => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const directionSoundRef = useRef<HTMLAudioElement>(null);
-  const foodSoundRef = useRef<HTMLAudioElement>(null);
+  const isMuted = useGlobalStore((state) => state.isMuted);
+
+  const [playDirectionSound, directionSoundData] = useSound(directionSound, {
+    volume: isMuted ? 0 : 0.1,
+  });
+  const [playFoodSound] = useSound(foodSound, {
+    volume: isMuted ? 0 : 0.1,
+  });
 
   const [snakeCoordinates, setSnakeCoordinates] = useState<Coordinates[]>([]);
   const [snakeLength, setSnakeLength] = useState(INITIAL_SNAKE_LENGTH);
@@ -136,7 +143,6 @@ export const Snake = () => {
   const [isRestartModalVisible, setIsRestartModalVisible] = useState(false);
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [isGameOverModalVisible, setIsGameOverModalVisible] = useState(false);
-  const isMuted = useGlobalStore((state) => state.isMuted);
 
   useEffect(() => {
     init();
@@ -154,7 +160,7 @@ export const Snake = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, []);
+  }, [directionSoundData]);
 
   const handleKeyPress = (event: KeyboardEvent) => {
     const validKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
@@ -166,10 +172,7 @@ export const Snake = () => {
 
     const direction = key.replace("Arrow", "").toLowerCase() as SnakeDirection;
     setSnakeDirection(direction);
-    if (directionSoundRef.current) {
-      directionSoundRef.current.play();
-      directionSoundRef.current.volume = 0.05;
-    }
+    playDirectionSound();
   };
 
   const handleTouchDirection = (direction: Direction) => {
@@ -278,10 +281,7 @@ export const Snake = () => {
     if (isFoodEaten) {
       setSnakeLength((prevLength) => prevLength + currentFood.score);
       setFoodCoordinates(getRandomDirection());
-      if (foodSoundRef.current) {
-        foodSoundRef.current.play();
-        foodSoundRef.current.volume = 0.1;
-      }
+      playFoodSound();
 
       const score = snakeLength - 1;
 
@@ -388,14 +388,6 @@ export const Snake = () => {
           disabled={isRestartModalVisible || isInfoModalVisible || isGameOver}
         />
       </StyledGameFooter>
-
-      <audio ref={foodSoundRef} muted={isMuted} src={foodSound} hidden />
-      <audio
-        ref={directionSoundRef}
-        muted={isMuted}
-        src={directionSound}
-        hidden
-      />
     </StyledContainer>
   );
 };

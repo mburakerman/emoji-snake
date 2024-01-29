@@ -56,7 +56,8 @@ const scoreStyle = `
       top: 100%;
       left: 50%;
       transform: translate(-50%, 0px);
-      width: 100%;
+      min-width: 100%;
+      width: min-content;
     }
   
     &:hover {

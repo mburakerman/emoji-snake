@@ -6,6 +6,7 @@
   "license": "ISC",
   "scripts": {
     "start": "vite --port 3003",
+    "dev": "vite --port 3003",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "\"./node_modules/.bin/eslint\" . --ext ts,tsx",
@@ -17,6 +18,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^6.0.5",
+    "use-sound": "^4.0.1",
     "zustand": "^4.3.9"
   },
   "devDependencies": {
