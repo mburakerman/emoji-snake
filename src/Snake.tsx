@@ -16,16 +16,9 @@ import { Direction, useTouch } from "./hooks/useTouch";
 import { useGlobalStore } from "./store";
 
 const StyledContainer = styled.div`
-  margin: 0 auto;
-  width: 400px;
-  max-width: 100%;
   touch-action: none;
   user-select: none;
   -webkit-user-drag: none;
-
-  @media screen and (max-width: 500px) {
-    width: 340px;
-  }
 `;
 
 const StyledGameAreaContainer = styled.div`

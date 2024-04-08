@@ -25,7 +25,7 @@ const StyledButton = styled.button`
 
 export const InfoButton = ({ onClick, disabled }: Props) => {
   return (
-    <StyledButton onClick={onClick} disabled={disabled}>
+    <StyledButton onClick={onClick} disabled={disabled} title="Info">
       <InfoIcon />
     </StyledButton>
   );
